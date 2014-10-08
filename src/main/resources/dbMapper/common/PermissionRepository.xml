@@ -42,4 +42,13 @@
 		<result property="description" column="description"/>
 	</resultMap>
 	
+	<!-- permissionRole -->
+	<resultMap type="Permission" id="permissionRoleResultMap" extends="permissionResultMap">
+		<collection property="role" ofType="Role">
+			<id property="id" column="role_id"/>
+			<result property="name" column="role_name"/>
+			<result property="description" column="role_description"/>
+		</collection>
+	</resultMap>
+	
 </mapper>
