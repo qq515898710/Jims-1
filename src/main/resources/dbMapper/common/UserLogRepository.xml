@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.mo.open.common.repository.UserLogRepository">
+	
+	<sql id="selcet_user_log">SELECT id, user_account, time FROM tb_user_log</sql>
+	
+	<insert id="insert" parameterType="UserLog" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO tb_user_log(user_account, time)
+		VALUE(#{user.account}, #{time})
+	</insert>
+	
+	<update id="updateByPK" parameterType="UserLog">
+		UPDATE tb_user_log SET 
+			user_account=#{user.account},
+			time=#{time},
+		WHERE id=#{id}
+	</update>
+	
+	<delete id="deleteByPK" >
+		DELETE FROM tb_user_log WHERE id=#{id}
+	</delete>
+	
+	<select id="selectByPK" resultMap="userLogResultMap">
+		<include refid="selcet_user_log"/>
+		WHERE id = #{id}
+	</select>
+	
+	<select id="countByAccount" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log 
+		<where>
+			<if test="account != null and account !=''">
+				user_account=#{account}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectByAccount" resultMap="userLogResultMap">
+		<include refid="selcet_user_log"/>
+		<where>
+			<if test="user_account != null and user_account !=''">
+				user_account=#{user_account}
+			</if>
+		</where>
+		ORDER BY id DESC
+		LIMIT #{offset}, #{size}
+	</select>
+	
+	<select id="countByLikeAccount" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log WHERE user_account LIKE CONCAT('%', #{account},'%')
+	</select>
+	
+	<select id="selectByLikeAccount" resultMap="userLogResultMap">
+		<include refid="selcet_user_log"/>
+		WHERE user_account LIKE CONCAT('%', #{account},'%')
+		ORDER BY id DESC
+		LIMIT #{offset}, #{size}
+	</select>
+	
+	<!-- userLog -->
+	<resultMap type="UserLog" id="userLogResultMap">
+		<id property="id" column="id" />
+		<result property="time" column="time"/>
+		<association property="user"  javaType="User">
+			<id property="account" column="user_account"/>
+			<result property="password" column="password"/>
+			<result property="createDate" column="create_date"/> 
+			<result property="lastestDate" column="lastest_date"/>
+		</association>
+	</resultMap>
+	
+</mapper>

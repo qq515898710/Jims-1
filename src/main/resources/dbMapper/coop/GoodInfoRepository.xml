@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.mo.jims.coop.repository.GoodInfoRepository">
+
+	<sql id="select_good_info">
+		SELECT 
+			id,
+		 	name, 
+		 	abbreviation,
+		 	origin, 
+		 	units, 
+		 	pack, 
+		 	approval_num, 
+		 	batch_num, 
+		 	memo 
+		FROM tb_good_info
+	</sql>
+
+	<insert id="insert" parameterType="GoodInfo">
+		INSERT INTO tb_good_info(id,name,abbreviation,origin,units,
+			pack,approval_num,batch_num,memo)
+		VALUE(#{id}, #{name},#{abbreviation},#{origin}, #{units},
+			#{pack},#{approvalNum},#{batchNum},#{memo})
+	</insert>
+
+	<update id="updateByPK" parameterType="GoodInfo">
+		UPDATE tb_good_info SET
+		 	name=#{name}, 
+		 	abbreviation=#{abbreviation},
+		 	origin=#{origin}, 
+		 	units=#{units}, 
+		 	pack=#{pack}, 
+		 	approval_num=#{approvalNum}, 
+		 	batch_num=#{batchNum}, 
+		 	memo=#{memo} 
+		WHERE
+			id=#{id}
+	</update>
+
+	<delete id="deleteByPK">
+		DELETE FROM tb_good_info WHERE id=#{id}
+	</delete>
+
+	<select id="selectByPK" resultMap="goodInfoResultMap">
+		<include refid="select_good_info" />
+		WHERE id = #{id}
+	</select>
+
+	<select id="selcetByName" resultMap="goodInfoResultMap">
+		<include refid="select_good_info" />
+		WHERE name = #{name}
+	</select>
+	
+	<select id="countAllByNameOrAbbreviation" resultType="int">
+		SELECT COUNT(*) FROM tb_good_info
+		<where>
+			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+		</where>
+	</select>
+
+	<select id="selectAllByNameOrAbbreviation" resultMap="goodInfoResultMap">
+		<include refid="select_good_info" />
+		<where>
+			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+		</where>
+		LIMIT #{offset}, #{size}
+	</select>
+
+	<!-- goodInfo -->
+	<resultMap type="GoodInfo" id="goodInfoResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="abbreviation" column="abbreviation" />
+		<result property="origin" column="origin" />
+		<result property="units	" column="units" />
+		<result property="pack" column="pack" />
+		<result property="approvalNum" column="approval_num" />
+		<result property="batchNum" column="batch_num" />
+		<result property="memo" column="memo" />
+	</resultMap>
+
+</mapper>

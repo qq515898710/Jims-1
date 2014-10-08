@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.mo.open.common.repository.UserRepository">
+
+	<sql id="select_user">SELECT account, username, password, create_date, lastest_date FROM tb_user</sql>
+
+	<insert id="insert" parameterType="User">
+		INSERT INTO tb_user(account, username, password, create_date, lastest_date)
+		VALUE(#{account}, #{username},#{password},#{createDate}, #{lastestDate})
+	</insert>
+
+	<update id="updateByPK" parameterType="User">
+		UPDATE tb_user SET
+			username=#{username},
+			password=#{password},
+			create_date=#{createDate},
+			lastest_date=#{lastestDate}
+		WHERE
+			account=#{account}
+	</update>
+
+	<delete id="deleteByPK">
+		DELETE FROM tb_user WHERE account=#{account}
+	</delete>
+
+	<select id="selectByPK" resultMap="userResultMap">
+		<include refid="select_user" />
+		WHERE account = #{account}
+	</select>
+
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_user
+		<where>
+			<if test="name != null and name != ''">account LIKE CONCAT('%', #{account},'%')</if>
+			<if test="username != null and username != ''">AND username LIKE CONCAT('%', #{username}, '%')</if>
+		</where>
+	</select>
+
+	<select id="selectAll" resultMap="userResultMap">
+		<include refid="select_user" />
+		<where>
+			<if test="name != null and name != ''">account LIKE CONCAT('%', #{account},'%')</if>
+			<if test="username != null and username != ''">AND username LIKE CONCAT('%', #{username}, '%')</if>
+		</where>
+		LIMIT #{offset}, #{size}
+	</select>
+	
+	<select id="selectUserByAccountAndPassword" resultMap="userResultMap">
+		<include refid="select_user" />
+		 WHERE account = #{account} AND password = #{password}
+	</select>
+
+	<!-- user -->
+	<resultMap type="User" id="userResultMap">
+		<id property="account" column="account" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="createDate" column="create_date" />
+		<result property="lastestDate" column="lastest_date" />
+	</resultMap>
+
+	<!-- <collection property="tbUserLog" ofType="TbUserLog"> -->
+	<!-- <id property="id" column="id"/> -->
+	<!-- <result property="name" column="name"/> -->
+	<!-- <result property="time" column="time"/> -->
+	<!-- </collection> -->
+	<!-- <collection property="tbSell" ofType="TbSell"> -->
+	<!-- <id property="id" column="id"/> -->
+	<!-- <result property="gid" column="gid"/> -->
+	<!-- <result property="cid" column="cid"/> -->
+	<!-- <result property="uid" column="uid"/> -->
+	<!-- <result property="unit_cost" column="unit_cost"/> -->
+	<!-- <result property="amount" column="amount"/> -->
+	<!-- <result property="sum" column="sum"/> -->
+	<!-- <result property="time" column="time"/> -->
+	<!-- <result property="clearing_form" column="clearing_form"/> -->
+	<!-- <result property="headler" column="headler"/> -->
+	<!-- </collection> -->
+	<!-- <collection property="tbSellReturn" ofType="TbSellReturn"> -->
+	<!-- <id property="id" column="id"/> -->
+	<!-- <result property="gid" column="gid"/> -->
+	<!-- <result property="cid" column="cid"/> -->
+	<!-- <result property="uid" column="uid"/> -->
+	<!-- <result property="unit_cost" column="unit_cost"/> -->
+	<!-- <result property="amount" column="amount"/> -->
+	<!-- <result property="sum" column="sum"/> -->
+	<!-- <result property="time" column="time"/> -->
+	<!-- <result property="clearing_form" column="clearing_form"/> -->
+	<!-- <result property="headler" column="headler"/> -->
+	<!-- </collection> -->
+	<!-- <collection property="tbStock" ofType="TbStock"> -->
+	<!-- <id property="id" column="id"/> -->
+	<!-- <result property="gid" column="gid"/> -->
+	<!-- <result property="cid" column="cid"/> -->
+	<!-- <result property="uid" column="uid"/> -->
+	<!-- <result property="variety_amount" column="variety_amount"/> -->
+	<!-- <result property="unit_cost" column="unit_cost"/> -->
+	<!-- <result property="amount" column="amount"/> -->
+	<!-- <result property="sum" column="sum"/> -->
+	<!-- <result property="check_conclusion" column="check_conclusion"/> -->
+	<!-- <result property="time" column="time"/> -->
+	<!-- <result property="clearing_form" column="clearing_form"/> -->
+	<!-- <result property="headler" column="headler"/> -->
+	<!-- </collection> -->
+	<!-- <collection property="tbStockReturn" ofType="TbStockReturn"> -->
+	<!-- <id property="id" column="id"/> -->
+	<!-- <result property="gid" column="gid"/> -->
+	<!-- <result property="cid" column="cid"/> -->
+	<!-- <result property="uid" column="uid"/> -->
+	<!-- <result property="variety_amount" column="variety_amount"/> -->
+	<!-- <result property="unit_cost" column="unit_cost"/> -->
+	<!-- <result property="amount" column="amount"/> -->
+	<!-- <result property="sum" column="sum"/> -->
+	<!-- <result property="check_conclusion" column="check_conclusion"/> -->
+	<!-- <result property="time" column="time"/> -->
+	<!-- <result property="clearing_form" column="clearing_form"/> -->
+	<!-- <result property="headler" column="headler"/> -->
+	<!-- </collection> -->
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.mo.jims.coop.repository.InventoryInfoRepository">
+
+	<sql id="select_inventory_info">
+		SELECT 
+			id,
+		 	name, 
+		 	abbreviation,
+		 	origin, 
+		 	specification, 
+		 	pack, 
+		 	units, 
+		 	unit_cost, 
+		 	amount, 
+		 	user_id 
+		FROM tb_inventory_info
+	</sql>
+
+	<insert id="insert" parameterType="InventoryInfo">
+		INSERT INTO tb_inventory_info(
+			id,
+		 	name, 
+		 	abbreviation,
+		 	origin, 
+		 	specification, 
+		 	pack, 
+		 	units, 
+		 	unit_cost, 
+		 	amount, 
+		 	user_id)
+		VALUE(#{id}, #{name},#{abbreviation},#{origin}, #{specification},
+			#{pack},#{units},#{unitCost},#{amount},#{user.account})
+	</insert>
+
+	<update id="updateByPK" parameterType="InventoryInfo">
+		UPDATE tb_inventory_info SET
+		 	name=#{name}, 
+		 	abbreviation=#{abbreviation},
+		 	origin=#{origin}, 
+		 	specification=#{specification}, 
+		 	pack=#{pack}, 
+		 	units=#{units}, 
+		 	unit_cost=#{unitCost}, 
+		 	amount=#{amount}, 
+		 	user_id=#{user.account},
+		WHERE
+			id=#{id}
+	</update>
+
+	<delete id="deleteByPK">
+		DELETE FROM tb_inventory_info WHERE id=#{id}
+	</delete>
+
+	<select id="selectByPK" resultMap="inventoryInfoResultMap">
+		<include refid="select_inventory_info" />
+		WHERE id = #{id}
+	</select>
+
+	<select id="selcetByName" resultMap="inventoryInfoResultMap">
+		<include refid="select_inventory_info" />
+		WHERE name = #{name}
+	</select>
+	
+	<select id="countAllByNameOrAbbreviation" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info
+		<where>
+			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+		</where>
+	</select>
+
+	<select id="selectAllByNameOrAbbreviation" resultMap="inventoryInfoResultMap">
+		<include refid="select_inventory_info" />
+		<where>
+			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+		</where>
+		LIMIT #{offset}, #{size}
+	</select>
+
+	<!-- inventoryInfo -->
+	<resultMap type="InventoryInfo" id="inventoryInfoResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="abbreviation" column="abbreviation" />
+		<result property="origin" column="origin" />
+		<result property="specification" column="specification" />
+		<result property="pack" column="pack" />
+		<result property="units" column="units" />
+		<result property="unitCost" column="unit_cost" />
+		<result property="amount" column="amount" />
+		<association property="user"  javaType="User">
+			<id property="account" column="user_id"/>
+			<result property="username" column="username"/>
+		</association>
+	</resultMap>
+
+</mapper>

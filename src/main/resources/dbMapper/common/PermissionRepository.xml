@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.mo.open.common.repository.PermissionRepository">
+
+	<sql id="select_permission">SELECT id, name, description FROM tb_permission</sql>
+	
+	<insert id="insert" parameterType="Permission" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO tb_permission (name, description)
+		VALUE(#{name},#{description})
+	</insert>
+	
+	<update id="updateByPK" parameterType="Permission">
+		UPDATE tb_permission SET 
+			name=#{name},
+			description=#{description}
+		WHERE 
+			id=#{id}
+	</update>
+	
+	<delete id="deleteByPK" >
+		DELETE FROM tb_permission WHERE id=#{id}
+	</delete>
+	
+	<select id="selectByPK" resultMap="permissionResultMap">
+		<include refid="select_permission"/>
+		WHERE id = #{id}
+	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_permission
+	</select>
+	
+	<select id="selectAll" resultMap="permissionResultMap">
+		<include refid="select_permission"/>
+		ORDER BY id DESC
+	</select>
+	
+	<!-- permission -->
+	<resultMap type="Permission" id="permissionResultMap">
+		<id property="id" column="id" />
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+	</resultMap>
+	
+</mapper>

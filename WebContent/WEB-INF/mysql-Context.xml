@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+		
+	<!-- 使用覆写的类来读取配置文件 -->
+	<bean class="org.mo.open.common.util.EncryptPropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:configs/dev.properties" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="mysqltransactionManager" />
+
+	<!-- myBatis SqlSessionFactory -->
+	<bean id="mysqlSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="druid" />
+		<!--实体bean的映射文件 -->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:dbMapper/coop/*.xml</value>
+				<value>classpath*:dbMapper/common/*.xml</value>
+			</list>
+		</property>
+		<!-- 读取mybatis配置 -->
+		<property name="configLocation" value="classpath:configs/mybatis-config.xml"/>
+<!-- 		<property name="configLocation" value="/WEB-INF/mybatis-config.xml"/> -->
+		<!-- 扫描coop,common实体bean -->
+		<property name="typeAliasesPackage" value="org.mo.jims.coop.entity;org.mo.open.common.entity;" />
+	</bean>
+
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	    <property name="sqlSessionFactoryBeanName" value="mysqlSqlSessionFactory"></property>
+	    <!-- repository类 -->
+		<property name="basePackage" value="org.mo.jims.coop.repository;org.mo.open.common.repository;" />
+	</bean>
+
+	<bean id="mysqltransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="druid" />
+	</bean>
+
+	<import resource="dataSource-Context.xml" />
+</beans>

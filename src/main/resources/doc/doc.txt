@@ -1,0 +1,64 @@
+配置说明
+eclipse luna
+tomcat 7.0.55
+JDK 7
+mysql 5.0
+
+=========================================
+添加自定义的pager标签,和添加user表的一个属性(create_date)(2014-10-1)
+
+============================================
+openssl实现HTTPS协议(2014-9-20)
+------------------------------------------------------------------------------------
+下载地址http://dl.pconline.com.cn/download/355862-1.html
+参考配置http://blog.csdn.net/zklxuankai/article/details/8155490
+http://blog.csdn.net/sunyujia/article/details/3017405
+----------------------------------------------------------------------
+试了一个天,终于这次成功,虽然没改什么配置,用了他这个网站默认的参数
+http://bewithme.iteye.com/blog/1687516
+-------------------------------------------------------------------------
+简单做笔记
+修改D:\2tools\apache-tomcat-7.0.55-windows-x86\conf.server.xml
+
+    <Connector port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
+               maxThreads="150" SSLEnabled="true" scheme="https" secure="true" 
+               clientAuth="false"  
+			   keystoreFile="D:/2tools/apache-tomcat-7.0.55-windows-x86/conf/ssl/serverStore"  
+			   keystorePass="p@ssw0rd888168" 
+			   truststoreFile="D:/2tools/apache-tomcat-7.0.55-windows-x86/conf/ssl/rootStore" 
+			   truststorePass="p@ssw0rd888168" sslProtocol="TLS" />
+			   
+=========================================================
+绘制了用户和管理员的用例图(2014-9-19)
+----------------------------------------------------------------------------
+由于学校的垃圾网络,所以没更新到git上
+
+======================================================
+生成二维码和条形码(2014-9-17)
+-----------------------------------------------------------------------------------------
+参考链接http://blog.csdn.net/feiyu84/article/details/9089497
+http://www.cnblogs.com/jtmjx/archive/2012/06/18/2545209.html
+----------------------------------------------------------------------------------
+1.JS生成二维码
+使用jquery-qrcode生成二维码
+先简单说一下jquery-qrcode，这个开源的三方库（可以从https://github.com/jeromeetienne/jquery-qrcode 获取），
+qrcode.js 是实现二维码数据计算的核心类，
+jquery.qrcode.js 是把它用jquery方式封装起来的，用它来实现图形渲染，其实就是画图（支持canvas和table两种方式）
+
+=================================================
+关于powerdesigner学习教程(2014-9-16)
+http://www.cnblogs.com/huangcong/archive/2010/06/14/1757957.html
+----------------------------------------------------------------------------
+在powerdesigner 设置约束是点击key那里...
+
+=======================================
+本系统加强了对数据库连接加密（2014-9-15）
+--------------------------------------------------------------------------------
+1在/Jims/src/test/java/org/mo/open/common/util/DESUtilsTest.java，
+可以看到原本的数据库连接的帐号和密码
+--------------------------------------------------------------------------
+2默认帐号密码是root、123456，基于第一步中，运行测试类获取加密的帐号和密码
+修改/Jims/src/main/resources/configs/dev.properties 文件的帐号和密码
+一定要填写加密后的帐号和密码，否则连接不到。
+
+
