@@ -32,7 +32,7 @@ public class User implements Serializable {
 
 	private Date createDate;
 
-	private Date lastestDate;
+	private Date latestDate;
 
 	private List<Role> role;
 
@@ -59,7 +59,7 @@ public class User implements Serializable {
 		this.username = username;
 		this.password = password;
 		this.createDate = createDate;
-		this.lastestDate = lastestDate;
+		this.latestDate = lastestDate;
 	}
 
 	public java.lang.String getAccount() {
@@ -94,12 +94,12 @@ public class User implements Serializable {
 		this.createDate = createDate;
 	}
 
-	public Date getLastestDate() {
-		return lastestDate;
+	public Date getLatestDate() {
+		return latestDate;
 	}
 
-	public void setLastestDate(Date lastestDate) {
-		this.lastestDate = lastestDate;
+	public void setLatestDate(Date latestDate) {
+		this.latestDate = latestDate;
 	}
 
 	public List<Role> getRole() {

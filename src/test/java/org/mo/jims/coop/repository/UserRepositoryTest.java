@@ -64,13 +64,13 @@ public class UserRepositoryTest extends BaseTest {
 	@Test
 	public void testInsert() {
 		tbUser = new User();
-//		for (int i = 1; i < 30; i++) {
-//			tbUser.setAccount("name" + i);
-//			tbUser.setUsername("uname" + i);
-//			tbUser.setPassword("123465");
-//			tbUser.setCreateDate(new Date(System.currentTimeMillis()));
-//			userRepository.insert(tbUser);
-//		}
+		for (int i = 1; i < 30; i++) {
+			tbUser.setAccount("name" + i);
+			tbUser.setUsername("uname" + i);
+			tbUser.setPassword("123465");
+			tbUser.setCreateDate(new Date(System.currentTimeMillis()));
+			userRepository.insert(tbUser);
+		}
 
 	}
 

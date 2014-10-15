@@ -108,14 +108,15 @@
              <tr> 
                <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
                <td >${ status.index + 1}</td> 
-               <td ><a href="#">${userlist.name}</a></td> 
+               <td ><a href="#">${userlist.account}</a></td> 
                <td>${userlist.username}</td>
                <td><fmt:formatDate value="${userlist.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>  </td> 
                <td><span class="label label-sm label-warning">
-                 <c:choose>
-                   <c:when test="${userlist.tbUserRole.id eq 1}">管理员</c:when>
-                   <c:when test="${userlist.tbUserRole.id eq 2}">操作员</c:when>
-                 </c:choose></span>
+<%--                  <c:choose> --%>
+<%--                    <c:when test="${userlist.tbUserRole.id eq 1}">管理员</c:when> --%>
+<%--                    <c:when test="${userlist.tbUserRole.id eq 2}">操作员</c:when> --%>
+<%--                  </c:choose> --%>
+                 </span>
                </td> 
                <td> 
                 <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
