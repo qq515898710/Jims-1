@@ -1,4 +1,4 @@
-package org.mo.jims.coop.controller;
+package org.mo.open.common.controller;
 
 import javax.annotation.Resource;
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/coop/sys/")
+@RequestMapping("/common/sys/")
 public class UserController {
 
 	private UserService userService;
@@ -32,7 +32,7 @@ public class UserController {
 		model.put("baseActive", "sysManage");
 		model.put("active", "CaoZuoYuanGuanLi");
 		model.put("allUserInfo", allUserInfo);
-		return new ModelAndView("coop/sysManage/CaoZuoYuanGuanLi", model);
+		return new ModelAndView("common/sysManage/CaoZuoYuanGuanLi", model);
 	}
 
 	@RequestMapping(value = "CaoZuoYuanGuanLi.html", method = RequestMethod.GET, produces = "application/json")

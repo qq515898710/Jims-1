@@ -36,7 +36,7 @@
        </ul></li> 
       <li id="sysManage"><a href="#" class="dropdown-toggle"> <i class="icon-tag"></i> <span class="menu-text"> <%=configBundle.getString("sysManage") %> </span> <b class="arrow icon-angle-down"></b> </a> 
        <ul class="submenu"> 
-        <li id="CaoZuoYuanGuanLi"><a href="coop/sys/caozuoyuanguanli.html/1/10"> <i class="icon-double-angle-right"></i> <%=configBundle.getString("CaoZuoYuanGuanLi") %> </a></li> 
+        <li id="CaoZuoYuanGuanLi"><a href="common/sys/caozuoyuanguanli.html/1/10"> <i class="icon-double-angle-right"></i> <%=configBundle.getString("CaoZuoYuanGuanLi") %> </a></li> 
         <li id="GengGaiMiMa"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("GengGaiMiMa") %> </a></li> 
         <li id="QuanXianGuanLi"><a href="javascript:void()"> <i class="icon-double-angle-right"></i> <%=configBundle.getString("QuanXianGuanLi") %> </a></li> 
        </ul></li> 

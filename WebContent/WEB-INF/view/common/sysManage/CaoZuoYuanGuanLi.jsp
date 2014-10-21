@@ -56,7 +56,7 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="coop/sys/IIk15dX0+6BqWuCaUE0kEh8kB9Ww/4zb.html/1/10">操作员管理</a></li> 
+       <li><a href="common/sys/caozuoyuanguanli.html/1/10">操作员管理</a></li> 
       </ul> 
       <!-- .breadcrumb --> 
       <!-- 可添加div--> 
@@ -90,7 +90,7 @@
             <tags:pager pagerRange="6"  totalElement="${allUserInfo.totalElement }" pageSize="${allUserInfo.pageSize}"  totalPage="${allUserInfo.totalPage}" currentPage="${allUserInfo.currentPage}" formId="queryForm"></tags:pager>
           </div><!--.row  -->
           <!-- 显示列表数据 --> 
-          <form action="coop/sys/caozuoyuanguanli.html" id="queryform" method="get">
+          <form action="common/sys/caozuoyuanguanli.html" id="queryform" method="get">
             <table id="sample-table-2" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
              <thead> 
               <tr role="row"> 
