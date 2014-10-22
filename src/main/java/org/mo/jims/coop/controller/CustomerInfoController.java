@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/coop/")
-public class BaseController {
+@RequestMapping("/")
+public class CustomerInfoController {
 
-	@RequestMapping(value = "cZKs8DCjl7PhWwE5HP9FeA==.html", method = RequestMethod.GET)
+	@RequestMapping(value = "kehuguanli.html", method = RequestMethod.GET)
 	public ModelAndView KeHuGuanLi(ModelMap model) {
 		model.put("baseActive", "baseManage");
 		model.put("active", "KeHuGuanLi");

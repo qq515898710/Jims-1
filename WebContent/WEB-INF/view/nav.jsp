@@ -4,7 +4,7 @@
    <ul class="nav nav-list"> 
       <li id="baseManage"><a href="#" class="dropdown-toggle"> <i class="icon-dashboard"></i> <span class="menu-text"> <%=configBundle.getString("baseManage") %></span><b class="arrow icon-angle-down"></b> </a> 
        <ul class="submenu"> 
-        <li id="KeHuGuanLi"><a href="coop/cZKs8DCjl7PhWwE5HP9FeA==.html"> <i class="icon-double-angle-right"></i><%=configBundle.getString("KeHuGuanLi") %> </a></li> 
+        <li id="KeHuGuanLi"><a href="kehuguanli.html"> <i class="icon-double-angle-right"></i><%=configBundle.getString("KeHuGuanLi") %> </a></li> 
         <li id="ShangPinGuanLi"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("ShangPinGuanLi") %> </a></li> 
         <li id="GongYingShangGuanLi"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("GongYingShangGuanLi") %> </a></li> 
        </ul></li> 
@@ -36,7 +36,7 @@
        </ul></li> 
       <li id="sysManage"><a href="#" class="dropdown-toggle"> <i class="icon-tag"></i> <span class="menu-text"> <%=configBundle.getString("sysManage") %> </span> <b class="arrow icon-angle-down"></b> </a> 
        <ul class="submenu"> 
-        <li id="CaoZuoYuanGuanLi"><a href="common/sys/caozuoyuanguanli.html/1/10"> <i class="icon-double-angle-right"></i> <%=configBundle.getString("CaoZuoYuanGuanLi") %> </a></li> 
+        <li id="CaoZuoYuanGuanLi"><a href="caozuoyuanguanli.html/1/10"> <i class="icon-double-angle-right"></i> <%=configBundle.getString("CaoZuoYuanGuanLi") %> </a></li> 
         <li id="GengGaiMiMa"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("GengGaiMiMa") %> </a></li> 
         <li id="QuanXianGuanLi"><a href="javascript:void()"> <i class="icon-double-angle-right"></i> <%=configBundle.getString("QuanXianGuanLi") %> </a></li> 
        </ul></li> 

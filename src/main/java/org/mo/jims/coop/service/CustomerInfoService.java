@@ -20,9 +20,6 @@ public class CustomerInfoService {
 	public CustomerInfo getCustomerInfoByName(String name) {
 		CustomerInfo selcetByName = null;
 		selcetByName = customerInfoRepository.selcetByName(name);
-		if (selcetByName == null) {
-			return null;
-		}
 		return selcetByName;
 	}
 	
