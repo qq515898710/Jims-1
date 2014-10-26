@@ -41,6 +41,7 @@ public class CustomerInfoServiceTest extends BaseTest {
 
 	@Test
 	public void testSave() {
+		CustomerInfo tbCustomerInfo  = null;
 		String cname="东莞理工学院城市学院";
 		String abbreviation="城院";
 		String address="广东东莞";
@@ -52,8 +53,10 @@ public class CustomerInfoServiceTest extends BaseTest {
 		String email="mo@163.com";
 		String depositBank="东莞银行";
 		String accountBank="5345 3453 3453 6565";
-		CustomerInfo tbCustomerInfo = new CustomerInfo( cname, abbreviation, address, postalCode, phone, fax, contacts, telephone, email, depositBank, accountBank);
-		customerInfoService.save(tbCustomerInfo);
+		for(int i=1;i<20;i++){
+			tbCustomerInfo = new CustomerInfo( cname, abbreviation+"i", address, postalCode, phone, fax, contacts, telephone, email, depositBank, accountBank);
+			customerInfoService.save(tbCustomerInfo);
+		}
 	}
 
 	@Test

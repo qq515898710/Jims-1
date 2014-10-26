@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/jspf/taglibs.jspf" %>
 <jsp:include page="/WEB-INF/view/header.jsp"></jsp:include> 
   <div class="main-container" id="main-container"> 
    <script type="text/javascript">
@@ -55,15 +55,9 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="coop/KeHuGuanLi.html">客户信息管理</a></li> 
+       <li><a href="coop/kehuguanli.html/1/10">客户信息管理</a></li> 
       </ul> 
-      <!-- .breadcrumb --> 
-      <div class="nav-search" id="nav-search"> 
-       <form class="form-search"> 
-        <span class="input-icon"> <input type="text" placeholder="请输入查询的内容" class="nav-search-input" id="nav-search-input" autocomplete="off" /> <i class="icon-search nav-search-icon"></i> </span> 
-       </form> 
-      </div> 
-      <!-- #nav-search --> 
+      <!-- .breadcrumb -->
      </div> 
      <div class="page-content"> 
       <div class="row"> 
@@ -79,264 +73,58 @@
           所有信息 
         </div> 
         <div class="table-responsive"> 
-         <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid"> 
-          <!-- 显示列表数据 --> 
-          <table id="sample-table-2" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
-           <thead> 
-            <tr role="row"> 
-             <th class="center sorting_disabled" role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label> </th> 
-             <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 163px;" aria-sort="descending" aria-label="Domain: activate to sort column ascending">Domain</th> 
-             <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 122px;" aria-label="Price: activate to sort column ascending">Price</th> 
-             <th class="hidden-480 sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 133px;" aria-label="Clicks: activate to sort column ascending">Clicks</th> 
-             <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 193px;" aria-label="Update: activate to sort column ascending"> <i class="icon-time bigger-110 hidden-480"></i> Update </th> 
-             <th class="hidden-480 sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 170px;" aria-label="Status: activate to sort column ascending">Status</th> 
-             <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label=""></th> 
-            </tr> 
-           </thead> 
-           <tbody role="alert" aria-live="polite" aria-relevant="all"> 
-            <tr class="odd"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">year.com</a></td> 
-             <td class="">$48</td> 
-             <td class="hidden-480">3,990</td> 
-             <td class="">Feb 15</td> 
-             <td class="hidden-480 "><span class="label label-sm label-warning">Expiring</span></td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-            <tr class="even"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">view.com</a></td> 
-             <td class="">$45</td> 
-             <td class="hidden-480">4,100</td> 
-             <td class="">Mar 12</td> 
-             <td class="hidden-480 "><span class="label label-sm label-success">Registered</span></td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-            <tr class="odd"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">up.com</a></td> 
-             <td class="">$95</td> 
-             <td class="hidden-480">8,520</td> 
-             <td class="">Feb 22</td> 
-             <td class="hidden-480 "><span class="label label-sm label-info arrowed arrowed-righ">Sold</span> </td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-            <tr class="even"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">team.com</a></td> 
-             <td class="">$40</td> 
-             <td class="hidden-480">3,200</td> 
-             <td class="">Feb 09</td> 
-             <td class="hidden-480 "><span class="label label-sm label-inverse arrowed-in">Flagged</span> </td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-            <tr class="odd"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">sight.com</a></td> 
-             <td class="">$58</td> 
-             <td class="hidden-480">6,100</td> 
-             <td class="">Feb 19</td> 
-             <td class="hidden-480 "><span class="label label-sm label-inverse arrowed-in">Flagged</span> </td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-            <tr class="even"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">shine.com</a></td> 
-             <td class="">$25</td> 
-             <td class="hidden-480">2,200</td> 
-             <td class="">Apr 01</td> 
-             <td class="hidden-480 "><span class="label label-sm label-inverse arrowed-in">Flagged</span> </td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-            <tr class="odd"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">share.com</a></td> 
-             <td class="">$30</td> 
-             <td class="hidden-480">3,200</td> 
-             <td class="">Feb 11</td> 
-             <td class="hidden-480 "><span class="label label-sm label-info arrowed arrowed-righ">Sold</span> </td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-            <tr class="even"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">rise.com</a></td> 
-             <td class="">$42</td> 
-             <td class="hidden-480">3,900</td> 
-             <td class="">Feb 01</td> 
-             <td class="hidden-480 "><span class="label label-sm label-info arrowed arrowed-righ">Sold</span> </td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-            <tr class="odd"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">right.com</a></td> 
-             <td class="">$50</td> 
-             <td class="hidden-480">4,400</td> 
-             <td class="">Apr 01</td> 
-             <td class="hidden-480 "><span class="label label-sm label-warning">Expiring</span></td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-            <tr class="even"> 
-             <td class="center"><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-             <td class=" sorting_1"><a href="#">pro.com</a></td> 
-             <td class="">moziqi</td> 
-             <td class="hidden-480">4,250</td> 
-             <td class="">Jan 21</td> 
-             <td class="hidden-480 "><span class="label label-sm label-success">Registered</span></td> 
-             <td class=" "> 
-              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-               <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-               <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-               <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-              </div> 
-              <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-               <div class="inline position-relative"> 
-                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                 <li><a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                 <li><a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                </ul> 
-               </div> 
-              </div> </td> 
-            </tr> 
-           </tbody> 
-          </table> 
-         </div> 
+         <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
+           <div class="row">
+            <tags:pager pagerRange="6"  totalElement="${allCustomerInfo.totalElement }" pageSize="${allCustomerInfo.pageSize}"  totalPage="${allCustomerInfo.totalPage}" currentPage="${allCustomerInfo.currentPage}" formId="queryForm"></tags:pager>
+          </div><!--.row  -->
+          <form action="coop/kehuguanli.html" id="queryform" method="get">
+            <!-- 显示列表数据 --> 
+            <table id="sample-table-2" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
+             <thead> 
+              <tr role="row"> 
+               <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label> </th> 
+               <th  role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 57px;" >序号</th>
+               <th  role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 122px;" >名称</th> 
+               <th role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 133px;" >地址</th> 
+               <th role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 193px;" > <i class="icon-time bigger-110 hidden-480"></i> 邮箱地址 </th> 
+               <th  role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 170px;" >联系电话 </th> 
+               <th  role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label=""></th> 
+              </tr> 
+             </thead> 
+             <tbody role="alert" aria-live="polite" aria-relevant="all">
+               <c:forEach items="${allCustomerInfo.content}" var="list" varStatus="status">
+                 <tr> 
+                 <td ><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
+                 <td >${ status.index + 1}</td> 
+                 <td >${list.name }</td> 
+                 <td >${list.address }</td> 
+                 <td >${list.email}</td> 
+                 <td ><span class="label label-sm label-success">${list.telephone }</span></td> 
+                 <td > 
+                  <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
+                   <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
+                   <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
+                   <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
+                  </div> 
+                  <div class="visible-xs visible-sm hidden-md hidden-lg"> 
+                   <div class="inline position-relative"> 
+                    <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
+                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
+                     <li><a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
+                     <li><a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
+                     <li><a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
+                    </ul> 
+                   </div> 
+                  </div> </td> 
+                </tr> 
+               </c:forEach>
+             </tbody> 
+            </table>
+           </form>
+           <div class="row">
+            <tags:pager pagerRange="6"  totalElement="${allCustomerInfo.totalElement }" pageSize="${allCustomerInfo.pageSize}"  totalPage="${allCustomerInfo.totalPage}" currentPage="${allCustomerInfo.currentPage}" formId="queryForm"></tags:pager>
+          </div><!--.row  -->
+         </div>
         </div> 
        </div> 
        <!-- /.col --> 

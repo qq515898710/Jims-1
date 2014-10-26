@@ -19,7 +19,7 @@ public class CustomerInfoController {
 
 	@RequestMapping(value = "kehuguanli.html/{page}/{size}", method = RequestMethod.GET)
 	public ModelAndView KeHuGuanLi(@PathVariable int page,
-			@PathVariable int size,ModelMap model) {
+			@PathVariable int size, ModelMap model) {
 		Page<CustomerInfo> allCustomerInfo = customerInfoService.getAllCustomerInfo(page, size);
 		model.put("baseActive", "baseManage");
 		model.put("active", "KeHuGuanLi");
