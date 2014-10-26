@@ -37,6 +37,21 @@ public class CustomerInfoService {
 		customerInfoPage.setContent(selectAllByNameOrAbbreviation);
 		return customerInfoPage;
 	}
+	
+	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+	public Page<CustomerInfo> getAllCustomerInfo(int page, int pageSize) {
+		Page<CustomerInfo> customerInfoPage = new Page<CustomerInfo>();
+		customerInfoPage.setTotalElement(customerInfoRepository.countAll(), pageSize);
+		if(customerInfoPage.getTotalElement() == 0){
+			return customerInfoPage;
+		}
+		customerInfoPage.setPageSize(pageSize);
+		customerInfoPage.setCurrentPage(page);
+		List<CustomerInfo> selectAllByNameOrAbbreviation = 
+				customerInfoRepository.selectAll((page - 1) * pageSize, pageSize);
+		customerInfoPage.setContent(selectAllByNameOrAbbreviation);
+		return customerInfoPage;
+	}
 
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public CustomerInfo getByPK(String id) {

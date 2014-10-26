@@ -63,12 +63,21 @@
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
 		</where>
 	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_customer_info
+	</select>
 
 	<select id="selectAllByNameOrAbbreviation" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
 		</where>
+		LIMIT #{offset}, #{size}
+	</select>
+	
+	<select id="selectAll" resultMap="customerInfoResultMap">
+		<include refid="select_customer_info" />
 		LIMIT #{offset}, #{size}
 	</select>
 

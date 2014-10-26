@@ -13,7 +13,12 @@ public interface CustomerInfoRepository extends BaseRepository<CustomerInfo, Str
 	public CustomerInfo selcetByName(@Param("name") String name);
 
 	public int countAllByNameOrAbbreviation(@Param("name") String param);
-
+	
+	public int countAll();
+	
 	public List<CustomerInfo> selectAllByNameOrAbbreviation(@Param("name") String param,
 			@Param("offset") int offset, @Param("size") int size);
+	
+	public List<CustomerInfo> selectAll(@Param("offset") int offset, @Param("size") int size);
+	
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/common/sys/")
+@RequestMapping("/")
 public class UserController {
 
 	private UserService userService;
