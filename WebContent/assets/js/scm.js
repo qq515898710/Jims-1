@@ -22,8 +22,41 @@ function toUtf8(str) {
 function gotoPage(pageIndex) {
 	var action = $('#queryform').attr('action');
 	var pageSize = $("#p_pageSizeSelect").val();
-	action += "/" + pageIndex + "/" + pageSize;
-	// alert(action);
-	$("#queryform").attr("action", action);
-	$("#queryform").submit();
+	$.ajax({
+				url : action,
+				type : 'get',
+				data : "page=" + pageIndex + "&size=" + pageSize,
+				aysnc : false,
+				success : function(msg) {
+					alert(msg.success);
+//					$.each(data.data.content, function(i, item) {  
+//			              $('#tb').append( '<tr>'
+//			            		  +'<td><label> <input type="checkbox" class="ace" /><span class="lbl"></span> </label></td>'
+//			            		  +'<td >'+item.id+'</td> '+'</tr>');
+//			            });
+				}
+			});
+	// var action = $('#queryform').attr('action');
+	// var pageSize = $("#p_pageSizeSelect").val();
+	// action += "/" + pageIndex + "/" + pageSize;
+	// // alert(action);
+	// $("#queryform").attr("action", action);
+	// $("#queryform").submit();
 }
+
+// 将一个表单的数据返回成JSON对象
+$.fn.serializeObject = function() {
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function() {
+		if (o[this.name]) {
+			if (!o[this.name].push) {
+				o[this.name] = [ o[this.name] ];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+};

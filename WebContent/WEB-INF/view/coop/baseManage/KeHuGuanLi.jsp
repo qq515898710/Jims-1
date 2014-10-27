@@ -74,9 +74,9 @@
         </div> 
         <div class="table-responsive"> 
          <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
-           <div class="row">
-            <tags:pager pagerRange="6"  totalElement="${allCustomerInfo.totalElement }" pageSize="${allCustomerInfo.pageSize}"  totalPage="${allCustomerInfo.totalPage}" currentPage="${allCustomerInfo.currentPage}" formId="queryForm"></tags:pager>
-          </div><!--.row  -->
+<!--            <div class="row"> -->
+<%--             <tags:pager pagerRange="6"  totalElement="${allCustomerInfo.totalElement }" pageSize="${allCustomerInfo.pageSize}"  totalPage="${allCustomerInfo.totalPage}" currentPage="${allCustomerInfo.currentPage}" formId="queryForm"></tags:pager> --%>
+<!--           </div>.row  -->
           <form action="coop/kehuguanli.html" id="queryform" method="get">
             <!-- 显示列表数据 --> 
             <table id="sample-table-2" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
@@ -91,39 +91,39 @@
                <th  role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label=""></th> 
               </tr> 
              </thead> 
-             <tbody role="alert" aria-live="polite" aria-relevant="all">
-               <c:forEach items="${allCustomerInfo.content}" var="list" varStatus="status">
-                 <tr> 
-                 <td ><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td> 
-                 <td >${ status.index + 1}</td> 
-                 <td >${list.name }</td> 
-                 <td >${list.address }</td> 
-                 <td >${list.email}</td> 
-                 <td ><span class="label label-sm label-success">${list.telephone }</span></td> 
-                 <td > 
-                  <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons"> 
-                   <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a> 
-                   <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a> 
-                   <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a> 
-                  </div> 
-                  <div class="visible-xs visible-sm hidden-md hidden-lg"> 
-                   <div class="inline position-relative"> 
-                    <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button> 
-                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close"> 
-                     <li><a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li> 
-                     <li><a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li> 
-                     <li><a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li> 
-                    </ul> 
-                   </div> 
-                  </div> </td> 
-                </tr> 
-               </c:forEach>
+             <tbody role="alert" aria-live="polite" aria-relevant="all"  id="tb">
+<%--                <c:forEach items="${allCustomerInfo.content}" var="list" varStatus="status"> --%>
+<!--                  <tr>  -->
+<!--                  <td ><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td>  -->
+<%--                  <td >${ status.index + 1}</td>  --%>
+<%--                  <td >${list.name }</td>  --%>
+<%--                  <td >${list.address }</td>  --%>
+<%--                  <td >${list.email}</td>  --%>
+<%--                  <td ><span class="label label-sm label-success">${list.telephone }</span></td>  --%>
+<!--                  <td >  -->
+<!--                   <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">  -->
+<!--                    <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a>  -->
+<!--                    <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a>  -->
+<!--                    <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a>  -->
+<!--                   </div>  -->
+<!--                   <div class="visible-xs visible-sm hidden-md hidden-lg">  -->
+<!--                    <div class="inline position-relative">  -->
+<!--                     <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button>  -->
+<!--                     <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">  -->
+<!--                      <li><a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li>  -->
+<!--                      <li><a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li>  -->
+<!--                      <li><a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li>  -->
+<!--                     </ul>  -->
+<!--                    </div>  -->
+<!--                   </div></td> -->
+<!--                 </tr> -->
+<%--                </c:forEach> --%>
              </tbody> 
             </table>
            </form>
-           <div class="row">
-            <tags:pager pagerRange="6"  totalElement="${allCustomerInfo.totalElement }" pageSize="${allCustomerInfo.pageSize}"  totalPage="${allCustomerInfo.totalPage}" currentPage="${allCustomerInfo.currentPage}" formId="queryForm"></tags:pager>
-          </div><!--.row  -->
+<!--            <div class="row"> -->
+<%--             <tags:pager pagerRange="6"  totalElement="${allCustomerInfo.totalElement }" pageSize="${allCustomerInfo.pageSize}"  totalPage="${allCustomerInfo.totalPage}" currentPage="${allCustomerInfo.currentPage}" formId="queryForm"></tags:pager> --%>
+<!--           </div>.row  -->
          </div>
         </div> 
        </div> 
@@ -136,13 +136,7 @@
     <!-- /.main-content --> 
     <script type="text/javascript">
 	jQuery(function($) {
-		
-		var oTable1 = $('#sample-table-2').dataTable( {
-		"aoColumns": [
-	      { "bSortable": false },
-	      null, null,null, null, null,
-		  { "bSortable": false }
-		] } );
+		gotoPage(1);
 		
 		$('table th input:checkbox').on('click' , function(){
 			var that = this;
