@@ -18,30 +18,56 @@ function toUtf8(str) {
 	}
 	return out;
 }
-// 分页caozuoyuanguanli.jsp
+//分页显示工具
 function gotoPage(pageIndex) {
 	var action = $('#queryform').attr('action');
-	var pageSize = $("#p_pageSizeSelect").val();
+	var pagerRange = 6;//
+	var pageSize =  $("#p_pageSizeSelect").val(); //获取每一页显示多少记录
+	var loc='<div class="col-sm-6"><div class="dataTables_paginate paging_bootstrap"><ul class="pagination">';
+	$('#tb').html("");
 	$.ajax({
 				url : action,
 				type : 'get',
 				data : "page=" + pageIndex + "&size=" + pageSize,
 				aysnc : false,
 				success : function(msg) {
-					alert(msg.success);
-//					$.each(data.data.content, function(i, item) {  
-//			              $('#tb').append( '<tr>'
-//			            		  +'<td><label> <input type="checkbox" class="ace" /><span class="lbl"></span> </label></td>'
-//			            		  +'<td >'+item.id+'</td> '+'</tr>');
-//			            });
+					$.each(msg.content, function(i, item) {
+			              $('#tb').append( '<tr>'
+			            		  +'<td><label> <input type="checkbox" class="ace" /><span class="lbl"></span> </label></td>'
+			            		  +'<td >'+item.id+'</td> '
+			            		  +'<td >'+item.name+'</td> '
+			            		  +'<td >'+item.address+'</td> '
+			            		  +'<td >'+item.email+'</td> '
+			            		  +'<td >'+item.phone+'</td> '
+			            		  +'<td >'+'<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">'
+			            		  				+'<a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i>'
+			            		  				+'<a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a>'
+			            		  				+'<a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a>'+'</td> '+'</tr>');
+			            });
+						var begin = Math.max(1, msg.currentPage - pagerRange/2 );
+						var end = Math.min(begin + (pagerRange - 1), msg.totalPage);
+						if(msg.currentPage !=1){
+							loc+='<li class="prev "><a href="javascript:gotoPage(1)"><i class=" icon-double-angle-left "></i></a></li><li class="prev "><a href="javascript:gotoPage('+(msg.currentPage - 1)+')"><i class=" icon-angle-left "></i></a></li>';
+						}else{
+							loc+='<li class="prev disabled"><a href="javascript:void(0)"><i class=" icon-double-angle-left "></i></a></li><li class="prev disabled"><a href="javascript:void(0)"><i class=" icon-angle-left "></i></a></li>';
+						}
+						for(var i = begin; i <= end; i++){
+							if(msg.currentPage == i){
+								loc+='<li class="active"><a href="javascript:void(0)">'+i+'</a></li>'
+							}else{
+								loc+='<li><a href="javascript:gotoPage('+i +')" >'+i+'</a></li>'
+							}
+						}
+						if(msg.currentPage!=msg.totalPage){
+							loc+='<li class="next"><a href="javascript:gotoPage('+(msg.currentPage + 1)+')"><i class="icon-angle-right "></i></a></li><li class="next "><a href="javascript:gotoPage('+msg.totalPage+')"><i class="icon-double-angle-right "></i></a></li>';
+						}else{
+							loc+='<li class="next disabled"><a href="javascript:void(0)"><i class="icon-angle-right "></i></a></li><li class="next disabled"><a href="javascript:void(0)"><i class="icon-double-angle-right "></i></a></li>';
+						}
+						loc+='</ul></div></div>';
+						$('#pages').html(loc);
+						$("#other").html('<label style="color:rgb(66, 139, 202)">共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
 				}
 			});
-	// var action = $('#queryform').attr('action');
-	// var pageSize = $("#p_pageSizeSelect").val();
-	// action += "/" + pageIndex + "/" + pageSize;
-	// // alert(action);
-	// $("#queryform").attr("action", action);
-	// $("#queryform").submit();
 }
 
 // 将一个表单的数据返回成JSON对象

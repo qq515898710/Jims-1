@@ -1,19 +1,14 @@
 package org.mo.jims.coop.controller;
 
-import java.io.IOException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.mo.jims.coop.entity.CustomerInfo;
 import org.mo.jims.coop.service.CustomerInfoService;
-import org.mo.open.common.util.ApplicationContextProvider;
-import org.mo.open.common.util.JSonUtil;
 import org.mo.open.common.util.Page;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;

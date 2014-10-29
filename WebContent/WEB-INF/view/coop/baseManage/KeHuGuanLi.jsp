@@ -55,7 +55,7 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="coop/kehuguanli.html/1/10">客户信息管理</a></li> 
+       <li><a href="coop/kehuguanli.html">客户信息管理</a></li> 
       </ul> 
       <!-- .breadcrumb -->
      </div> 
@@ -74,56 +74,34 @@
         </div> 
         <div class="table-responsive"> 
          <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
-<!--            <div class="row"> -->
-<%--             <tags:pager pagerRange="6"  totalElement="${allCustomerInfo.totalElement }" pageSize="${allCustomerInfo.pageSize}"  totalPage="${allCustomerInfo.totalPage}" currentPage="${allCustomerInfo.currentPage}" formId="queryForm"></tags:pager> --%>
-<!--           </div>.row  -->
-          <form action="coop/kehuguanli.html" id="queryform" method="get">
+            <div class="row" >
+            <div class="col-sm-6"><div id="pager"  ><label style="color:rgb(66, 139, 202)">显示 <select size="1" onchange="javascript:gotoPage(1)" id="p_pageSizeSelect">
+              <option value="10" selected="selected" >10</option>
+              <option value="25" >25</option>
+              <option value="50" >50</option>
+              <option value="100" >100</option></select>记录</label></div ><!--#page  -->
+            </div>
+            <div id="pages"></div>
+           </div><!--.row  -->
+          <form action="coop/pageOfCustomers" id="queryform" method="get">
             <!-- 显示列表数据 --> 
             <table id="sample-table-2" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
              <thead> 
               <tr role="row"> 
                <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label> </th> 
-               <th  role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 57px;" >序号</th>
-               <th  role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 122px;" >名称</th> 
-               <th role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 133px;" >地址</th> 
-               <th role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 193px;" > <i class="icon-time bigger-110 hidden-480"></i> 邮箱地址 </th> 
-               <th  role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 170px;" >联系电话 </th> 
-               <th  role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label=""></th> 
+               <th  role="columnheader"  rowspan="1" colspan="1" style="width: 20px;" >序号</th>
+               <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >名称</th> 
+               <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >地址</th> 
+               <th role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" > <i class="icon-time bigger-110 hidden-480"></i> 邮箱地址 </th> 
+               <th  role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" >联系电话 </th> 
+               <th  role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label="">操作</th> 
               </tr> 
              </thead> 
              <tbody role="alert" aria-live="polite" aria-relevant="all"  id="tb">
-<%--                <c:forEach items="${allCustomerInfo.content}" var="list" varStatus="status"> --%>
-<!--                  <tr>  -->
-<!--                  <td ><label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label></td>  -->
-<%--                  <td >${ status.index + 1}</td>  --%>
-<%--                  <td >${list.name }</td>  --%>
-<%--                  <td >${list.address }</td>  --%>
-<%--                  <td >${list.email}</td>  --%>
-<%--                  <td ><span class="label label-sm label-success">${list.telephone }</span></td>  --%>
-<!--                  <td >  -->
-<!--                   <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">  -->
-<!--                    <a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i> </a>  -->
-<!--                    <a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a>  -->
-<!--                    <a class="red" href="#"> <i class="icon-trash bigger-130"></i> </a>  -->
-<!--                   </div>  -->
-<!--                   <div class="visible-xs visible-sm hidden-md hidden-lg">  -->
-<!--                    <div class="inline position-relative">  -->
-<!--                     <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown"> <i class="icon-caret-down icon-only bigger-120"></i> </button>  -->
-<!--                     <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">  -->
-<!--                      <li><a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View"> <span class="blue"> <i class="icon-zoom-in bigger-120"></i> </span> </a></li>  -->
-<!--                      <li><a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit"> <span class="green"> <i class="icon-edit bigger-120"></i> </span> </a></li>  -->
-<!--                      <li><a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete"> <span class="red"> <i class="icon-trash bigger-120"></i> </span> </a></li>  -->
-<!--                     </ul>  -->
-<!--                    </div>  -->
-<!--                   </div></td> -->
-<!--                 </tr> -->
-<%--                </c:forEach> --%>
              </tbody> 
             </table>
            </form>
-<!--            <div class="row"> -->
-<%--             <tags:pager pagerRange="6"  totalElement="${allCustomerInfo.totalElement }" pageSize="${allCustomerInfo.pageSize}"  totalPage="${allCustomerInfo.totalPage}" currentPage="${allCustomerInfo.currentPage}" formId="queryForm"></tags:pager> --%>
-<!--           </div>.row  -->
+           <div class="row" ><div class="col-sm-6"  id="other"></div></div><!--.row  -->
          </div>
         </div> 
        </div> 
@@ -136,8 +114,9 @@
     <!-- /.main-content --> 
     <script type="text/javascript">
 	jQuery(function($) {
+		/* 获取数据 */
 		gotoPage(1);
-		
+		/* 复选框操作 */
 		$('table th input:checkbox').on('click' , function(){
 			var that = this;
 			$(this).closest('table').find('tr > td:first-child input:checkbox')
@@ -146,19 +125,6 @@
 				$(this).closest('tr').toggleClass('selected');
 			});
 		});
-		
-		$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-		function tooltip_placement(context, source) {
-			var $source = $(source);
-			var $parent = $source.closest('table')
-			var off1 = $parent.offset();
-			var w1 = $parent.width();
-			var off2 = $source.offset();
-			var w2 = $source.width();
-			if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-			return 'left';
-		}
-		
 	});
 </script> 
     <!-- 工具导入 --> 
