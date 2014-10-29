@@ -34,7 +34,7 @@ function gotoPage(pageIndex) {
 					$.each(msg.content, function(i, item) {
 			              $('#tb').append( '<tr>'
 			            		  +'<td><label> <input type="checkbox" class="ace" /><span class="lbl"></span> </label></td>'
-			            		  +'<td >'+item.id+'</td> '
+			            		  +'<td >'+(++i)+'</td> '
 			            		  +'<td >'+item.name+'</td> '
 			            		  +'<td >'+item.address+'</td> '
 			            		  +'<td >'+item.email+'</td> '

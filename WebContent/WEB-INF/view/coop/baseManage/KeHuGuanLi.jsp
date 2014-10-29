@@ -89,7 +89,7 @@
              <thead> 
               <tr role="row"> 
                <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label> </th> 
-               <th  role="columnheader"  rowspan="1" colspan="1" style="width: 20px;" >序号</th>
+               <th  role="columnheader"  rowspan="1" colspan="1" style="width: 50px;" >序号</th>
                <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >名称</th> 
                <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >地址</th> 
                <th role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" > <i class="icon-time bigger-110 hidden-480"></i> 邮箱地址 </th> 
@@ -116,6 +116,7 @@
 	jQuery(function($) {
 		/* 获取数据 */
 		gotoPage(1);
+		
 		/* 复选框操作 */
 		$('table th input:checkbox').on('click' , function(){
 			var that = this;
@@ -125,6 +126,7 @@
 				$(this).closest('tr').toggleClass('selected');
 			});
 		});
+		
 	});
 </script> 
     <!-- 工具导入 --> 
