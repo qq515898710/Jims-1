@@ -25,9 +25,8 @@
 <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
 <!-- 自定义css -->
 <link rel="stylesheet" href="assets/css/scm.css" />
-<script src="assets/js/ace-extra.min.js"></script>
 <script src="assets/js/jquery-2.0.3.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/ace-extra.min.js"></script>
 <script src="assets/js/typeahead-bs2.min.js"></script>
 <script src="assets/js/jquery-ui-1.10.3.full.min.js"></script>
 <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
@@ -35,6 +34,7 @@
 <script src="assets/js/ace.min.js"></script>
 <script src="assets/js/bootbox.min.js"></script>
 <script src="assets/js/jquery.lazyload.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
 <!-- 二维码js -->
 <script type="text/javascript" src="assets/js/jquery.qrcode.js"></script>
 <!-- 自定义js -->

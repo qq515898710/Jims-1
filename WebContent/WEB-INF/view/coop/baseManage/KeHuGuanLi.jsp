@@ -55,7 +55,7 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="coop/kehuguanli.html">客户信息管理</a></li> 
+       <li><a href="kehuguanli.html">客户信息管理</a></li> 
       </ul> 
       <!-- .breadcrumb -->
      </div> 
@@ -83,7 +83,7 @@
             </div>
             <div id="pages"></div>
            </div><!--.row  -->
-          <form action="coop/pageOfCustomers" id="queryform" method="get">
+          <form action="pageOfCustomers" id="queryform" method="get">
             <!-- 显示列表数据 --> 
             <table id="sample-table-2" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
              <thead> 

@@ -4,7 +4,7 @@
    <ul class="nav nav-list"> 
       <li id="baseManage"><a href="#" class="dropdown-toggle"> <i class="icon-dashboard"></i> <span class="menu-text"> <%=configBundle.getString("baseManage") %></span><b class="arrow icon-angle-down"></b> </a> 
        <ul class="submenu"> 
-        <li id="KeHuGuanLi"><a href="coop/kehuguanli.html"> <i class="icon-double-angle-right"></i><%=configBundle.getString("KeHuGuanLi") %> </a></li> 
+        <li id="KeHuGuanLi"><a href="kehuguanli.html"> <i class="icon-double-angle-right"></i><%=configBundle.getString("KeHuGuanLi") %> </a></li> 
         <li id="ShangPinGuanLi"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("ShangPinGuanLi") %> </a></li> 
         <li id="GongYingShangGuanLi"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("GongYingShangGuanLi") %> </a></li> 
        </ul></li> 
