@@ -63,11 +63,11 @@
       <div class="row"> 
        <div class="col-xs-12"> 
         <h3 class="header smaller lighter blue"> 
-          <button id="bt-add-dialog" class="btn btn-success" data-toggle="modal"  data-target="#add-dialog-message"><i class="icon-plus-sign align-top bigger-125"></i>添加 </button> 
+          <button id="bt-add-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#add-dialog-message"><i class="icon-plus-sign align-top bigger-125"></i>添加 </button> 
           <jsp:include page="KeHuGuanLi_add.jsp"></jsp:include>
-          <button id="bt-edit-dialog" class="btn btn-primary" data-toggle="modal"  data-target="#edit-dialog-message"><i class="icon-edit align-top bigger-125"></i>修改</button>
+          <button id="bt-edit-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#edit-dialog-message"><i class="icon-edit align-top bigger-125"></i>修改</button>
           <jsp:include page="KeHuGuanLi_edit.jsp"></jsp:include> 
-          <button id="bt-delete-dialog" class="btn btn-danger" data-toggle="modal"  data-target="#delete-dialog-message"><i class="icon-trash align-top bigger-125"></i>删除 </button> 
+          <button id="bt-delete-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#delete-dialog-message"><i class="icon-trash align-top bigger-125"></i>删除 </button> 
          <jsp:include page="KeHuGuanLi_delete.jsp"></jsp:include> </h3> 
         <div class="table-header">
           所有信息 
@@ -75,7 +75,7 @@
         <div class="table-responsive"> 
          <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
             <div class="row" >
-            <div class="col-sm-6"><div id="pager"  ><label style="color:rgb(66, 139, 202)">显示 <select size="1" onchange="javascript:gotoPage(1)" id="p_pageSizeSelect">
+            <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1)" id="p_pageSizeSelect">
               <option value="10" selected="selected" >10</option>
               <option value="25" >25</option>
               <option value="50" >50</option>

@@ -5,7 +5,7 @@
     <div class="modal-content"> 
      <div class="modal-header"> 
       <button type="button" class="close" data-dismiss="modal" id="close"> <span aria-hidden="true">&times;</span><span class="sr-only">x</span></button> 
-      <h4 class="modal-title" id="myModalLabel"> <i class="icon-plus-sign"></i>&nbsp;添加客户信息 </h4> 
+      <h6 class="modal-title" id="myModalLabel"> <i class="icon-plus-sign"></i>&nbsp;添加客户信息 </h6> 
      </div>
      <div class="modal-body">
       <form id="add-form-dialog" class="form-horizontal" role="form">
@@ -84,8 +84,8 @@
       </form> 
      </div> 
      <div class="modal-footer"> 
-      <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel"><i class="icon-remove bigger-110"></i>取消</button> 
-      <button type="button" class="btn btn-primary" id="ok" autocomplete="off"  data-loading-text="正在处理中..." ><i class="icon-ok bigger-110" ></i>确定</button> 
+      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="cancel"><i class="icon-remove bigger-110"></i>取消</button> 
+      <button type="button" class="btn btn-primary btn-sm"  id="ok" autocomplete="off"  data-loading-text="正在处理中..." ><i class="icon-ok bigger-110" ></i>确定</button> 
      </div> 
     </div> 
    </div> 

@@ -65,7 +65,7 @@ function gotoPage(pageIndex) {
 						}
 						loc+='</ul></div></div>';
 						$('#pages').html(loc);
-						$("#other").html('<label style="color:rgb(66, 139, 202)">共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
+						$("#other").html('<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
 				}
 			});
 }
