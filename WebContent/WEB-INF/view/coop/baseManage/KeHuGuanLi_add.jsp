@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.UUID"%>
+<%
+	String token = UUID.randomUUID().toString().replaceAll("-", "");
+	session.setAttribute("token", token);
+%>
 <div id="add-dialog-message" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
    <div class="modal-dialog"> 
     <div class="modal-content"> 
@@ -66,7 +69,7 @@
        <div class="form-group"> 
         <label class="col-sm-3 control-label no-padding-right font" for="depositBank"> 开户行： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="accountBank" class="col-xs-8" /><div id="accountBank-tip"></div>
+         <input type="text" id="depositBank" class="col-xs-8" /><div id="depositBank-tip"></div>
         </div> 
        </div> 
        <div class="form-group"> 
@@ -74,11 +77,12 @@
         <div class="col-sm-9"> 
          <input type="text" id="accountBank" class="col-xs-8" /><div id="accountBank-tip"></div>
         </div> 
-       </div> 
+       </div>
+       <input type="hidden" name="formtoken"  value="<%=token%>"  id="formtoken">
        <!-- 警告框 -->
-       <div class="hide" id="warning-block" style="background-color:#fcf8e3;color: #a94442">
+       <div class="hide" id="warning-block" style="background-color:#fcf8e3;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <div id="content" style="text-align: center;">添加记录失败 </div>
+          <div id="content" style="text-align: center;"></div>
         <span class="sr-only">Close</span>
        </div>
       </form> 
@@ -150,7 +154,7 @@
  		  var $btn = $(this).button('loading');
 	        $.ajax({
 	            type: "POST",
-	            url: "addCoustomer",
+	            url: "coop/addCoustomer",
 	            contentType: "application/json",
 	            // 必须有
 	            dataType: "json",
@@ -166,15 +170,59 @@
 	                'telephone': $("#telephone").val(),
 	                'email': $("#email").val(),
 	                'depositBank': $("#depositBank").val(),
-	                'accountBank': $("#accountBank").val()
+	                'accountBank': $("#accountBank").val(),
+	                'formtoken': $("#formtoken").val()
 	            }),
 	            async: true,
 	            success: function(data) {
-		            alert(data.name);
-		            alert(data.abbreviation);
-		            alert(data.address);
-		            alert(data.postalCode);
-	                $("#warning-block").removeClass("hide");
+		            if(data.tip != null){
+					    $("#content").html(data.tip);
+		                $("#warning-block").css('color','red').removeClass("hide");
+			        }
+		            else{
+		            	if(data.success != null){
+			            	 $("#content").html('添加信息成功<div style="background-color:#fcf8e3;color: green;"><a href="coop/kehuguanli.html"><span id="mysecond">'+5+'</span>秒自动跳转</a><div>');
+			            	 countDown(5, "coop/kehuguanli.html");
+			            	$("#warning-block").css('color','green').removeClass("hide");
+				        }
+				        else{
+				            if(data.name != null){
+				            	$("#name-tip").html('<span class="formtips onError" style="font-size:30%">' + data.name + '</span>');
+					        }
+					        if(data.abbreviation != null){
+					        	$("#abbreviation-tip").html('<span class="formtips onError" style="font-size:30%">' + data.abbreviation + '</span>');
+						    }
+					        if(data.address != null){
+					        	$("#address-tip").html('<span class="formtips onError" style="font-size:30%">' + data.address + '</span>');
+						    }
+					        if(data.postalCode != null){
+					        	$("#postalCode-tip").html('<span class="formtips onError" style="font-size:30%">' + data.postalCode + '</span>');
+						    }
+					        if(data.phone != null){
+					        	$("#phone-tip").html('<span class="formtips onError" style="font-size:30%">' + data.phone + '</span>');
+						    }
+					        if(data.fax != null){
+					        	$("#fax-tip").html('<span class="formtips onError" style="font-size:30%">' + data.fax + '</span>');
+						    }
+					        if(data.contacts != null){
+					        	$("#contacts-tip").html('<span class="formtips onError" style="font-size:30%">' + data.contacts + '</span>');
+						    }
+					        if(data.telephone != null){
+					        	$("#telephone-tip").html('<span class="formtips onError" style="font-size:30%">' + data.telephone + '</span>');
+						    }
+					        if(data.email != null){
+					        	$("#email-tip").html('<span class="formtips onError" style="font-size:30%">' + data.email + '</span>');
+						    }
+					        if(data.depositBank != null){
+					        	$("#depositBank-tip").html('<span class="formtips onError" style="font-size:30%">' + data.depositBank + '</span>');
+						    }
+					        if(data.accountBank != null){
+					        	$("#accountBank-tip").html('<span class="formtips onError" style="font-size:30%">' + data.accountBank + '</span>');
+						    }
+						    $("#content").html("添加信息失败");
+			                $("#warning-block").css('color','red').removeClass("hide");
+					    }
+			        }
 	            },
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
 	                alert(XMLHttpRequest.status + "-" + XMLHttpRequest.readyState + "-" + textStatus);
@@ -185,7 +233,7 @@
  	   });//提交事件
  	   
  	   $("#cancel").on("click",function(){//取消事件
- 		  $.get("kehuguanli.html", function (data, textStatus){
+ 		  $.get("coop/kehuguanli.html", function (data, textStatus){
  			 $("#warning-block").addClass("hide");
  			 $("#name-tip").html("");
  			 $("#address-tip").html("");
@@ -201,7 +249,7 @@
  	 	});
 	 	
  	   $("#close").on("click",function(){//x事件
-  		  $.get("kehuguanli.html", function (data, textStatus){
+  		  $.get("coop/kehuguanli.html", function (data, textStatus){
   			 $("#warning-block").addClass("hide");
  			 $("#name-tip").html("");
  			 $("#address-tip").html("");

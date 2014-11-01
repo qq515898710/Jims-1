@@ -1,3 +1,17 @@
+//定时跳转
+function countDown(time,url){
+    $("#mysecond").text(time);//<span>中显示的内容值
+     if(url==''){
+             url="/";
+     }
+     if(--time>0){
+            setTimeout("countDown("+time+",'"+url+"')",1000);//设定超时时间
+     }
+     else{
+         location.href=url;//跳转页面
+     }
+}
+
 /** 二维码* */
 function toUtf8(str) {
 	var out, i, len, c;
@@ -18,6 +32,7 @@ function toUtf8(str) {
 	}
 	return out;
 }
+
 //分页显示工具
 function gotoPage(pageIndex) {
 	var action = $('#queryform').attr('action');

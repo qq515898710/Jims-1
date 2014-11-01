@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  */
 public final class Sequence {
-	private static final long ONE_STEP = 10;
+	private static final long ONE_STEP = 9999;
 	private static final Lock LOCK = new ReentrantLock();
 	private static long lastTime = System.currentTimeMillis();
 	private static short lastCount = 0;

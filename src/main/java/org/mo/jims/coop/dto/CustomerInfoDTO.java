@@ -2,7 +2,7 @@ package org.mo.jims.coop.dto;
 
 import org.mo.jims.coop.entity.CustomerInfo;
 
-public class AddCustomerInfoDTO implements java.io.Serializable {
+public class CustomerInfoDTO implements java.io.Serializable {
 
 	/**
 	 * 
@@ -30,6 +30,8 @@ public class AddCustomerInfoDTO implements java.io.Serializable {
 	private java.lang.String depositBank;
 
 	private java.lang.String accountBank;
+	
+	private String formtoken;
 
 	public CustomerInfo toObject() {
 		CustomerInfo customerInfo = new CustomerInfo(name, abbreviation,
@@ -126,13 +128,23 @@ public class AddCustomerInfoDTO implements java.io.Serializable {
 		this.accountBank = accountBank;
 	}
 
+	public String getFormtoken() {
+		return formtoken;
+	}
+
+	public void setFormtoken(String formtoken) {
+		this.formtoken = formtoken;
+	}
+
 	@Override
 	public String toString() {
-		return "AddCustomerInfoDTO [name=" + name + ", abbreviation="
+		return "CustomerInfoDTO [name=" + name + ", abbreviation="
 				+ abbreviation + ", address=" + address + ", postalCode="
 				+ postalCode + ", phone=" + phone + ", fax=" + fax
 				+ ", contacts=" + contacts + ", telephone=" + telephone
 				+ ", email=" + email + ", depositBank=" + depositBank
-				+ ", accountBank=" + accountBank + "]";
+				+ ", accountBank=" + accountBank + ", formtoken=" + formtoken
+				+ "]";
 	}
+
 }

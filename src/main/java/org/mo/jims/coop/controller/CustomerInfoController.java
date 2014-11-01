@@ -5,11 +5,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.mo.jims.coop.dto.AddCustomerInfoDTO;
+import org.mo.jims.coop.dto.CustomerInfoDTO;
 import org.mo.jims.coop.entity.CustomerInfo;
 import org.mo.jims.coop.service.CustomerInfoService;
 import org.mo.open.common.util.Page;
+import org.mo.open.common.util.RegexValidateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,55 +27,32 @@ public class CustomerInfoController {
 
 	private CustomerInfoService customerInfoService;
 
-	@RequestMapping(value = "kehuguanli.html", method = RequestMethod.GET)
+	@RequestMapping(value = "coop/kehuguanli.html", method = RequestMethod.GET)
 	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "baseManage");
 		model.put("active", "KeHuGuanLi");
 		return new ModelAndView("coop/baseManage/KeHuGuanLi");
 	}
 
-	@RequestMapping(value = "addCoustomer", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "coop/addCoustomer", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
 	public Map<String, String> add(
-			@RequestBody AddCustomerInfoDTO customerInfoDTO,
-			HttpServletResponse response) {
-		Map<String, String> modelMap = new HashMap<String, String>();
-		if("".equals(customerInfoDTO.getName())){
-			modelMap.put("name", "客户名称不能为空");
-		}
-		if("".equals(customerInfoDTO.getAbbreviation())){
-			modelMap.put("abbreviation", "简称不能为空");
-		}
-		if ("".equals(customerInfoDTO.getAddress())) {
-			modelMap.put("address", "地址不能为空");
-		}
-		if("".equals(customerInfoDTO.getPostalCode())){
-			modelMap.put("postalCode", "邮政编码不能为空");
-		}
-		if("".equals(customerInfoDTO.getPhone())){
-			modelMap.put("phone", "手机不能为空");
-		}
-		if("".equals(customerInfoDTO.getFax())){
-			modelMap.put("fax", "传真不能为空");
-		}
-		if("".equals(customerInfoDTO.getContacts())){
-			modelMap.put("contacts", "联系人不能为空");
-		}
-		if("".equals(customerInfoDTO.getTelephone())){
-			modelMap.put("telephone", "联系人电话不能为空");
-		}
-		if("".equals(customerInfoDTO.getEmail())){
-			modelMap.put("email", "邮箱不能为空");
-		}
-		if("".equals(customerInfoDTO.getDepositBank())){
-			modelMap.put("depositBank", "开户行");
-		}
-		if("".equals(customerInfoDTO.getAccountBank())){
-			modelMap.put("accountBank", "开户行帐号");
-		}
-		if (modelMap.size() < 0) {
-			CustomerInfo entity = customerInfoDTO.toObject();
-			customerInfoService.save(entity);
+			@RequestBody CustomerInfoDTO customerInfoDTO,
+			HttpServletResponse response, HttpSession session) {
+		Map<String, String> modelMap = validateCutomerInfoDTO(customerInfoDTO);//校验表单
+		String formtoken = customerInfoDTO.getFormtoken();
+		System.out.println("formtoken:"+formtoken);
+		String token = (String) session.getAttribute("token");
+		System.out.println("token:"+token);
+		if (formtoken.equals(token)) {//防止重复提及表单
+			if (modelMap.isEmpty()) {//对表单校验,空继续执行
+				modelMap.put("success", "ok");
+				CustomerInfo entity = customerInfoDTO.toObject();
+				customerInfoService.save(entity);
+				session.removeAttribute("token");
+			}
+		}else {
+			modelMap.put("tip", "请不要重复提交");
 		}
 		return modelMap;
 	}
@@ -87,7 +66,53 @@ public class CustomerInfoController {
 		Page<CustomerInfo> allCustomerInfo = customerInfoService.getAllCustomerInfo(page, size);
 		return allCustomerInfo;
 	}
-
+	
+	private Map<String, String> validateCutomerInfoDTO(CustomerInfoDTO customerInfoDTO) {
+		Map<String, String> modelMap = new HashMap<String, String>();
+		if ("".equals(customerInfoDTO.getName())) {
+			modelMap.put("name", "客户名称不能为空");
+		}
+		if ("".equals(customerInfoDTO.getAbbreviation())) {
+			modelMap.put("abbreviation", "简称不能为空");
+		}
+		if ("".equals(customerInfoDTO.getAddress())) {
+			modelMap.put("address", "地址不能为空");
+		}
+		if ("".equals(customerInfoDTO.getPostalCode())) {
+			modelMap.put("postalCode", "邮政编码不能为空");
+		}
+		if ("".equals(customerInfoDTO.getPhone())) {
+			modelMap.put("phone", "手机不能为空");
+		} else if (!RegexValidateUtil.checkCellphone(customerInfoDTO.getPhone())) {
+			modelMap.put("phone", "手机格式不正确(13000000000)");
+		}
+		if ("".equals(customerInfoDTO.getFax())) {
+			modelMap.put("fax", "传真不能为空");
+		}else if(!RegexValidateUtil.checkFax(customerInfoDTO.getFax())) {
+			modelMap.put("fax", "传真格式不正确");
+		}
+		if ("".equals(customerInfoDTO.getContacts())) {
+			modelMap.put("contacts", "联系人不能为空");
+		}
+		if ("".equals(customerInfoDTO.getTelephone())) {
+			modelMap.put("telephone", "座机不能为空");
+		}else if(!RegexValidateUtil.checkTelephone(customerInfoDTO.getTelephone())) {
+			modelMap.put("telephone", "座机格式不正确(XXXX-XXXXXXX)");
+		}
+		if ("".equals(customerInfoDTO.getEmail())) {
+			modelMap.put("email", "邮箱不能为空");
+		}else if(!RegexValidateUtil.checkEmail(customerInfoDTO.getEmail())){
+			modelMap.put("email", "邮箱格式不正确");
+		}
+		if ("".equals(customerInfoDTO.getDepositBank())) {
+			modelMap.put("depositBank", "开户行不能为空");
+		}
+		if ("".equals(customerInfoDTO.getAccountBank())) {
+			modelMap.put("accountBank", "开户行帐号不能为空");
+		}
+		return modelMap;
+	}
+	
 	public CustomerInfoService getCustomerInfoService() {
 		return customerInfoService;
 	}
