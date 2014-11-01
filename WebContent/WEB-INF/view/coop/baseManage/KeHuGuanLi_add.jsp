@@ -154,7 +154,7 @@
  		  var $btn = $(this).button('loading');
 	        $.ajax({
 	            type: "POST",
-	            url: "coop/addCoustomer",
+	            url: "admin/addCustomer",
 	            contentType: "application/json",
 	            // 必须有
 	            dataType: "json",

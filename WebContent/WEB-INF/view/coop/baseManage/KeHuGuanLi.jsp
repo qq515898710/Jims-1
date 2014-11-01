@@ -55,7 +55,7 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="kehuguanli.html">客户信息管理</a></li> 
+       <li><a href="coop/kehuguanli.html">客户信息管理</a></li> 
       </ul> 
       <!-- .breadcrumb -->
      </div> 
@@ -68,7 +68,7 @@
           <button id="bt-edit-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#edit-dialog-message"><i class="icon-edit align-top bigger-125"></i>修改</button>
           <jsp:include page="KeHuGuanLi_edit.jsp"></jsp:include> 
           <button id="bt-delete-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#delete-dialog-message"><i class="icon-trash align-top bigger-125"></i>删除 </button> 
-         <jsp:include page="KeHuGuanLi_delete.jsp"></jsp:include> </h3> 
+         <jsp:include page="KeHuGuanLi_delete.jsp"></jsp:include> </h3>
         <div class="table-header">
           所有信息 
         </div> 
@@ -85,10 +85,10 @@
            </div><!--.row  -->
           <form action="pageOfCustomers" id="queryform" method="get">
             <!-- 显示列表数据 --> 
-            <table id="sample-table-2" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
+            <table id="mytable" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
              <thead> 
               <tr role="row"> 
-               <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace" /> <span class="lbl"></span> </label> </th> 
+               <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace"  id="checkall"/> <span class="lbl"></span> </label> </th> 
                <th  role="columnheader"  rowspan="1" colspan="1" style="width: 50px;" >序号</th>
                <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >名称</th> 
                <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >地址</th> 
@@ -114,6 +114,7 @@
     <!-- /.main-content --> 
     <script type="text/javascript">
 	jQuery(function($) {
+		
 		/* 获取数据 */
 		gotoPage(1);
 		
@@ -126,7 +127,32 @@
 				$(this).closest('tr').toggleClass('selected');
 			});
 		});
-		
+
+		$("bt-delete-dialog").on('click',function(){
+			
+		});
+		$("#delete-ok").on('click',function() { //提交事件
+			var selectedItems = new Array();
+			$("input[type='checkbox']:checked").each(function() {
+				selectedItems.push($(this).val());
+			});
+			if (selectedItems .length == 0) 
+			    alert("Please select item(s) to delete."); 
+			else
+				$.ajax({ 
+				    type: "post", 
+				    url: "admin/deleteCustomer", 
+				    data: "deleteId=" + selectedItems.join(','), 
+				    dataType: "text", 
+				    success: function (request) {
+				        document.location.reload();
+				      }, 
+				    error: function(request,error){ 
+				        alert('Error deleting item(s), try again later.'); 
+				      } 
+				    }
+				    );
+		});
 	});
 </script> 
     <!-- 工具导入 --> 

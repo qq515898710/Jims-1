@@ -75,6 +75,12 @@ public class CustomerInfoService {
 		customerInfoRepository.deleteByPK(id);
 		return true;
 	}
+	
+	@Transactional(noRollbackFor = Exception.class)
+	public boolean batchRemove(String[] ids){
+		customerInfoRepository.batchDelete(ids);;
+		return true;
+	}
 
 	public CustomerInfoRepository getCustomerInfoRepository() {
 		return customerInfoRepository;

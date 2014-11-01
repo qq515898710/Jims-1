@@ -10,14 +10,14 @@
      </div>
      <!--.modal-header  --> 
      <div class="modal-body">
-      <div class="font" style="text-align: center;">
+      <div class="font" style="text-align: center; color: red;">
        确定删除?
       </div>
      </div>
      <!--.modal-body  --> 
      <div class="modal-footer"> 
-      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="icon-remove bigger-110"></i>取消</button> 
-      <button type="button" class="btn btn-primary btn-sm"><i class="icon-ok bigger-110"></i>确定</button> 
+      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"  id="delete-cancel"><i class="icon-remove bigger-110"></i>取消</button> 
+      <button type="button" class="btn btn-primary btn-sm"  id="delete-ok"><i class="icon-ok bigger-110"></i>确定</button> 
      </div> 
     </div>
     <!--.modal-content  --> 

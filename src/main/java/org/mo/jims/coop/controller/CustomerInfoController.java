@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.mo.jims.coop.dto.CustomerInfoDTO;
 import org.mo.jims.coop.entity.CustomerInfo;
 import org.mo.jims.coop.service.CustomerInfoService;
+import org.mo.open.common.util.JsonResponse;
 import org.mo.open.common.util.Page;
 import org.mo.open.common.util.RegexValidateUtil;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,22 @@ public class CustomerInfoController {
 		model.put("active", "KeHuGuanLi");
 		return new ModelAndView("coop/baseManage/KeHuGuanLi");
 	}
+	
+	@RequestMapping(value = "admin/deleteCustomer", method = RequestMethod.POST)
+	@ResponseBody
+	public void delete(@RequestParam(required=true) String deleteId) {
+		String[] ids = deleteId.split(",");
+		System.out.println(deleteId);
+//		if (ids.length > 1) {
+//			boolean batchRemove = customerInfoService.batchRemove(ids);
+//			JsonResponse jsonResponse = deleteTip(batchRemove);
+//		}
+//		boolean removeByPK = customerInfoService.removeByPK(deleteId);
+//		JsonResponse jsonResponse = deleteTip(removeByPK);
+//		return jsonResponse;
+	}
 
-	@RequestMapping(value = "coop/addCoustomer", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "admin/addCustomer", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
 	public Map<String, String> add(
 			@RequestBody CustomerInfoDTO customerInfoDTO,
@@ -113,6 +128,17 @@ public class CustomerInfoController {
 		return modelMap;
 	}
 	
+	private JsonResponse deleteTip(boolean removeByPK) {
+		JsonResponse jsonResponse = new JsonResponse();
+		if (removeByPK) {
+			jsonResponse.setSuccess(true);
+			jsonResponse.setMessage("删除成功");
+		} else {
+			jsonResponse.setSuccess(false);
+			jsonResponse.setMessage("删除失败");
+		}
+		return jsonResponse;
+	}
 	public CustomerInfoService getCustomerInfoService() {
 		return customerInfoService;
 	}

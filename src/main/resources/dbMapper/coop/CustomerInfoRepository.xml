@@ -18,7 +18,7 @@
 		 	account_bank
 		FROM tb_customer_info
 	</sql>
-
+	
 	<insert id="insert" parameterType="CustomerInfo">
 		INSERT INTO tb_customer_info(id,name,abbreviation,address,postal_code,
 			phone,fax,contacts,telephone,email,deposit_bank,account_bank)
@@ -46,7 +46,13 @@
 	<delete id="deleteByPK">
 		DELETE FROM tb_customer_info WHERE id=#{id}
 	</delete>
-
+	
+	<delete id="batchDelete">
+		DELETE FROM tb_customer_info WHERE id IN
+		<foreach collection="ids" open="(" separator="," close=")"  item="id">#{id}
+		</foreach>
+	</delete>
+	
 	<select id="selectByPK" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
 		WHERE id = #{id}

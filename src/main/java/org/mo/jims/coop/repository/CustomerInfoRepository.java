@@ -21,4 +21,5 @@ public interface CustomerInfoRepository extends BaseRepository<CustomerInfo, Str
 	
 	public List<CustomerInfo> selectAll(@Param("offset") int offset, @Param("size") int size);
 	
+	public void batchDelete(String[] ids);//单参数的不需要@Param
 }
