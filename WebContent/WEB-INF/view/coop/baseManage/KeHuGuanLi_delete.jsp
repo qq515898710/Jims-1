@@ -10,14 +10,13 @@
      </div>
      <!--.modal-header  --> 
      <div class="modal-body">
-      <div class="font" style="text-align: center; color: red;">
-       确定删除?
-      </div>
+      <div class="font" style="text-align: center; color: red;"> 确定删除?</div>
+      <div id="delete-tip" class="font"  style="text-align: center;"></div>
      </div>
      <!--.modal-body  --> 
      <div class="modal-footer"> 
       <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"  id="delete-cancel"><i class="icon-remove bigger-110"></i>取消</button> 
-      <button type="button" class="btn btn-primary btn-sm"  id="delete-ok"><i class="icon-ok bigger-110"></i>确定</button> 
+      <button type="button" class="btn btn-primary btn-sm"  id="delete-ok" autocomplete="off"  data-loading-text="正在处理中..." ><i class="icon-ok bigger-110"></i>确定</button> 
      </div> 
     </div>
     <!--.modal-content  --> 
@@ -25,3 +24,11 @@
    <!--.modal-dialog  --> 
   </div>
   <!-- .delete-dialog-message -->
+  <script type="text/javascript">
+  jQuery(function($) {
+	  $('#delete-cancel').on('click',function(){
+		  $("#delete-tip").html("");
+		  gotoPage(1);
+	  });
+  });
+  </script>

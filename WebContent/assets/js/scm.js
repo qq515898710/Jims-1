@@ -35,7 +35,7 @@ function toUtf8(str) {
 
 //分页显示工具
 function gotoPage(pageIndex) {
-	var action = $('#queryform').attr('action');
+	var action = 'pageOfCustomers';
 	var pagerRange = 6;//
 	var pageSize =  $("#p_pageSizeSelect").val(); //获取每一页显示多少记录
 	var loc='<div class="col-sm-6"><div class="dataTables_paginate paging_bootstrap"><ul class="pagination">';
@@ -48,16 +48,16 @@ function gotoPage(pageIndex) {
 				success : function(msg) {
 					$.each(msg.content, function(i, item) {
 			              $('#tb').append( '<tr>'
-			            		  +'<td><label> <input type="checkbox" class="ace" id="'+item.id+'" /><span class="lbl"></span> </label></td>'
+			            		  +'<td><label> <input type="checkbox" class="ace" name="checkbox" value="'+item.id+'" /><span class="lbl"></span> </label></td>'
 			            		  +'<td >'+(++i)+'</td> '
 			            		  +'<td >'+item.name+'</td> '
 			            		  +'<td >'+item.address+'</td> '
 			            		  +'<td >'+item.email+'</td> '
 			            		  +'<td >'+item.phone+'</td> '
-			            		  +'<td >'+'<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">'
+			            		  +'<td >'+'<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" id="buttontools">'
 			            		  				+'<a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i>'
 			            		  				+'<a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a>'
-			            		  				+'<a class="red" href="#" id="'+item.id+'" data-toggle="modal"  data-target="#delete-dialog-message"> <i class="icon-trash bigger-130"></i> </a>'+'</td> '+'</tr>');
+			            		  				+'<a class="red" href="#"  name="'+item.id+'" data-toggle="modal"  data-target="#delete-dialog-message"> <i class="icon-trash bigger-130"></i> </a>'+'</td> '+'</tr>');
 			            });
 						var begin = Math.max(1, msg.currentPage - pagerRange/2 );
 						var end = Math.min(begin + (pagerRange - 1), msg.totalPage);
@@ -84,17 +84,6 @@ function gotoPage(pageIndex) {
 				}
 			});
 }
-
-//function deleteCustomer() {
-//	$("#mytable tr").each(function(i) {
-//		var chk = $(this).find("input[type='checkbox']:checked");
-//		if (chk.attr("id") != "checkall") {// 不能删除标题行
-//			if (chk.attr("checked")) {
-//				$(this).remove();
-//			}
-//		}
-//	});
-//}
 
 // 将一个表单的数据返回成JSON对象
 $.fn.serializeObject = function() {

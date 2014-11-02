@@ -2,6 +2,8 @@ package org.mo.jims.coop.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -35,35 +37,91 @@ public class CustomerInfoController {
 		return new ModelAndView("coop/baseManage/KeHuGuanLi");
 	}
 	
+	@RequestMapping(value="admin/searchCustomerById",method=RequestMethod.POST)
+	@ResponseBody
+	public CustomerInfo searchById(@RequestParam(required=true)  final String searchId){
+		String[] ids = searchId.split(",");
+		CustomerInfo customerInfo = null;
+		System.out.println("================"+searchId);
+		if (ids.length < 1) {
+			customerInfo = customerInfoService.getByPK(searchId);
+		} else {
+			customerInfo = customerInfoService.getByPK(ids[0]);
+		}
+		return customerInfo;
+	}
+	
+	@RequestMapping(value = "admin/editCustomer", method = RequestMethod.POST, consumes = "application/json")
+	@ResponseBody
+	public Map<String, String> edit(@RequestBody final CustomerInfoDTO customerInfoDTO,
+			HttpServletResponse response, HttpSession session){
+		Map<String, String> modelMap = validateCutomerInfoDTO(customerInfoDTO);//校验表单
+		String formtoken = customerInfoDTO.getFormtoken();
+		String token = (String) session.getAttribute("CustomerEidtToken");
+		if (formtoken.equals(token)) {//防止重复提及表单
+			if (modelMap.isEmpty()) {//对表单校验,空继续执行
+				modelMap.put("success", "ok");
+				//启动线程,1.7新特性
+				ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
+				newCachedThreadPool.execute(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(3000);
+							CustomerInfo entity = customerInfoDTO.toObject();
+							customerInfoService.alter(entity);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				session.removeAttribute("token");
+			}
+		}else {
+			modelMap.put("tip", "请不要重复提交");
+		}
+		return modelMap;
+	}
+	
 	@RequestMapping(value = "admin/deleteCustomer", method = RequestMethod.POST)
 	@ResponseBody
-	public void delete(@RequestParam(required=true) String deleteId) {
+	public JsonResponse delete(@RequestParam(required=true) String deleteId) {
+		JsonResponse jsonResponse =null;
 		String[] ids = deleteId.split(",");
-		System.out.println(deleteId);
-//		if (ids.length > 1) {
-//			boolean batchRemove = customerInfoService.batchRemove(ids);
-//			JsonResponse jsonResponse = deleteTip(batchRemove);
-//		}
-//		boolean removeByPK = customerInfoService.removeByPK(deleteId);
-//		JsonResponse jsonResponse = deleteTip(removeByPK);
-//		return jsonResponse;
+		if (ids.length > 1) {
+			boolean batchRemove = customerInfoService.batchRemove(ids);
+			 jsonResponse = deleteTip(batchRemove);
+		}
+		boolean removeByPK = customerInfoService.removeByPK(deleteId);
+		jsonResponse = deleteTip(removeByPK);
+		return jsonResponse;
 	}
 
 	@RequestMapping(value = "admin/addCustomer", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
 	public Map<String, String> add(
-			@RequestBody CustomerInfoDTO customerInfoDTO,
+			@RequestBody final CustomerInfoDTO customerInfoDTO,
 			HttpServletResponse response, HttpSession session) {
 		Map<String, String> modelMap = validateCutomerInfoDTO(customerInfoDTO);//校验表单
 		String formtoken = customerInfoDTO.getFormtoken();
-		System.out.println("formtoken:"+formtoken);
 		String token = (String) session.getAttribute("token");
-		System.out.println("token:"+token);
 		if (formtoken.equals(token)) {//防止重复提及表单
 			if (modelMap.isEmpty()) {//对表单校验,空继续执行
 				modelMap.put("success", "ok");
-				CustomerInfo entity = customerInfoDTO.toObject();
-				customerInfoService.save(entity);
+				//启动线程,1.7新特性
+				ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
+				newCachedThreadPool.execute(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Thread.sleep(3000);
+							CustomerInfo entity = customerInfoDTO.toObject();
+							customerInfoService.save(entity);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 				session.removeAttribute("token");
 			}
 		}else {

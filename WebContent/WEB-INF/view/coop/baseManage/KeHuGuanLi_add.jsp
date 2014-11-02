@@ -181,8 +181,8 @@
 			        }
 		            else{
 		            	if(data.success != null){
-			            	 $("#content").html('添加信息成功<div style="background-color:#fcf8e3;color: green;"><a href="coop/kehuguanli.html"><span id="mysecond">'+5+'</span>秒自动跳转</a><div>');
-			            	 countDown(5, "coop/kehuguanli.html");
+			            	 $("#content").html('添加信息成功<hr><div style="background-color:#fcf8e3;color: green;"><a href="coop/kehuguanli.html" style="color:green;"><span id="mysecond">'+3+'</span>秒自动跳转</a><div>');
+			            	 countDown(3, "coop/kehuguanli.html");
 			            	$("#warning-block").css('color','green').removeClass("hide");
 				        }
 				        else{

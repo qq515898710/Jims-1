@@ -47,9 +47,10 @@
 		DELETE FROM tb_customer_info WHERE id=#{id}
 	</delete>
 	
-	<delete id="batchDelete">
+	<delete id="batchDelete" parameterType="java.lang.String">
 		DELETE FROM tb_customer_info WHERE id IN
-		<foreach collection="ids" open="(" separator="," close=")"  item="id">#{id}
+		<foreach collection="array" open="(" separator="," close=")"  item="id">
+			#{id}
 		</foreach>
 	</delete>
 	
