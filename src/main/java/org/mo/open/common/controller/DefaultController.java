@@ -15,7 +15,7 @@ public class DefaultController implements GenericController {
 	}
 
 	@RequestMapping(value = "login.html", method = RequestMethod.GET)
-	public String login() {
-		return "login";
+	public ModelAndView login() {
+		return new ModelAndView("login");
 	}
 }

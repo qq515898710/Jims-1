@@ -12,6 +12,5 @@ public interface PermissionRepository extends BaseRepository<Permission, Long> {
 
 	public List<Permission> selectAll();
 
-	
 	public List<Permission> getPermissions(String account);
 }

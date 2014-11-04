@@ -49,13 +49,13 @@
            <h4 class="header blue lighter bigger"> <i class="icon-coffee green"></i> 欢迎使用 </h4> 
            <div class="space-6"></div> 
            <!-- 登录表单 --> 
-           <form id="login"  action="logining" method="post"> 
+           <form id="login"  role="form" action="<c:url value='j_spring_security_check'/>" method="post"> 
             <fieldset> 
              <label class="block clearfix"> <span class="block input-icon input-icon-right"> 
-                <input type="text" class="form-control" placeholder="请输入用户名" id="name" name="account" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}" /> <i class="icon-user"></i> </span> 
+                <input type="text" class="form-control" placeholder="请输入用户名" id="username" name="j_username" /> <i class="icon-user"></i> </span> 
              </label> 
              <label class="block clearfix"> <span class="block input-icon input-icon-right"> 
-                <input type="password" class="form-control" placeholder="请输入密码"  id="password" name="password" /> <i class="icon-lock"></i> </span> 
+                <input type="password" class="form-control" placeholder="请输入密码"  id="password" name="j_password" /> <i class="icon-lock"></i> </span> 
              </label> 
              <label class="block clearfix"> <span class="block input-icon input-icon-right"> 
                 <input type="text "  class=""  placeholder="验证码"  id="code" name="code" />
