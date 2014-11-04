@@ -44,6 +44,8 @@
 		</property>
 	</bean>
 	
-<!-- 	<import resource="springSecurity-Context.xml" /> -->
+	<bean id="md5PasswordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+	
+<!--  	<import resource="springSecurity-Context.xml" /> -->
 	<import resource="mysql-Context.xml"/>
 </beans>

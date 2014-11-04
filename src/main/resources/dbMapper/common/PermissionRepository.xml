@@ -21,6 +21,13 @@
 		DELETE FROM tb_permission WHERE id=#{id}
 	</delete>
 	
+	<select id="getPermissions" resultMap="permissionResultMap">
+		SELECT * FROM tb_permission 
+		JOIN tb_role_permission ON tb_role_permission.permission_id = permission.id 
+		JOIN tb_user_role ON tb_user_role.role_id = tb_role_permisson.role_id
+		where tb_user_role.user_id=#{account}
+	</select>
+	
 	<select id="selectByPK" resultMap="permissionResultMap">
 		<include refid="select_permission"/>
 		WHERE id = #{id}

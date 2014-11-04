@@ -1,18 +1,49 @@
 package org.mo.open.common.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.mo.open.common.entity.Permission;
+import org.mo.open.common.entity.Role;
 import org.mo.open.common.repository.PermissionRepository;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service( "permissionService")
-public class PermissionService  {
+import com.google.common.collect.Maps;
+
+@Service("permissionService")
+public class PermissionService {
+
 	private PermissionRepository permissionRepository;
+
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
+	public HashMap<String, Collection<ConfigAttribute>> loadResourceDefine() {
+		HashMap<String, Collection<ConfigAttribute>> map = null;
+		map = Maps.newHashMap();
+		List<Permission> gettAll = this.gettAll();
+		System.out.println(gettAll.size());
+		if (gettAll != null) {
+			for (Permission permission : gettAll) {
+				Collection<ConfigAttribute> array = new ArrayList<ConfigAttribute>(gettAll.size());
+				Iterator<Role> iterator = permission.getRoles().iterator();
+				while(iterator.hasNext()){
+					Role next = iterator.next();
+					ConfigAttribute configAttribute= new SecurityConfig(next.getName());
+					array.add(configAttribute);
+				}
+				map.put(permission.getName(), array);
+			}
+		}
+		return map;
+	}
 
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<Permission> gettAll() {
@@ -47,7 +78,8 @@ public class PermissionService  {
 	}
 
 	@Resource(name = "permissionRepository")
-	public void setPermissionRepository(PermissionRepository permissionRepository) {
+	public void setPermissionRepository(
+			PermissionRepository permissionRepository) {
 		this.permissionRepository = permissionRepository;
 	}
 }

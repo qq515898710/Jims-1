@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 /**
  * 身份验证
- * 
+ * http://panyongzheng.iteye.com/blog/2080390
  * @author moziqi
  *
  */

@@ -49,22 +49,22 @@
            <h4 class="header blue lighter bigger"> <i class="icon-coffee green"></i> 欢迎使用 </h4> 
            <div class="space-6"></div> 
            <!-- 登录表单 --> 
-           <form id="login" > 
+           <form id="login"  action="logining" method="post"> 
             <fieldset> 
              <label class="block clearfix"> <span class="block input-icon input-icon-right"> 
-                <input type="text" class="form-control" placeholder="请输入用户名" id="name" name="j_username" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}" /> <i class="icon-user"></i> </span> 
+                <input type="text" class="form-control" placeholder="请输入用户名" id="name" name="account" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}" /> <i class="icon-user"></i> </span> 
              </label> 
              <label class="block clearfix"> <span class="block input-icon input-icon-right"> 
-                <input type="password" class="form-control" placeholder="请输入密码"  id="password" name="j_password" /> <i class="icon-lock"></i> </span> 
+                <input type="password" class="form-control" placeholder="请输入密码"  id="password" name="password" /> <i class="icon-lock"></i> </span> 
              </label> 
              <label class="block clearfix"> <span class="block input-icon input-icon-right"> 
-                <input type="text "  class="" placeholder="验证码"  id="code" name="code" />
+                <input type="text "  class=""  placeholder="验证码"  id="code" name="code" />
                 <img src="captcha-image" alt="验证码" width="90 " height="30" style="margin-bottom: -3px"  id="codeImage"/></span>
              </label>
              <div class="space"></div> 
              <div class="clearfix"> 
               <label class="inline"> <input type="checkbox" class="ace"  id="remember" name="_spring_security_remember_me"/> <span class="lbl"> 记住</span> </label> 
-              <button type="button" class="width-35 pull-right btn btn-sm btn-primary" id="loginButton" autocomplete="off"  data-loading-text="正在处理中..." > <i class="icon-key"></i>登录 </button> 
+              <button type="submit" class="width-35 pull-right btn btn-sm btn-primary" id="loginButton" autocomplete="off"  data-loading-text="正在处理中..." > <i class="icon-key"></i>登录 </button> 
              </div> 
              <div class="space-4"></div> 
             </fieldset> 
@@ -186,46 +186,46 @@
 	    }).focus(function() {
 	        $(this).triggerHandler("blur");
 	    }); //end blur
-	    $("#loginButton").on('click',function() { //登录事件
-	    	$("form :input").trigger('blur');
-	    	var numError = $('form .onError').length;
-            if(numError){
-                return false;
-            }
-	        var $btn = $(this).button('loading');
-	        $.ajax({
-	            type: "POST",
-	            url: "checklogin",
-	            contentType: "application/json",
-	            // 必须有
-	            dataType: "json",
-	            // 表示返回值类型，不必须
-	            data: JSON.stringify({
-	                'name': $("#name").val().trim(),
-	                'password': $("#password").val().trim(),
-	                'code': $("#code").val().trim()
-	            }),
-	            async: true,
-	            success: function(data) {
-	                if (data.info == 1) {
-	                    location.href = "home.html";
-	                } else if (data.user_error == 2) {
-	                    $("#error-info").text("");
-	                    $("#error-info").append("<b>不存在用户或密码错误</b>");
-	                    $("#alert").removeClass("close").addClass("alert alert-danger fade in");
-	                } else if (data.code_error == 3) {
-	                    $("#error-info").text("");
-	                    $("#error-info").append("<b>验证码错误</b>");
-	                    $("#alert").removeClass("close").addClass("alert alert-danger fade in");
-	                }
-	            },
-	            error: function(XMLHttpRequest, textStatus, errorThrown) {
-	                alert(XMLHttpRequest.status + "-" + XMLHttpRequest.readyState + "-" + textStatus);
-	            }
-	        }).always(function() {
-	            $btn.button('reset')
-	        }); //ajax
-	    }); //loginButton.click
+// 	    $("#loginButton").on('click',function() { //登录事件
+// 	    	$("form :input").trigger('blur');
+// 	    	var numError = $('form .onError').length;
+//             if(numError){
+//                 return false;
+//             }
+// 	        var $btn = $(this).button('loading');
+// 	        $.ajax({
+// 	            type: "POST",
+// 	            url: "checklogin",
+// 	            contentType: "application/json",
+// 	            // 必须有
+// 	            dataType: "json",
+// 	            // 表示返回值类型，不必须
+// 	            data: JSON.stringify({
+// 	                'name': $("#name").val().trim(),
+// 	                'password': $("#password").val().trim(),
+// 	                'code': $("#code").val().trim()
+// 	            }),
+// 	            async: true,
+// 	            success: function(data) {
+// 	                if (data.info == 1) {
+// 	                    location.href = "home.html";
+// 	                } else if (data.user_error == 2) {
+// 	                    $("#error-info").text("");
+// 	                    $("#error-info").append("<b>不存在用户或密码错误</b>");
+// 	                    $("#alert").removeClass("close").addClass("alert alert-danger fade in");
+// 	                } else if (data.code_error == 3) {
+// 	                    $("#error-info").text("");
+// 	                    $("#error-info").append("<b>验证码错误</b>");
+// 	                    $("#alert").removeClass("close").addClass("alert alert-danger fade in");
+// 	                }
+// 	            },
+// 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
+// 	                alert(XMLHttpRequest.status + "-" + XMLHttpRequest.readyState + "-" + textStatus);
+// 	            }
+// 	        }).always(function() {
+// 	            $btn.button('reset')
+// 	        }); //ajax
+// 	    }); //loginButton.click
 	});//全ready
 	function show_box(id) {
 	    jQuery('.widget-box.visible').removeClass('visible');

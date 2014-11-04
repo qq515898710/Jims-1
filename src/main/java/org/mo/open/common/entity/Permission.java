@@ -18,8 +18,8 @@ public class Permission implements java.io.Serializable {
 
 	private java.lang.String description;
 	
-	private List<Role> role;
-
+	private List<Role> roles;
+	
 	public java.lang.Long getId() {
 		return id;
 	}
@@ -44,12 +44,12 @@ public class Permission implements java.io.Serializable {
 		this.description = description;
 	}
 
-	public List<Role> getRole() {
-		return role;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setRole(List<Role> role) {
-		this.role = role;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 }

@@ -19,7 +19,7 @@ public class Role implements java.io.Serializable {
 
 	private List<User> user;
 
-	private List<Permission> permission;
+	private List<Permission> permissions;
 	
 	public java.lang.Long getId() {
 		return id;
@@ -53,12 +53,12 @@ public class Role implements java.io.Serializable {
 		this.user = user;
 	}
 
-	public List<Permission> getPermission() {
-		return permission;
+	public List<Permission> getPermissions() {
+		return permissions;
 	}
 
-	public void setPermission(List<Permission> permission) {
-		this.permission = permission;
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
 	}
 
 }

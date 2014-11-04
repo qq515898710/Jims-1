@@ -19,6 +19,13 @@
 	
 	<dependencies>
 	
+	<!-- map使用而导入 -->
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>r05</version>
+	</dependency>
+
 		<!-- 二维码 -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
