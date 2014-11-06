@@ -52,6 +52,25 @@ public class CustomerInfo implements Serializable {
 		super();
 	}
 
+	public CustomerInfo(String id, String name, String abbreviation,
+			String address, String postalCode, String phone, String fax,
+			String contacts, String telephone, String email,
+			String depositBank, String accountBank) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.abbreviation = abbreviation;
+		this.address = address;
+		this.postalCode = postalCode;
+		this.phone = phone;
+		this.fax = fax;
+		this.contacts = contacts;
+		this.telephone = telephone;
+		this.email = email;
+		this.depositBank = depositBank;
+		this.accountBank = accountBank;
+	}
+
 	public CustomerInfo(String name, String abbreviation, String address,
 			String postalCode, String phone, String fax, String contacts,
 			String telephone, String email, String depositBank,

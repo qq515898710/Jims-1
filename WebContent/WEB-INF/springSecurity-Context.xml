@@ -13,21 +13,21 @@
 	<security:http auto-config="true" use-expressions="true" access-denied-page="/accessdenied.html">
 		
 		<!-- 允许访问的uri --> 
-		<security:intercept-url pattern="/" access="permitAll" />
+		<security:intercept-url pattern="/**" access="permitAll" />
 		<security:intercept-url pattern="/login.html" access="permitAll" />
 		<security:intercept-url pattern="/logout.html" access="permitAll" />
 		<security:intercept-url pattern="/accessdenied.html" access="permitAll" />
 		
 		<!--指定登录页面  -->
 		<security:form-login login-page="/login.html" 
-			authentication-failure-url="/accessdenied.html" 
+			authentication-failure-url="/login.html" 
 			default-target-url="/home.html"
 			/>
 			
 		<!-- 指定退出 -->
 		<security:logout invalidate-session="true" 
 			logout-success-url="/login.html"
-			logout-url="/login.html"/>
+			logout-url="/loginout.html"/>
 		
 		<!-- 实现免登陆验证 -->
 		<security:remember-me />

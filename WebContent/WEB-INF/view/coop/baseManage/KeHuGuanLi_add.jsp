@@ -4,7 +4,7 @@
 	session.setAttribute("token", token);
 %>
 <div id="add-dialog-message" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
-   <div class="modal-dialog"> 
+   <div class="modal-dialog modal-sm"> 
     <div class="modal-content"> 
      <div class="modal-header"> 
       <button type="button" class="close" data-dismiss="modal" id="close"> <span aria-hidden="true">&times;</span><span class="sr-only">x</span></button> 
@@ -80,10 +80,9 @@
        </div>
        <input type="hidden" name="formtoken"  value="<%=token%>"  id="formtoken">
        <!-- 警告框 -->
-       <div class="hide" id="warning-block" style="background-color:#fcf8e3;">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <div id="content" style="text-align: center;"></div>
-        <span class="sr-only">Close</span>
+       <div class="hide alert alert-block alert-danger" id="warning-block" >
+        <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i> </button>
+          <div id="content"  class="danger bold-center"></div>
        </div>
       </form> 
      </div> 
@@ -96,7 +95,6 @@
   </div>
   <script>
   	 $(document).ready(function() {
-  	  	 
  	    $('form :input').blur(function() {//表单验证
 	        var $parent = $(this).parent();
 	        $parent.find(".formtips").remove();
@@ -177,13 +175,13 @@
 	            success: function(data) {
 		            if(data.tip != null){
 					    $("#content").html(data.tip);
-		                $("#warning-block").css('color','red').removeClass("hide");
+		                $("#warning-block").css('color','alert-warning').removeClass("hide");
 			        }
 		            else{
 		            	if(data.success != null){
-			            	 $("#content").html('添加信息成功<hr><div style="background-color:#fcf8e3;color: green;"><a href="coop/kehuguanli.html" style="color:green;"><span id="mysecond">'+3+'</span>秒自动跳转</a><div>');
-			            	 countDown(3, "coop/kehuguanli.html");
-			            	$("#warning-block").css('color','green').removeClass("hide");
+			            	 $("#content").html('添加信息成功<hr><div style="background-color:#fcf8e3;color: green;"><a href="coop/kehuguanli.html" style="color:green;"><span id="mysecond">'+5+'</span>秒自动跳转</a><div>');
+			            	 countDown(5, "coop/kehuguanli.html");
+			            	$("#warning-block").css('color','alert-success').removeClass("hide");
 				        }
 				        else{
 				            if(data.name != null){
@@ -220,7 +218,7 @@
 					        	$("#accountBank-tip").html('<span class="formtips onError" style="font-size:30%">' + data.accountBank + '</span>');
 						    }
 						    $("#content").html("添加信息失败");
-			                $("#warning-block").css('color','red').removeClass("hide");
+			                $("#warning-block").css('color','alert-warning').removeClass("hide");
 					    }
 			        }
 	            },

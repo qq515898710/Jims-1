@@ -61,22 +61,35 @@
      </div> 
      <div class="page-content"> 
       <div class="row"> 
-       <div class="col-xs-12"> 
-        <h3 class="header smaller lighter blue"> 
+       <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">
+          <button id="bt-add-dialog" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#search-dialog-message"><i class="icon-search align-top bigger-125"  ></i>查询 </button>
+          <jsp:include page="KeHuGuanLi_search.jsp"></jsp:include>
           <button id="bt-add-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#add-dialog-message"><i class="icon-plus-sign align-top bigger-125"></i>添加 </button> 
           <jsp:include page="KeHuGuanLi_add.jsp"></jsp:include>
-          <button id="bt-edit-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#edit-dialog-message"><i class="icon-edit align-top bigger-125"></i>修改</button>
+          <button id="bt-edit-dialog" class="btn btn-primary btn-sm" ><i class="icon-edit align-top bigger-125"></i>修改</button>
           <jsp:include page="KeHuGuanLi_edit.jsp"></jsp:include> 
-          <button id="bt-delete-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#delete-dialog-message"><i class="icon-trash align-top bigger-125"></i>删除 </button> 
+          <button id="bt-delete-dialog" class="btn btn-primary btn-sm" ><i class="icon-trash align-top bigger-125"></i>删除 </button> 
          <jsp:include page="KeHuGuanLi_delete.jsp"></jsp:include>
-         <jsp:include page="KeHuGuanLi_delete2.jsp"></jsp:include> </h3>
+         <button id="bt-add-dialog" class="btn btn-primary btn-sm" onclick="document.getElementById('file').click();" ><i class="icon-cloud-upload align-top bigger-125"></i>导入 </button>
+         <input type="file" name="file" id="file" style="display:none" />
+         <button id="bt-add-dialog" class="btn btn-primary btn-sm"  type="flle" ><i class="icon-cloud-download align-top bigger-125"></i>导出 </button>
+         <div class="btn-group"> 
+            <button data-toggle="dropdown" class="btn btn-primary  btn-sm2 dropdown-toggle"><i class="icon-stackexchange"></i> 更多<i class="icon-angle-down icon-on-right"></i></button> 
+            <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"> 
+              <li> <a href="#" onclick="document.all.WebBrowser.ExecWB(6,1)"><i class="icon-print"></i> 打印</a> </li> 
+              <li class="divider"></li> 
+              <li> <a href="#"><i class="icon-long-arrow-down"></i> 模版表格下载</a> </li> 
+           </ul> 
+         </div></h3>
+         <div id="alert"></div>
         <div class="table-header">
           所有信息 
         </div> 
         <div class="table-responsive"> 
          <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
             <div class="row" >
-            <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1)" id="p_pageSizeSelect">
+            <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1,'name=')" id="p_pageSizeSelect">
               <option value="10" selected="selected" >10</option>
               <option value="25" >25</option>
               <option value="50" >50</option>
@@ -117,7 +130,7 @@
 	jQuery(function($) {
 		
 		/* 获取数据 */
-		gotoPage(1);
+		gotoPage(1,'name=');
 		
 		/* 复选框操作 */
 		$('table th input:checkbox').on('click' , function(){
@@ -129,46 +142,12 @@
 			});
 		});
 
-		$("#delete-ok").on('click',function() { //提交事件
-			var $btn = $(this).button('loading');
-			var selectedItems = new Array();
-			$("input[name='checkbox']:checked").each(function() {
-				selectedItems.push($(this).val());
-			});
-			if (selectedItems .length == 0) {
-				$("#delete-tip").html("<hr>没勾选任何记录");
-				$("#delete-tip").css('color','red');
-		        $btn.button('reset');
-			}
-			else
-				$.ajax({ 
-				    type: "post", 
-				    url: "admin/deleteCustomer", 
-				    data: "deleteId=" + selectedItems.join(','), 
-				    dataType: "json", 
-				    success: function (data) {
-					    if(data.success){
-					    	$("#delete-tip").html('<hr>'+data.message+', '+'<a href="coop/kehuguanli.html" style="color:green;"><span id="mysecond">'+10+'</span>秒自动跳转</a>');
-					    	$("#delete-tip").css('color','green');
-					        countDown(3, "coop/kehuguanli.html");
-						 }else{
-						    $("#delete-tip").html('<hr>'+data.message);
-						    $("#delete-tip").css('color','red');
-						}
-				      }, 
-				    error: function(request,error){ 
-				        alert('Error deleting item(s), try again later.'); 
-				      } 
-				    }).always(function() {
-			            $btn.button('reset');
-			        }); //ajax;
-		});
 	});
 </script> 
     <!-- 工具导入 --> 
     <jsp:include page="/WEB-INF/view/tool.jsp"></jsp:include>
     <!-- /#ace-settings-container --> 
-   </div> 
+   </div>
    <!-- /.main-container-inner --> 
    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse"> <i class="icon-double-angle-up icon-only bigger-110"></i> </a> 
   </div>

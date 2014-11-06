@@ -2990,6 +2990,13 @@ li [class^="icon-"], li [class*=" icon-"], .nav-list li [class^="icon-"],
 	line-height: 1.39
 }
 
+.btn-sm2 {
+	border-width: 4px;
+	font-size: 13px;
+	padding: 5px 10px;
+	line-height: 1.39
+}
+
 .btn-xs {
 	border-width: 3px
 }

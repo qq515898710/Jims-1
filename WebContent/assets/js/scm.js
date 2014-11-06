@@ -34,16 +34,17 @@ function toUtf8(str) {
 }
 
 //分页显示工具
-function gotoPage(pageIndex) {
-	var action = 'pageOfCustomers';
+function gotoPage(pageIndex, cond) {
+	var action = 'coop/pageOfCustomersByName';
 	var pagerRange = 6;//
 	var pageSize =  $("#p_pageSizeSelect").val(); //获取每一页显示多少记录
 	var loc='<div class="col-sm-6"><div class="dataTables_paginate paging_bootstrap"><ul class="pagination">';
 	$('#tb').html("");
+	//alert("page=" + pageIndex + "&size=" + pageSize+"&"+cond);
 	$.ajax({
 				url : action,
 				type : 'get',
-				data : "page=" + pageIndex + "&size=" + pageSize,
+				data : "page=" + pageIndex + "&size=" + pageSize+"&"+cond,
 				aysnc : false,
 				success : function(msg) {
 					$.each(msg.content, function(i, item) {
@@ -55,14 +56,14 @@ function gotoPage(pageIndex) {
 			            		  +'<td >'+item.email+'</td> '
 			            		  +'<td >'+item.phone+'</td> '
 			            		  +'<td >'+'<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" id="buttontools">'
-			            		  				+'<a class="blue" href="#"> <i class="icon-zoom-in bigger-130"></i>'
-			            		  				+'<a class="green" href="#"> <i class="icon-pencil bigger-130"></i> </a>'
-			            		  				+'<a class="red" href="#"  name="'+item.id+'" data-toggle="modal"  data-target="#delete-dialog-message"> <i class="icon-trash bigger-130"></i> </a>'+'</td> '+'</tr>');
+			            		  				+'<a class="blue" href="javascript:showCustomer(\''+item.id+'\')"> <i class="icon-zoom-in bigger-130"></i>'
+			            		  				+'<a class="green" href="javascript:editCustomer(\''+item.id+'\')" > <i class="icon-pencil bigger-130"></i> </a>'
+			            		  				+'<a class="red" href="javascript:deleteCustomer(\''+item.id+'\')" > <i class="icon-trash bigger-130"></i> </a>'+'</td> '+'</tr>');
 			            });
 						var begin = Math.max(1, msg.currentPage - pagerRange/2 );
 						var end = Math.min(begin + (pagerRange - 1), msg.totalPage);
 						if(msg.currentPage !=1){
-							loc+='<li class="prev "><a href="javascript:gotoPage(1)"><i class=" icon-double-angle-left "></i></a></li><li class="prev "><a href="javascript:gotoPage('+(msg.currentPage - 1)+')"><i class=" icon-angle-left "></i></a></li>';
+							loc+='<li class="prev "><a href="javascript:gotoPage(1,\''+cond+'\')"><i class=" icon-double-angle-left "></i></a></li><li class="prev "><a href="javascript:gotoPage('+(msg.currentPage - 1)+',\''+cond+'\')"><i class=" icon-angle-left "></i></a></li>';
 						}else{
 							loc+='<li class="prev disabled"><a href="javascript:void(0)"><i class=" icon-double-angle-left "></i></a></li><li class="prev disabled"><a href="javascript:void(0)"><i class=" icon-angle-left "></i></a></li>';
 						}
@@ -70,11 +71,11 @@ function gotoPage(pageIndex) {
 							if(msg.currentPage == i){
 								loc+='<li class="active"><a href="javascript:void(0)">'+i+'</a></li>'
 							}else{
-								loc+='<li><a href="javascript:gotoPage('+i +')" >'+i+'</a></li>'
+								loc+='<li><a href="javascript:gotoPage('+i +',\''+cond+'\')" >'+i+'</a></li>'
 							}
 						}
 						if(msg.currentPage!=msg.totalPage){
-							loc+='<li class="next"><a href="javascript:gotoPage('+(msg.currentPage + 1)+')"><i class="icon-angle-right "></i></a></li><li class="next "><a href="javascript:gotoPage('+msg.totalPage+')"><i class="icon-double-angle-right "></i></a></li>';
+							loc+='<li class="next"><a href="javascript:gotoPage('+(msg.currentPage + 1)+',\''+cond+'\')"><i class="icon-angle-right "></i></a></li><li class="next "><a href="javascript:gotoPage('+msg.totalPage+',\''+cond+'\')"><i class="icon-double-angle-right "></i></a></li>';
 						}else{
 							loc+='<li class="next disabled"><a href="javascript:void(0)"><i class="icon-angle-right "></i></a></li><li class="next disabled"><a href="javascript:void(0)"><i class="icon-double-angle-right "></i></a></li>';
 						}
@@ -83,6 +84,38 @@ function gotoPage(pageIndex) {
 						$("#other").html('<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
 				}
 			});
+}
+
+function deleteCustomer(id){
+	deleteIds = id;
+	$("#alert").html("");
+	$('#delete-dialog-message').modal('show');
+}
+
+function editCustomer(id) {
+	var searchId=id;
+	$.ajax({
+	    type: "POST", 
+	    url: "coop/searchCustomerById", 
+	    data: "searchId=" + searchId, 
+	    dataType: "json", 
+	    success: function (data){
+			 $("#edit-id").attr("value",data.id);
+			 $("#edit-name").attr("value",data.name);
+			 $("#edit-abbreviation").attr("value",data.abbreviation);
+			 $("#edit-address").attr("value",data.address);
+			 $("#edit-postalCode").attr("value",data.postalCode);
+			 $("#edit-phone").attr("value",data.phone);
+			 $("#edit-fax").attr("value",data.fax);
+			 $("#edit-contacts").attr("value",data.contacts);
+			 $("#edit-telephone").attr("value",data.telephone);
+			 $("#edit-email").attr("value",data.email);
+			 $("#edit-depositBank").attr("value",data.depositBank);
+			 $("#edit-accountBank").attr("value",data.accountBank);
+		}
+	 });
+	$("#alert").html("");
+	$('#edit-dialog-message').modal('show');
 }
 
 // 将一个表单的数据返回成JSON对象

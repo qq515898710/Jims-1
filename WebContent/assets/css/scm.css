@@ -5,9 +5,17 @@
 .code {
 	border-color: #d58512;
 }
-.onError{
-	color:red;
+
+.onError {
+	color: red;
 }
-.onSuccess{
-	color:green;
+
+.onSuccess {
+	color: green;
+}
+
+/* 居中加粗 */
+.bold-center {
+	text-align: center;
+	font-weight: bold;
 }

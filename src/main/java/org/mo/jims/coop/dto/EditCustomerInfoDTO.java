@@ -2,12 +2,14 @@ package org.mo.jims.coop.dto;
 
 import org.mo.jims.coop.entity.CustomerInfo;
 
-public class CustomerInfoDTO implements java.io.Serializable {
+public class EditCustomerInfoDTO implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private java.lang.String id;
 
 	private java.lang.String name;
 
@@ -30,14 +32,22 @@ public class CustomerInfoDTO implements java.io.Serializable {
 	private java.lang.String depositBank;
 
 	private java.lang.String accountBank;
-	
+
 	private String formtoken;
 
 	public CustomerInfo toObject() {
-		CustomerInfo customerInfo = new CustomerInfo(name, abbreviation,
+		CustomerInfo customerInfo = new CustomerInfo(id, name, abbreviation,
 				address, postalCode, phone, fax, contacts, telephone, email,
 				depositBank, accountBank);
 		return customerInfo;
+	}
+
+	public java.lang.String getId() {
+		return id;
+	}
+
+	public void setId(java.lang.String id) {
+		this.id = id;
 	}
 
 	public java.lang.String getName() {
