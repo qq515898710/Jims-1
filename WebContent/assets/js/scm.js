@@ -46,6 +46,10 @@ function gotoPage(pageIndex, cond) {
 				type : 'get',
 				data : "page=" + pageIndex + "&size=" + pageSize+"&"+cond,
 				aysnc : false,
+				beforeSend:function(XMLHttpRequest){
+		              //alert('远程调用开始...');
+		              $("#table-result").showLoading();
+		         },
 				success : function(msg) {
 					$.each(msg.content, function(i, item) {
 			              $('#tb').append( '<tr>'
@@ -81,9 +85,22 @@ function gotoPage(pageIndex, cond) {
 						}
 						loc+='</ul></div></div>';
 						$('#pages').html(loc);
-						$("#other").html('<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
-				}
+						$("#other").html('<a href="#" data-action="reload"><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
+						$("#table-result").hideLoading();
+				},
+				complete:function(XMLHttpRequest,textStatus){
+		              // alert('远程调用成功，状态文本值：'+textStatus);
+					$("#table-result").hideLoading();
+		         },
+		         error:function(XMLHttpRequest,textStatus,errorThrown){
+		              alert('error...状态文本值：'+textStatus+" 异常信息："+errorThrown);
+		              $("#table-result").hideLoading();
+		          }
 			});
+}
+
+function showCustomer(id){
+	$('#detailed-dialog-message').modal('show');
 }
 
 function deleteCustomer(id){

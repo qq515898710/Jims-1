@@ -63,6 +63,7 @@
       <div class="row"> 
        <div class="col-xs-12">
         <h3 class="header smaller lighter blue">
+          <jsp:include page="KeHuGuanLi_detailed.jsp"></jsp:include>
           <button id="bt-add-dialog" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#search-dialog-message"><i class="icon-search align-top bigger-125"  ></i>查询 </button>
           <jsp:include page="KeHuGuanLi_search.jsp"></jsp:include>
           <button id="bt-add-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#add-dialog-message"><i class="icon-plus-sign align-top bigger-125"></i>添加 </button> 
@@ -83,41 +84,43 @@
            </ul> 
          </div></h3>
          <div id="alert"></div>
-        <div class="table-header">
-          所有信息 
-        </div> 
-        <div class="table-responsive"> 
-         <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
-            <div class="row" >
-            <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1,'name=')" id="p_pageSizeSelect">
-              <option value="10" selected="selected" >10</option>
-              <option value="25" >25</option>
-              <option value="50" >50</option>
-              <option value="100" >100</option></select>记录</label></div ><!--#page  -->
-            </div>
-            <div id="pages"></div>
-           </div><!--.row  -->
-          <form>
-            <!-- 显示列表数据 --> 
-            <table id="mytable" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
-             <thead> 
-              <tr role="row"> 
-               <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace"  id="checkall"/> <span class="lbl"></span> </label> </th> 
-               <th  role="columnheader"  rowspan="1" colspan="1" style="width: 50px;" >序号</th>
-               <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >名称</th> 
-               <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >地址</th> 
-               <th role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" > <i class="icon-time bigger-110 hidden-480"></i> 邮箱地址 </th> 
-               <th  role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" >联系电话 </th> 
-               <th  role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label="">操作</th> 
-              </tr> 
-             </thead> 
-             <tbody role="alert" aria-live="polite" aria-relevant="all"  id="tb">
-             </tbody> 
-            </table>
-           </form>
-           <div class="row" ><div class="col-sm-6"  id="other"></div></div><!--.row  -->
+         <div id="table-result">
+          <div class="table-header">
+            所有信息 
+          </div> 
+          <div class="table-responsive"> 
+           <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
+              <div class="row" >
+              <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1,'name=')" id="p_pageSizeSelect">
+                <option value="10" selected="selected" >10</option>
+                <option value="25" >25</option>
+                <option value="50" >50</option>
+                <option value="100" >100</option></select>记录</label></div ><!--#page  -->
+              </div>
+              <div id="pages"></div>
+             </div><!--.row  -->
+            <form>
+              <!-- 显示列表数据 --> 
+              <table id="mytable" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info"> 
+               <thead> 
+                <tr role="row"> 
+                 <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace"  id="checkall"/> <span class="lbl"></span> </label> </th> 
+                 <th  role="columnheader"  rowspan="1" colspan="1" style="width: 50px;" >序号</th>
+                 <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >名称</th> 
+                 <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >地址</th> 
+                 <th role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" > <i class="icon-time bigger-110 hidden-480"></i> 邮箱地址 </th> 
+                 <th  role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" >联系电话 </th> 
+                 <th  role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label="">操作</th> 
+                </tr> 
+               </thead> 
+               <tbody role="alert" aria-live="polite" aria-relevant="all"  id="tb">
+               </tbody> 
+              </table>
+             </form>
+             <div class="row" ><div class="col-sm-6"  id="other"></div></div><!--.row  -->
+           </div>
+          </div> 
          </div>
-        </div> 
        </div> 
        <!-- /.col --> 
       </div> 
@@ -141,7 +144,7 @@
 				$(this).closest('tr').toggleClass('selected');
 			});
 		});
-
+		
 	});
 </script> 
     <!-- 工具导入 --> 

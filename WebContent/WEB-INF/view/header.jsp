@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="assets/css/ace.min.css" />
 <link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
 <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+<link rel="stylesheet" href="assets/css/showLoading.css" />
 <!-- 自定义css -->
 <link rel="stylesheet" href="assets/css/scm.css" />
 <script src="assets/js/jquery-2.0.3.min.js"></script>
@@ -35,6 +36,7 @@
 <script src="assets/js/bootbox.min.js"></script>
 <script src="assets/js/jquery.lazyload.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.showLoading.min.js"></script>
 <!-- 二维码js -->
 <script type="text/javascript" src="assets/js/jquery.qrcode.js"></script>
 <!-- 自定义js -->
