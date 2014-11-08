@@ -85,7 +85,7 @@ function gotoPage(pageIndex, cond) {
 						}
 						loc+='</ul></div></div>';
 						$('#pages').html(loc);
-						$("#other").html('<a href="#" data-action="reload"><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
+						$("#other").html('<a href="javascript:gotoPage(1,\'name=\')" ><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
 						$("#table-result").hideLoading();
 				},
 				complete:function(XMLHttpRequest,textStatus){
@@ -100,6 +100,70 @@ function gotoPage(pageIndex, cond) {
 }
 
 function showCustomer(id){
+	var searchId=id;
+	$.ajax({
+	    type: "POST", 
+	    url: "coop/searchCustomerById", 
+	    data: "searchId=" + searchId, 
+	    dataType: "json", 
+	    success: function (data){
+	    	if(data.name != null && data.name != ''){
+	    		$("#detailed-name").html(data.name);
+	    	}else{
+	    		$("#detailed-name").html('未知');
+	    	}
+	    	if(data.abbreviation != null && data.abbreviation != ''){
+	    		$("#detailed-abbreviation").html(data.abbreviation);
+	    	}else{
+	    		$("#detailed-abbreviation").html('未知');
+	    	}
+	    	if(data.address != null && data.address != ''){
+	    		$("#detailed-address").html(data.address);
+	    	}else{
+	    		$("#detailed-address").html('未知');
+	    	}
+	    	if(data.postalCode!=null && data.postalCode!=''){
+	    		$("#detailed-postalCode").html(data.postalCode);
+	    	}else{
+	    		$("#detailed-postalCode" ).html('未知');
+	    	}
+	    	if(data.phone!=null && data.phone!=''){
+	    		$("#detailed-phone").html(data.phone);
+	    	}else{
+	    		$("#detailed-phone").html('未知');
+	    	}
+	    	if(data.fax!=null && data.fax!=''){
+	    		$("#detailed-fax").html(data.fax);
+	    	}else{
+	    		$("#detailed-fax").html('未知');
+	    	}
+	    	if(data.contacts!=null && data.contacts!=''){
+	    		$("#detailed-contacts").html(data.contacts);
+	    	}else{
+	    		$("#detailed-contacts").html('未知');
+	    	}
+	    	if(data.telephone!=null && data.name!=''){
+	    		$("#detailed-telephone").html(data.telephone);
+	    	}else{
+	    		$("#detailed-telephone").html('未知');
+	    	}
+	    	if(data.email!=null && data.email!=''){
+	    		$("#detailed-email").html(data.email);
+	    	}else{
+	    		$("#detailed-email").html('未知');
+	    	}
+	    	if(data.depositBank!=null && data.depositBank!=''){
+	    		$("#detailed-depositBank").html(data.depositBank);
+	    	}else{
+	    		$("#detailed-depositBank").html('未知');
+	    	}
+	    	if(data.accountBank!=null && data.accountBank!=''){
+	    		$("#detailed-accountBank").html(data.accountBank);
+	    	}else{
+	    		$("#detailed-accountBank").html('未知');
+	    	}
+	    }
+	});
 	$('#detailed-dialog-message').modal('show');
 }
 

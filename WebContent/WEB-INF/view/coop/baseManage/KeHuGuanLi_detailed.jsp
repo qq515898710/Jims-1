@@ -19,16 +19,53 @@
          <div class="profile-user-info profile-user-info-striped"> 
           <div class="profile-info-row"> 
            <div class="profile-info-name"> 客户名称</div> 
-           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-name">?</span> </div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-name">-</span></div> 
           </div>
           <div class="profile-info-row"> 
            <div class="profile-info-name"> 简称</div> 
-           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-abbreviation">?</span> </div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-abbreviation">-</span> </div> 
+          </div> 
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 地址</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-address">-</span> </div> 
+          </div> 
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 邮政编码</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-postalCode">-</span> </div> 
+          </div> 
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 电话</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-phone">-</span> </div> 
           </div> 
          </div> 
         </div> 
         <div id="dropdown14" class="tab-pane">
-          Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. 
+          <div class="profile-user-info profile-user-info-striped"> 
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 传真</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-fax">-</span> </div> 
+          </div>
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 联系人</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-contacts">-</span> </div> 
+          </div> 
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 联系人电话</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-telephone">-</span> </div> 
+          </div> 
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 电子邮箱</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-email">-</span> </div> 
+          </div> 
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 开户行</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-depositBank">-</span> </div> 
+          </div> 
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 开户帐号</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-accountBank">-</span> </div> 
+          </div> 
+         </div> 
         </div> 
        </div> 
       </div> 
