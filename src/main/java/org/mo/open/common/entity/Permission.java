@@ -20,6 +20,16 @@ public class Permission implements java.io.Serializable {
 	
 	private List<Role> roles;
 	
+	public Permission() {
+		super();
+	}
+
+	public Permission(String name, String description) {
+		super();
+		this.name = name;
+		this.description = description;
+	}
+
 	public java.lang.Long getId() {
 		return id;
 	}

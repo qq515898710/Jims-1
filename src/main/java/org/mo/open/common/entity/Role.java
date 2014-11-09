@@ -21,6 +21,20 @@ public class Role implements java.io.Serializable {
 
 	private List<Permission> permissions;
 	
+	
+	
+	public Role() {
+		super();
+	}
+
+	
+	public Role(String name, String description) {
+		super();
+		this.name = name;
+		this.description = description;
+	}
+
+
 	public java.lang.Long getId() {
 		return id;
 	}

@@ -20,9 +20,9 @@ public class SellReturn implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private java.lang.String id;
-	
+
 	private float unitCost;
 
 	private int amount;
@@ -38,26 +38,26 @@ public class SellReturn implements Serializable {
 	private GoodInfo goodInfo;
 
 	private CustomerInfo customerInfo;
-	
+
 	private User user;
 
 	public SellReturn() {
 		super();
 	}
 
-	public SellReturn(float unitCost, int amount, float sum, Date time,
-			String clearingForm, String handler,GoodInfo goodInfo,CustomerInfo customerInfo,User user) {
+	public SellReturn(float unitCost, int amount, float sum, 
+			String clearingForm, String handler, GoodInfo goodInfo,
+			CustomerInfo customerInfo, User user) {
 		super();
 		this.id = "sellr" + Sequence.nextId();
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
-		this.time = time;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
-		this.goodInfo =goodInfo;
-		this.customerInfo =customerInfo;
-		this.user=user;
+		this.goodInfo = goodInfo;
+		this.customerInfo = customerInfo;
+		this.user = user;
 	}
 
 	public java.lang.String getId() {

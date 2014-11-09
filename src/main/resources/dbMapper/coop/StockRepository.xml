@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.mo.jims.coop.repository.StockRepository">
+
+	<sql id="select_stock_info">
+		SELECT 
+			id,
+		 	provider_id,
+		 	user_id, 
+		 	good_id, 
+		 	variety_amount, 
+		 	unit_cost, 
+		 	amount, 
+		 	sum, 
+		 	check_conclusion, 
+		 	time, 
+		 	clearing_form, 
+		 	handler 
+		FROM tb_stock
+	</sql>
+
+	<insert id="insert" parameterType="Stock">
+		INSERT INTO tb_stock(
+			id,
+		 	provider_id,
+		 	user_id, 
+		 	good_id, 
+		 	variety_amount, 
+		 	unit_cost, 
+		 	amount, 
+		 	sum, 
+		 	check_conclusion, 
+		 	time, 
+		 	clearing_form, 
+		 	handler)
+		VALUE(#{id}, #{providerInfo.id},#{user.id},#{goodInfo.id}, #{varietyAmount},#{unitCost},
+			#{amount},#{sum}, #{checkConclusion},#{time},#{clearingForm}, #{handler})
+		<selectKey order="AFTER" resultType="String" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+	</insert>
+
+	<update id="updateByPK" parameterType="Stock">
+		UPDATE tb_stock SET
+		 	provider_id=#{providerInfo.id},
+		 	good_id=#{goodInfo.id}, 
+		 	user_id=#{user.id}, 
+		 	variety_amount=#{varietyAmount}, 
+		 	unit_cost=#{unitCost}, 
+		 	amount=#{amount}, 
+		 	sum=#{sum}, 
+		 	check_conclusion =#{checkConclusion},
+		 	time=#{time}, 
+		 	clearing_form=#{clearingForm}, 
+		 	handler=#{handler}
+		WHERE
+			id=#{id}
+	</update>
+
+	<delete id="deleteByPK">
+		DELETE FROM tb_stock WHERE id=#{id}
+	</delete>
+
+	<select id="selectByPK" resultMap="stockResultMap">
+		<include refid="select_stock_info" />
+		WHERE id = #{id}
+	</select>
+	
+	<select id="countByProviderInfoGoodInfoUserTime" resultType="int">
+		SELECT COUNT(*) FROM tb_stock 
+		JOIN tb_provider_info ON tb_provider_info.id = tb_stock.provider_id 
+		JOIN tb_user ON tb_user.account = tb_stock.user_id 
+		JOIN tb_good_info ON tb_good_info.id = tb_stock.good_id 
+		<where>
+			<if test="startTime != null"><![CDATA[ tb_stock.time >= #{startTime} ]]> </if>
+			<if test="endTime != null"><![CDATA[ AND tb_stock.time <= #{endTime} ]]> </if>
+			<if test="ProviderName != null and ProviderName != ''"> AND tb_provider_info.name LIKE CONCAT('%', #{ProviderName},'%') </if>
+			<if test="GoodName != null and GoodName != ''"> AND tb_good_info.name LIKE CONCAT('%', #{GoodName},'%') </if>
+			<if test="UserName != null and UserName != ''"> AND tb_user.username LIKE CONCAT('%', #{UserName},'%') </if>
+		</where>
+	</select>
+	
+	<select id="selectAllByProviderInfoGoodInfoUserTime" resultMap="stockResultMap">
+		SELECT 
+			tb_stock.id,
+		 	tb_provider_info.name AS provider_name,
+		 	tb_user.username AS user_username, 
+		 	tb_good_info.name AS good_name, 
+		 	tb_stock.variety_amount, 
+		 	tb_stock.unit_cost, 
+		 	tb_stock.amount, 
+		 	tb_stock.sum, 
+		 	tb_stock.check_conclusion, 
+		 	tb_stock.time, 
+		 	tb_stock.clearing_form, 
+		 	tb_stock.handler 
+		FROM tb_stock 
+		JOIN tb_provider_info ON tb_provider_info.id = tb_stock.provider_id 
+		JOIN tb_user ON tb_user.account = tb_stock.user_id 
+		JOIN tb_good_info ON tb_good_info.id = tb_stock.good_id 
+		<where>
+			<if test="startTime != null"><![CDATA[ tb_stock.time >= #{startTime} ]]> </if>
+			<if test="endTime != null"><![CDATA[ AND tb_stock.time <= #{endTime} ]]> </if>
+			<if test="ProviderName != null and ProviderName != ''"> AND tb_provider_info.name LIKE CONCAT('%', #{ProviderName},'%') </if>
+			<if test="GoodName != null and GoodName != ''"> AND tb_good_info.name LIKE CONCAT('%', #{GoodName},'%') </if>
+			<if test="UserName != null and UserName != ''"> AND tb_user.username LIKE CONCAT('%', #{UserName},'%') </if>
+		</where>
+		LIMIT #{offset}, #{size}
+	</select>
+
+	<!-- stock -->
+	<resultMap type="Stock" id="stockResultMap">
+		<id property="id" column="id" />
+		<result property="varietyAmount" column="variety_amount" />
+		<result property="unitCost" column="unit_cost" />
+		<result property="amount" column="amount" />
+		<result property="sum" column="sum" />
+		<result property="checkConclusion" column="check_conclusion" />
+		<result property="time" column="time" />
+		<result property="clearingForm" column="clearing_form" />
+		<result property="handler" column="handler" />
+		<association property="providerInfo" javaType="ProviderInfo">
+			<id property="id" column="provider_id"/>
+			<result property="name" column="provider_name" />
+		</association>
+		<association property="user" javaType="User">
+			<id property="account" column="user_id"/>
+			<result property="username" column="user_username" />
+		</association>
+		<association property="goodInfo" javaType="GoodInfo">
+			<id property="id" column="good_id"/>
+			<result property="name" column="good_name" />
+		</association>
+	</resultMap>
+
+</mapper>

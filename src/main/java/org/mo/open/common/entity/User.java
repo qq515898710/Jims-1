@@ -52,13 +52,11 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(String username, String password, Date createDate,
-			Date lastestDate) {
+	public User(String username, String password, Date lastestDate) {
 		super();
 		this.account = "u" + Sequence.nextId();
 		this.username = username;
 		this.password = password;
-		this.createDate = createDate;
 		this.latestDate = lastestDate;
 	}
 

@@ -31,7 +31,7 @@ public class Stock implements Serializable {
 
 	private float sum;
 
-	private java.lang.String check_conclusion;
+	private java.lang.String checkConclusion;
 
 	private java.util.Date time;
 
@@ -50,17 +50,15 @@ public class Stock implements Serializable {
 	}
 
 	public Stock(int varietyAmount, float unitCost, int amount, float sum,
-			String check_conclusion, Date time, String clearingForm,
-			String handler, ProviderInfo providerInfo, GoodInfo goodInfo,
-			User user) {
+			String checkConclusion, String clearingForm, String handler,
+			ProviderInfo providerInfo, GoodInfo goodInfo, User user) {
 		super();
 		this.id = "stock" + Sequence.nextId();
 		this.varietyAmount = varietyAmount;
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
-		this.check_conclusion = check_conclusion;
-		this.time = time;
+		this.checkConclusion = checkConclusion;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
 		this.providerInfo = providerInfo;
@@ -108,12 +106,12 @@ public class Stock implements Serializable {
 		this.sum = sum;
 	}
 
-	public java.lang.String getCheck_conclusion() {
-		return check_conclusion;
+	public java.lang.String getCheckConclusion() {
+		return checkConclusion;
 	}
 
-	public void setCheck_conclusion(java.lang.String check_conclusion) {
-		this.check_conclusion = check_conclusion;
+	public void setCheckConclusion(java.lang.String checkConclusion) {
+		this.checkConclusion = checkConclusion;
 	}
 
 	public java.util.Date getTime() {
@@ -162,6 +160,16 @@ public class Stock implements Serializable {
 
 	public void setGoodInfo(GoodInfo goodInfo) {
 		this.goodInfo = goodInfo;
+	}
+
+	@Override
+	public String toString() {
+		return "Stock [id=" + id + ", varietyAmount=" + varietyAmount
+				+ ", unitCost=" + unitCost + ", amount=" + amount + ", sum="
+				+ sum + ", checkConclusion=" + checkConclusion + ", time="
+				+ time + ", clearingForm=" + clearingForm + ", handler="
+				+ handler + ", providerInfo=" + providerInfo + ", user=" + user
+				+ ", goodInfo=" + goodInfo + "]";
 	}
 
 }

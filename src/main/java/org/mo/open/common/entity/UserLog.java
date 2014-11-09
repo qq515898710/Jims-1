@@ -11,8 +11,7 @@ import java.io.Serializable;
  * 登录日志信息
  * 
  */
-public class UserLog implements Serializable{
-
+public class UserLog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +20,15 @@ public class UserLog implements Serializable{
 	private java.util.Date time;
 
 	private User user;
+
+	public UserLog() {
+		super();
+	}
+
+	public UserLog(User user) {
+		super();
+		this.user = user;
+	}
 
 	public long getId() {
 		return id;
@@ -45,6 +53,5 @@ public class UserLog implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 
 }

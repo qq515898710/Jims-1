@@ -17,34 +17,33 @@
 					ace.settings.check('sidebar', 'fixed')
 				} catch (e) {
 				}
-			</script> 
-     <div class="sidebar-shortcuts" id="sidebar-shortcuts"> 
-      <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large"> 
-       <button class="btn btn-success"> <i class="icon-signal"></i> </button> 
-       <button class="btn btn-info"> <i class="icon-pencil"></i> </button> 
-       <button class="btn btn-warning"> <i class="icon-group"></i> </button> 
-       <button class="btn btn-danger"> <i class="icon-cogs"></i> </button> 
-      </div> 
-      <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini"> 
-       <span class="btn btn-success"></span> 
-       <span class="btn btn-info"></span> 
-       <span class="btn btn-warning"></span> 
-       <span class="btn btn-danger"></span> 
-      </div> 
-     </div> 
-     <!-- #sidebar-shortcuts --> 
+	 </script>
+	  <div class="sidebar-shortcuts" id="sidebar-shortcuts"> 
+       <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large"> 
+        <button class="btn btn-success" onclick="goPage('home.html')"><i class="icon-signal"></i></button> 
+        <button class="btn btn-info" onclick="goPage('home.html')"> <i class="icon-pencil"></i></button> 
+        <button class="btn btn-warning" onclick="goPage('home.html')"> <i class="icon-group"></i></button> 
+        <button class="btn btn-danger" onclick="goPage('home.html')"> <i class="icon-cogs"></i></button> 
+       </div><!--.sidebar-shortcuts-large  -->
+       <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+           <span class="btn btn-success"></span>
+           <span class="btn btn-info"></span>
+           <span class="btn btn-warning"></span>
+           <span class="btn btn-danger"></span>
+      </div>
+     </div><!--sidebar-shortcuts  -->
      <!-- 导航条 --> 
      <jsp:include page="/WEB-INF/view/nav.jsp"></jsp:include> 
      <div class="sidebar-collapse" id="sidebar-collapse"> 
       <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i> 
-     </div> 
+     </div> <!--.sidebar-collapse  -->
      <script type="text/javascript">
 				try {
 					ace.settings.check('sidebar', 'collapsed')
 				} catch (e) {
 				}
 			</script> 
-    </div> 
+    </div> <!--.sidebar  -->
     <div class="main-content"> 
      <div class="breadcrumbs" id="breadcrumbs"> 
       <script type="text/javascript">
@@ -72,15 +71,15 @@
           <jsp:include page="KeHuGuanLi_edit.jsp"></jsp:include> 
           <button id="bt-delete-dialog" class="btn btn-primary btn-sm" ><i class="icon-trash align-top bigger-125"></i>删除 </button> 
          <jsp:include page="KeHuGuanLi_delete.jsp"></jsp:include>
-         <button id="bt-add-dialog" class="btn btn-primary btn-sm" onclick="document.getElementById('file').click();" ><i class="icon-cloud-upload align-top bigger-125"></i>导入 </button>
+         <button id="bt-add-dialog" class="btn btn-primary btn-sm" onclick="document.getElementById('file').click();" ><i class="icon-upload align-top bigger-125"></i>导入 </button>
          <input type="file" name="file" id="file" style="display:none" />
-         <button id="bt-add-dialog" class="btn btn-primary btn-sm"  type="flle" ><i class="icon-cloud-download align-top bigger-125"></i>导出 </button>
+         <button id="bt-add-dialog" class="btn btn-primary btn-sm"  type="flle" ><i class="icon-download align-top bigger-125"></i>导出 </button>
          <div class="btn-group"> 
             <button data-toggle="dropdown" class="btn btn-primary  btn-sm2 dropdown-toggle"><i class="icon-stackexchange"></i> 更多<i class="icon-angle-down icon-on-right"></i></button> 
             <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"> 
               <li> <a href="#" onclick="document.all.WebBrowser.ExecWB(6,1)"><i class="icon-print"></i> 打印</a> </li> 
               <li class="divider"></li> 
-              <li> <a href="#"><i class="icon-long-arrow-down"></i> 模版表格下载</a> </li> 
+              <li> <a href="#"><i class="icon-download-alt"></i> 模版表格下载</a> </li> 
            </ul> 
          </div></h3>
          <div id="alert"></div>

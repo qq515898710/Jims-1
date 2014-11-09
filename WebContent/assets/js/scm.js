@@ -1,4 +1,7 @@
-//定时跳转
+function goPage(url) {
+	location.href = url;// 跳转页面
+}
+// 定时跳转
 function countDown(time,url){
     $("#mysecond").text(time);//<span>中显示的内容值
      if(url==''){

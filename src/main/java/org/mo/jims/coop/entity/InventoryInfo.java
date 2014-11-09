@@ -6,6 +6,7 @@
 package org.mo.jims.coop.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.mo.open.common.entity.User;
 import org.mo.open.common.util.Sequence;
@@ -38,13 +39,15 @@ public class InventoryInfo implements Serializable {
 
 	private User user;
 
+	private Date time;
+
 	public InventoryInfo() {
 		super();
 	}
 
 	public InventoryInfo(String name, String abbreviation, String origin,
 			String specification, String pack, String units, float unitCost,
-			int amount,User user) {
+			int amount, User user) {
 		super();
 		this.id = "i" + Sequence.nextId();
 		this.name = name;
@@ -136,6 +139,14 @@ public class InventoryInfo implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
 	}
 
 }

@@ -23,7 +23,7 @@ public interface BaseRepository<T extends Serializable, PK extends Serializable>
 	 * 
 	 * @param entity
 	 */
-	public void insert(T entity);
+	public int insert(T entity);
 
 	/**
 	 * 通过主键更新数据

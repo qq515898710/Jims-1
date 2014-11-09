@@ -13,12 +13,12 @@
 		 	sum, 
 		 	time, 
 		 	clearing_form, 
-		 	headler
-		FROM tb_sell_info
+		 	headler 
+		FROM tb_sell
 	</sql>
 
 	<insert id="insert" parameterType="Sell">
-		INSERT INTO tb_sell_info(
+		INSERT INTO tb_sell(
 			id,
 		 	good_id, 
 		 	customer_id,
@@ -34,7 +34,7 @@
 	</insert>
 
 	<update id="updateByPK" parameterType="Sell">
-		UPDATE tb_sell_info SET
+		UPDATE tb_sell SET
 		 	good_id=#{goodInfo.id}, 
 		 	customer_id=#{customerInfo.id},
 		 	user_id=#{user.id}, 
@@ -49,7 +49,7 @@
 	</update>
 
 	<delete id="deleteByPK">
-		DELETE FROM tb_sell_info WHERE id=#{id}
+		DELETE FROM tb_sell WHERE id=#{id}
 	</delete>
 
 	<select id="selectByPK" resultMap="sellResultMap">
