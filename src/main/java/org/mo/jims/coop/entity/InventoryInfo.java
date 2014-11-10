@@ -45,6 +45,23 @@ public class InventoryInfo implements Serializable {
 		super();
 	}
 
+	public InventoryInfo(String id, String name, String abbreviation,
+			String origin, String specification, String pack, String units,
+			float unitCost, int amount, User user, Date time) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.abbreviation = abbreviation;
+		this.origin = origin;
+		this.specification = specification;
+		this.pack = pack;
+		this.units = units;
+		this.unitCost = unitCost;
+		this.amount = amount;
+		this.user = user;
+		this.time = time;
+	}
+
 	public InventoryInfo(String name, String abbreviation, String origin,
 			String specification, String pack, String units, float unitCost,
 			int amount, User user) {

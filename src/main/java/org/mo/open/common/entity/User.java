@@ -52,12 +52,24 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(String username, String password, Date lastestDate) {
+	
+	public User(String account, String username, String password,
+			Date createDate, Date latestDate) {
+		super();
+		this.account = account;
+		this.username = username;
+		this.password = password;
+		this.createDate = createDate;
+		this.latestDate = latestDate;
+	}
+
+
+	public User(String username, String password, Date createDate) {
 		super();
 		this.account = "u" + Sequence.nextId();
 		this.username = username;
 		this.password = password;
-		this.latestDate = lastestDate;
+		this.createDate = createDate;
 	}
 
 	public java.lang.String getAccount() {
@@ -156,4 +168,14 @@ public class User implements Serializable {
 		this.inventoryInfo = inventoryInfo;
 	}
 
+	@Override
+	public String toString() {
+		return "User [account=" + account + ", username=" + username
+				+ ", password=" + password + ", createDate=" + createDate
+				+ ", latestDate=" + latestDate + ", role=" + role
+				+ ", userLog=" + userLog + ", sell=" + sell + ", sellReturn="
+				+ sellReturn + ", stock=" + stock + ", stockReturn="
+				+ stockReturn + ", inventoryInfo=" + inventoryInfo + "]";
+	}
+	
 }

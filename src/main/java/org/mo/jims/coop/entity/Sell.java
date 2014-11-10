@@ -45,6 +45,22 @@ public class Sell implements Serializable {
 		super();
 	}
 
+	public Sell(String id, float unitCost, int amount, float sum, Date time,
+			String clearingForm, String headler, GoodInfo goodInfo,
+			CustomerInfo customerInfo, User user) {
+		super();
+		this.id = id;
+		this.unitCost = unitCost;
+		this.amount = amount;
+		this.sum = sum;
+		this.time = time;
+		this.clearingForm = clearingForm;
+		this.headler = headler;
+		this.goodInfo = goodInfo;
+		this.customerInfo = customerInfo;
+		this.user = user;
+	}
+
 	public Sell(float unitCost, int amount, float sum, 
 			String clearingForm, String headler,User user) {
 		super();

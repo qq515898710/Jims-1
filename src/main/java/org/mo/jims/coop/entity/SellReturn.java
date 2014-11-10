@@ -45,6 +45,22 @@ public class SellReturn implements Serializable {
 		super();
 	}
 
+	public SellReturn(String id, float unitCost, int amount, float sum,
+			Date time, String clearingForm, String handler, GoodInfo goodInfo,
+			CustomerInfo customerInfo, User user) {
+		super();
+		this.id = id;
+		this.unitCost = unitCost;
+		this.amount = amount;
+		this.sum = sum;
+		this.time = time;
+		this.clearingForm = clearingForm;
+		this.handler = handler;
+		this.goodInfo = goodInfo;
+		this.customerInfo = customerInfo;
+		this.user = user;
+	}
+
 	public SellReturn(float unitCost, int amount, float sum, 
 			String clearingForm, String handler, GoodInfo goodInfo,
 			CustomerInfo customerInfo, User user) {

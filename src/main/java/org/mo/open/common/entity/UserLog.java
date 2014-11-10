@@ -6,6 +6,7 @@
 package org.mo.open.common.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 登录日志信息
@@ -24,6 +25,15 @@ public class UserLog implements Serializable {
 	public UserLog() {
 		super();
 	}
+
+	
+	public UserLog(long id, Date time, User user) {
+		super();
+		this.id = id;
+		this.time = time;
+		this.user = user;
+	}
+
 
 	public UserLog(User user) {
 		super();

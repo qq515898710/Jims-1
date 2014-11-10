@@ -28,6 +28,14 @@ public class Role implements java.io.Serializable {
 	}
 
 	
+	public Role(Long id, String name, String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
+
+
 	public Role(String name, String description) {
 		super();
 		this.name = name;

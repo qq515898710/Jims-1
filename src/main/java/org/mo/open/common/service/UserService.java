@@ -41,7 +41,7 @@ public class UserService {
 		userPage.setCurrentPage(page);
 		userPage.setPageSize(pageSize);
 		userPage.setTotalElement(
-				userRepository.countAll(user.getAccount(), user.getUsername()),
+				userRepository.countAllBy(user.getAccount(), user.getUsername()),
 				pageSize);
 		if (userPage.getTotalElement() == 0) {
 			return userPage;

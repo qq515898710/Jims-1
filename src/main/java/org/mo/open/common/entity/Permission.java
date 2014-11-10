@@ -24,6 +24,15 @@ public class Permission implements java.io.Serializable {
 		super();
 	}
 
+	
+	public Permission(Long id, String name, String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
+
+
 	public Permission(String name, String description) {
 		super();
 		this.name = name;

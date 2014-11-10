@@ -5,8 +5,8 @@
 	<sql id="selcet_user_log">SELECT id, user_account, time FROM tb_user_log</sql>
 	
 	<insert id="insert" parameterType="UserLog" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO tb_user_log(user_account, time)
-		VALUE(#{user.account}, #{time})
+		INSERT INTO tb_user_log(user_account)
+		VALUE(#{user.account})
 	</insert>
 	
 	<update id="updateByPK" parameterType="UserLog">

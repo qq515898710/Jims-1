@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.mo.open.common.util.Sequence;
 
+
 /**
  * 商品信息
  */
@@ -47,6 +48,21 @@ public class GoodInfo implements Serializable {
 
 	public GoodInfo() {
 		super();
+	}
+
+	public GoodInfo(String id, String name, String abbreviation, String origin,
+			String units, String pack, String approvalNum, String batchNum,
+			String memo) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.abbreviation = abbreviation;
+		this.origin = origin;
+		this.units = units;
+		this.pack = pack;
+		this.approvalNum = approvalNum;
+		this.batchNum = batchNum;
+		this.memo = memo;
 	}
 
 	public GoodInfo(String name, String abbreviation, String origin,

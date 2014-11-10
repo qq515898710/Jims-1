@@ -1,6 +1,8 @@
 package org.mo.open.common.repository;
 
 import java.io.Serializable;
+import java.util.Date;
+
 
 /**
  * 
@@ -38,5 +40,25 @@ public interface BaseRepository<T extends Serializable, PK extends Serializable>
 	 * @param entity
 	 */
 	public void deleteByPK(PK id);
+	
+	
+	/**
+	 * 获取系统时间
+	 * 
+	 * @return
+	 */
+	public Date getCurrentTime();
+	
+	/**
+	 * 获取最后插入的一条数据
+	 * @return
+	 */
+	public T getLatestInsert();
+	
+	/**
+	 * 获取最后插入的一条数据id
+	 * @return
+	 */
+	public PK getLatestInsertId();
 
 }

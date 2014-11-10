@@ -7,8 +7,8 @@
 <!-- 	<select id="getCurrentTime" resultType="Date">SELECT NOW()</select> -->
 	
 	<insert id="insert" parameterType="User">
-		INSERT INTO tb_user(account, username, password, create_date, latest_date)
-		VALUE(#{account}, #{username},#{password},#{createDate}, #{latestDate})
+		INSERT INTO tb_user(account, username, password,create_date)
+		VALUE(#{account}, #{username},#{password}, #{createDate})
 	</insert>
 
 	<update id="updateByPK" parameterType="User">
@@ -20,10 +20,23 @@
 		WHERE
 			account=#{account}
 	</update>
+	
 
 	<delete id="deleteByPK">
 		DELETE FROM tb_user WHERE account=#{account}
 	</delete>
+	
+	<select id="getCurrentTime" resultType="Date">
+		SELECT now();
+	</select>
+	
+	<select id="getLatestInsert" resultMap="userResultMap">
+		SELECT * FROM tb_user ORDER BY account DESC LIMIT 1 
+	</select>
+	
+	<select id="getLatestInsertId" resultType="String">
+		SELECT MAX(account) FROM  tb_user
+	</select>
 
 	<select id="selectByPK" resultMap="userResultMap">
 		<include refid="select_user" />
@@ -61,61 +74,4 @@
 		<result property="latestDate" column="latest_date" />
 	</resultMap>
 
-	<!-- <collection property="tbUserLog" ofType="TbUserLog"> -->
-	<!-- <id property="id" column="id"/> -->
-	<!-- <result property="name" column="name"/> -->
-	<!-- <result property="time" column="time"/> -->
-	<!-- </collection> -->
-	<!-- <collection property="tbSell" ofType="TbSell"> -->
-	<!-- <id property="id" column="id"/> -->
-	<!-- <result property="gid" column="gid"/> -->
-	<!-- <result property="cid" column="cid"/> -->
-	<!-- <result property="uid" column="uid"/> -->
-	<!-- <result property="unit_cost" column="unit_cost"/> -->
-	<!-- <result property="amount" column="amount"/> -->
-	<!-- <result property="sum" column="sum"/> -->
-	<!-- <result property="time" column="time"/> -->
-	<!-- <result property="clearing_form" column="clearing_form"/> -->
-	<!-- <result property="headler" column="headler"/> -->
-	<!-- </collection> -->
-	<!-- <collection property="tbSellReturn" ofType="TbSellReturn"> -->
-	<!-- <id property="id" column="id"/> -->
-	<!-- <result property="gid" column="gid"/> -->
-	<!-- <result property="cid" column="cid"/> -->
-	<!-- <result property="uid" column="uid"/> -->
-	<!-- <result property="unit_cost" column="unit_cost"/> -->
-	<!-- <result property="amount" column="amount"/> -->
-	<!-- <result property="sum" column="sum"/> -->
-	<!-- <result property="time" column="time"/> -->
-	<!-- <result property="clearing_form" column="clearing_form"/> -->
-	<!-- <result property="headler" column="headler"/> -->
-	<!-- </collection> -->
-	<!-- <collection property="tbStock" ofType="TbStock"> -->
-	<!-- <id property="id" column="id"/> -->
-	<!-- <result property="gid" column="gid"/> -->
-	<!-- <result property="cid" column="cid"/> -->
-	<!-- <result property="uid" column="uid"/> -->
-	<!-- <result property="variety_amount" column="variety_amount"/> -->
-	<!-- <result property="unit_cost" column="unit_cost"/> -->
-	<!-- <result property="amount" column="amount"/> -->
-	<!-- <result property="sum" column="sum"/> -->
-	<!-- <result property="check_conclusion" column="check_conclusion"/> -->
-	<!-- <result property="time" column="time"/> -->
-	<!-- <result property="clearing_form" column="clearing_form"/> -->
-	<!-- <result property="headler" column="headler"/> -->
-	<!-- </collection> -->
-	<!-- <collection property="tbStockReturn" ofType="TbStockReturn"> -->
-	<!-- <id property="id" column="id"/> -->
-	<!-- <result property="gid" column="gid"/> -->
-	<!-- <result property="cid" column="cid"/> -->
-	<!-- <result property="uid" column="uid"/> -->
-	<!-- <result property="variety_amount" column="variety_amount"/> -->
-	<!-- <result property="unit_cost" column="unit_cost"/> -->
-	<!-- <result property="amount" column="amount"/> -->
-	<!-- <result property="sum" column="sum"/> -->
-	<!-- <result property="check_conclusion" column="check_conclusion"/> -->
-	<!-- <result property="time" column="time"/> -->
-	<!-- <result property="clearing_form" column="clearing_form"/> -->
-	<!-- <result property="headler" column="headler"/> -->
-	<!-- </collection> -->
 </mapper>

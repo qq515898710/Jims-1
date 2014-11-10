@@ -49,6 +49,25 @@ public class Stock implements Serializable {
 		super();
 	}
 
+	public Stock(String id, int varietyAmount, float unitCost, int amount,
+			float sum, String checkConclusion, Date time, String clearingForm,
+			String handler, ProviderInfo providerInfo, User user,
+			GoodInfo goodInfo) {
+		super();
+		this.id = id;
+		this.varietyAmount = varietyAmount;
+		this.unitCost = unitCost;
+		this.amount = amount;
+		this.sum = sum;
+		this.checkConclusion = checkConclusion;
+		this.time = time;
+		this.clearingForm = clearingForm;
+		this.handler = handler;
+		this.providerInfo = providerInfo;
+		this.user = user;
+		this.goodInfo = goodInfo;
+	}
+
 	public Stock(int varietyAmount, float unitCost, int amount, float sum,
 			String checkConclusion, String clearingForm, String handler,
 			ProviderInfo providerInfo, GoodInfo goodInfo, User user) {

@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.mo.open.common.util.Sequence;
 
+
 /**
  * 客户信息
  * 

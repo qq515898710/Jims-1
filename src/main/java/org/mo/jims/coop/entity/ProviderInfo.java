@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.mo.open.common.util.Sequence;
 
+
 /**
  * 供应商信息
  * 
@@ -50,6 +51,24 @@ public class ProviderInfo implements Serializable {
 
 	public ProviderInfo() {
 		super();
+	}
+
+	public ProviderInfo(String id, String name, String abbreviation,
+			String address, String postalCode, String phone, String fax,
+			String contacts, String telephone, String depositBank,
+			String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.abbreviation = abbreviation;
+		this.address = address;
+		this.postalCode = postalCode;
+		this.phone = phone;
+		this.fax = fax;
+		this.contacts = contacts;
+		this.telephone = telephone;
+		this.depositBank = depositBank;
+		this.email = email;
 	}
 
 	public ProviderInfo(String pname, String abbreviation, String address,
