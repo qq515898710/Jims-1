@@ -4,8 +4,6 @@
 
 	<sql id="select_user">SELECT account, username, password, create_date, latest_date FROM tb_user</sql>
 
-<!-- 	<select id="getCurrentTime" resultType="Date">SELECT NOW()</select> -->
-	
 	<insert id="insert" parameterType="User">
 		INSERT INTO tb_user(account, username, password,create_date)
 		VALUE(#{account}, #{username},#{password}, #{createDate})

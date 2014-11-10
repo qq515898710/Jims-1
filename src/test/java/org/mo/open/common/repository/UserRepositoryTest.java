@@ -52,9 +52,9 @@ public class UserRepositoryTest extends BaseTest{
 
 	@Test
 	public void testInsert() {
-		User entity = new User("邓小平2", "12345632", new Date());
-		int insert = userRepository.insert(entity);
-		System.out.println(insert+"----------"+entity.getAccount());
+//		User entity = new User("邓小平2", "12345632", new Date());
+//		int insert = userRepository.insert(entity);
+//		System.out.println(insert+"----------"+entity.getAccount());
 	}
 
 	@Test

@@ -58,6 +58,18 @@
 		<include refid="select_customer_info" />
 		WHERE id = #{id}
 	</select>
+	
+	<select id="getCurrentTime" resultType="Date">
+		SELECT now();
+	</select>
+	
+	<select id="getLatestInsert" resultMap="userResultMap">
+		SELECT * FROM tb_user ORDER BY account DESC LIMIT 1 
+	</select>
+	
+	<select id="getLatestInsertId" resultType="String">
+		SELECT MAX(account) FROM  tb_user
+	</select>
 
 	<select id="selcetByName" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />

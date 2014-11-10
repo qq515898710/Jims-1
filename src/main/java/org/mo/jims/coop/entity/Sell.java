@@ -61,8 +61,9 @@ public class Sell implements Serializable {
 		this.user = user;
 	}
 
-	public Sell(float unitCost, int amount, float sum, 
-			String clearingForm, String headler,User user) {
+	public Sell(float unitCost, int amount, float sum, Date time,
+			String clearingForm, String headler, GoodInfo goodInfo,
+			CustomerInfo customerInfo, User user) {
 		super();
 		this.id = "sell" + Sequence.nextId();
 		this.unitCost = unitCost;
@@ -70,7 +71,10 @@ public class Sell implements Serializable {
 		this.sum = sum;
 		this.clearingForm = clearingForm;
 		this.headler = headler;
-		this.user=user;
+		this.user = user;
+		this.time = time;
+		this.goodInfo = goodInfo;
+		this.customerInfo = customerInfo;
 	}
 
 	public java.lang.String getId() {

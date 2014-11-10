@@ -64,12 +64,13 @@ public class User implements Serializable {
 	}
 
 
-	public User(String username, String password, Date createDate) {
+	public User(String username, String password, Date createDate, Date latestDate) {
 		super();
 		this.account = "u" + Sequence.nextId();
 		this.username = username;
 		this.password = password;
 		this.createDate = createDate;
+		this.latestDate = latestDate;
 	}
 
 	public java.lang.String getAccount() {

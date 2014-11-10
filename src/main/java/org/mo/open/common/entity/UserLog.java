@@ -35,8 +35,9 @@ public class UserLog implements Serializable {
 	}
 
 
-	public UserLog(User user) {
+	public UserLog(Date time,User user) {
 		super();
+		this.time = time;
 		this.user = user;
 	}
 
