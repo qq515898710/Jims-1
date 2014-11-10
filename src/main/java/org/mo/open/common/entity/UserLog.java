@@ -18,7 +18,7 @@ public class UserLog implements Serializable {
 
 	private long id;
 
-	private java.util.Date time;
+	private java.util.Date loginTime;
 
 	private User user;
 
@@ -26,18 +26,15 @@ public class UserLog implements Serializable {
 		super();
 	}
 
-	
-	public UserLog(long id, Date time, User user) {
+	public UserLog(long id, Date loginTime, User user) {
 		super();
 		this.id = id;
-		this.time = time;
+		this.loginTime = loginTime;
 		this.user = user;
 	}
 
-
-	public UserLog(Date time,User user) {
+	public UserLog(User user) {
 		super();
-		this.time = time;
 		this.user = user;
 	}
 
@@ -49,12 +46,12 @@ public class UserLog implements Serializable {
 		this.id = id;
 	}
 
-	public java.util.Date getTime() {
-		return time;
+	public java.util.Date getLoginTime() {
+		return loginTime;
 	}
 
-	public void setTime(java.util.Date time) {
-		this.time = time;
+	public void setLoginTime(java.util.Date loginTime) {
+		this.loginTime = loginTime;
 	}
 
 	public User getUser() {

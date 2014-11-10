@@ -69,7 +69,7 @@ public class Stock implements Serializable {
 	}
 
 	public Stock(int varietyAmount, float unitCost, int amount, float sum,
-			String checkConclusion, Date time,String clearingForm, String handler,
+			String checkConclusion, String clearingForm, String handler,
 			ProviderInfo providerInfo, GoodInfo goodInfo, User user) {
 		super();
 		this.id = "stock" + Sequence.nextId();
@@ -78,7 +78,6 @@ public class Stock implements Serializable {
 		this.amount = amount;
 		this.sum = sum;
 		this.checkConclusion = checkConclusion;
-		this.time = time;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
 		this.providerInfo = providerInfo;

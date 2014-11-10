@@ -15,15 +15,16 @@
 		 	telephone, 
 		 	email,
 		 	deposit_bank,
-		 	account_bank
+		 	account_bank,
+		 	time 
 		FROM tb_customer_info
 	</sql>
 	
 	<insert id="insert" parameterType="CustomerInfo">
 		INSERT INTO tb_customer_info(id,name,abbreviation,address,postal_code,
-			phone,fax,contacts,telephone,email,deposit_bank,account_bank)
+			phone,fax,contacts,telephone,email,deposit_bank,account_bank,time)
 		VALUE(#{id}, #{name},#{abbreviation},#{address}, #{postalCode},
-			#{phone},#{fax},#{contacts},#{telephone},#{email},#{depositBank},#{accountBank})
+			#{phone},#{fax},#{contacts},#{telephone},#{email},#{depositBank},#{accountBank},#{time})
 	</insert>
 
 	<update id="updateByPK" parameterType="CustomerInfo">
@@ -38,20 +39,14 @@
 			telephone=#{telephone},
 			email=#{email},
 			deposit_bank=#{depositBank},
-			account_bank=#{accountBank}
+			account_bank=#{accountBank},
+			time=#{time}
 		WHERE
 			id=#{id}
 	</update>
 
 	<delete id="deleteByPK">
 		DELETE FROM tb_customer_info WHERE id=#{id}
-	</delete>
-	
-	<delete id="batchDelete" parameterType="java.lang.String">
-		DELETE FROM tb_customer_info WHERE id IN
-		<foreach collection="array" open="(" separator="," close=")"  item="id">
-			#{id}
-		</foreach>
 	</delete>
 	
 	<select id="selectByPK" resultMap="customerInfoResultMap">
@@ -63,14 +58,30 @@
 		SELECT now();
 	</select>
 	
-	<select id="getLatestInsert" resultMap="userResultMap">
-		SELECT * FROM tb_user ORDER BY account DESC LIMIT 1 
+	<select id="getLatestInsert" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info ORDER BY id DESC LIMIT 1 
 	</select>
 	
 	<select id="getLatestInsertId" resultType="String">
-		SELECT MAX(account) FROM  tb_user
+		SELECT MAX(id) FROM  tb_customer_info
 	</select>
 
+	<select id="selectToday" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info WHERE TO_DAYS(time) = TO_DAYS(NOW());
+	</select>
+	
+	<select id="selectYesterday" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
+	</select>
+	
+	<select id="selectThisWeek" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
+	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_customer_info
+	</select>
+	
 	<select id="selcetByName" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
 		WHERE name = #{name}
@@ -83,10 +94,6 @@
 		</where>
 	</select>
 	
-	<select id="countAll" resultType="int">
-		SELECT COUNT(*) FROM tb_customer_info
-	</select>
-
 	<select id="selectAllByNameOrAbbreviation" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
 		<where>
@@ -95,11 +102,18 @@
 		LIMIT #{offset}, #{size}
 	</select>
 	
-	<select id="selectAll" resultMap="customerInfoResultMap">
+	<select id="selectAllByPage" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
 		LIMIT #{offset}, #{size}
 	</select>
-
+	
+	<delete id="batchDelete" parameterType="java.lang.String">
+		DELETE FROM tb_customer_info WHERE id IN
+		<foreach collection="array" open="(" separator="," close=")"  item="id">
+			#{id}
+		</foreach>
+	</delete>
+	
 	<!-- customerInfo -->
 	<resultMap type="CustomerInfo" id="customerInfoResultMap">
 		<id property="id" column="id" />
@@ -114,6 +128,7 @@
 		<result property="email" column="email" />
 		<result property="depositBank" column="deposit_bank" />
 		<result property="accountBank" column="account_bank" />
+		<result property="time" column="time"/>
 	</resultMap>
 
 </mapper>

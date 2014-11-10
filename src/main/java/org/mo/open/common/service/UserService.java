@@ -61,7 +61,7 @@ public class UserService {
 	private void saveUserLoginLog(User user) {
 		UserLog entity = new UserLog();
 		entity.setUser(user);
-		entity.setTime(new Date(System.currentTimeMillis()));
+		entity.setLoginTime(new Date(System.currentTimeMillis()));
 		userLogRepository.insert(entity);
 	}
 

@@ -14,12 +14,10 @@ public interface CustomerInfoRepository extends BaseRepository<CustomerInfo, Str
 
 	public int countAllByNameOrAbbreviation(@Param("name") String param);
 	
-	public int countAll();
-	
 	public List<CustomerInfo> selectAllByNameOrAbbreviation(@Param("name") String param,
 			@Param("offset") int offset, @Param("size") int size);
 	
-	public List<CustomerInfo> selectAll(@Param("offset") int offset, @Param("size") int size);
+	public List<CustomerInfo> selectAllByPage(@Param("offset") int offset, @Param("size") int size);
 	
 	public void batchDelete(String[] ids);//单参数的不需要@Param
 }

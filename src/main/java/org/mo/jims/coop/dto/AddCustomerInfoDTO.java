@@ -1,5 +1,7 @@
 package org.mo.jims.coop.dto;
 
+import java.util.Date;
+
 import org.mo.jims.coop.entity.CustomerInfo;
 
 public class AddCustomerInfoDTO implements java.io.Serializable {
@@ -30,7 +32,7 @@ public class AddCustomerInfoDTO implements java.io.Serializable {
 	private java.lang.String depositBank;
 
 	private java.lang.String accountBank;
-	
+
 	private String formtoken;
 
 	public CustomerInfo toObject() {

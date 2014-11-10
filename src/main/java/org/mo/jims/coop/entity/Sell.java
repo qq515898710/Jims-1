@@ -61,7 +61,7 @@ public class Sell implements Serializable {
 		this.user = user;
 	}
 
-	public Sell(float unitCost, int amount, float sum, Date time,
+	public Sell(float unitCost, int amount, float sum,
 			String clearingForm, String headler, GoodInfo goodInfo,
 			CustomerInfo customerInfo, User user) {
 		super();
@@ -72,7 +72,6 @@ public class Sell implements Serializable {
 		this.clearingForm = clearingForm;
 		this.headler = headler;
 		this.user = user;
-		this.time = time;
 		this.goodInfo = goodInfo;
 		this.customerInfo = customerInfo;
 	}

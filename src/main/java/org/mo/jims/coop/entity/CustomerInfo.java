@@ -6,10 +6,10 @@
 package org.mo.jims.coop.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.mo.open.common.util.Sequence;
-
 
 /**
  * 客户信息
@@ -45,6 +45,8 @@ public class CustomerInfo implements Serializable {
 
 	private java.lang.String accountBank;
 
+	private Date time;
+
 	private List<Sell> sell;
 
 	private List<SellReturn> sellReturn;
@@ -56,7 +58,7 @@ public class CustomerInfo implements Serializable {
 	public CustomerInfo(String id, String name, String abbreviation,
 			String address, String postalCode, String phone, String fax,
 			String contacts, String telephone, String email,
-			String depositBank, String accountBank) {
+			String depositBank, String accountBank, Date time) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -70,6 +72,7 @@ public class CustomerInfo implements Serializable {
 		this.email = email;
 		this.depositBank = depositBank;
 		this.accountBank = accountBank;
+		this.time = time;
 	}
 
 	public CustomerInfo(String name, String abbreviation, String address,
@@ -185,6 +188,14 @@ public class CustomerInfo implements Serializable {
 
 	public void setAccountBank(java.lang.String accountBank) {
 		this.accountBank = accountBank;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
 	}
 
 	public List<Sell> getSell() {

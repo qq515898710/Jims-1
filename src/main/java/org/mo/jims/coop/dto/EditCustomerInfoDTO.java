@@ -1,5 +1,7 @@
 package org.mo.jims.coop.dto;
 
+import java.util.Date;
+
 import org.mo.jims.coop.entity.CustomerInfo;
 
 public class EditCustomerInfoDTO implements java.io.Serializable {
@@ -8,7 +10,7 @@ public class EditCustomerInfoDTO implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private java.lang.String id;
 
 	private java.lang.String name;
@@ -33,12 +35,14 @@ public class EditCustomerInfoDTO implements java.io.Serializable {
 
 	private java.lang.String accountBank;
 
+	private Date time;
+	
 	private String formtoken;
 
 	public CustomerInfo toObject() {
 		CustomerInfo customerInfo = new CustomerInfo(id, name, abbreviation,
 				address, postalCode, phone, fax, contacts, telephone, email,
-				depositBank, accountBank);
+				depositBank, accountBank, time);
 		return customerInfo;
 	}
 
@@ -138,6 +142,14 @@ public class EditCustomerInfoDTO implements java.io.Serializable {
 		this.accountBank = accountBank;
 	}
 
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
 	public String getFormtoken() {
 		return formtoken;
 	}
@@ -148,13 +160,13 @@ public class EditCustomerInfoDTO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "CustomerInfoDTO [name=" + name + ", abbreviation="
-				+ abbreviation + ", address=" + address + ", postalCode="
-				+ postalCode + ", phone=" + phone + ", fax=" + fax
-				+ ", contacts=" + contacts + ", telephone=" + telephone
+		return "EditCustomerInfoDTO [id=" + id + ", name=" + name
+				+ ", abbreviation=" + abbreviation + ", address=" + address
+				+ ", postalCode=" + postalCode + ", phone=" + phone + ", fax="
+				+ fax + ", contacts=" + contacts + ", telephone=" + telephone
 				+ ", email=" + email + ", depositBank=" + depositBank
-				+ ", accountBank=" + accountBank + ", formtoken=" + formtoken
-				+ "]";
+				+ ", accountBank=" + accountBank + ", time=" + time
+				+ ", formtoken=" + formtoken + "]";
 	}
-
+	
 }

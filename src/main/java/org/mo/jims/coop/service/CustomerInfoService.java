@@ -48,7 +48,7 @@ public class CustomerInfoService {
 		customerInfoPage.setPageSize(pageSize);
 		customerInfoPage.setCurrentPage(page);
 		List<CustomerInfo> selectAllByNameOrAbbreviation = 
-				customerInfoRepository.selectAll((page - 1) * pageSize, pageSize);
+				customerInfoRepository.selectAllByPage((page - 1) * pageSize, pageSize);
 		customerInfoPage.setContent(selectAllByNameOrAbbreviation);
 		return customerInfoPage;
 	}

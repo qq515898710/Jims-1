@@ -64,7 +64,7 @@ public class InventoryInfo implements Serializable {
 
 	public InventoryInfo(String name, String abbreviation, String origin,
 			String specification, String pack, String units, float unitCost,
-			int amount, User user,Date time) {
+			int amount, User user) {
 		super();
 		this.id = "i" + Sequence.nextId();
 		this.name = name;
@@ -76,7 +76,6 @@ public class InventoryInfo implements Serializable {
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.user = user;
-		this.time = time;
 	}
 
 	public java.lang.String getId() {

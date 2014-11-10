@@ -67,7 +67,7 @@ public class StockReturn implements Serializable {
 	}
 
 	public StockReturn(int varietyAmount, float unitCost, int amount,
-			float sum, String check_conclusion,Date time,String clearingForm,
+			float sum, String check_conclusion, String clearingForm,
 			String handler, ProviderInfo providerInfo, User user,
 			GoodInfo goodInfo) {
 		super();
@@ -77,7 +77,6 @@ public class StockReturn implements Serializable {
 		this.amount = amount;
 		this.sum = sum;
 		this.check_conclusion = check_conclusion;
-		this.time = time;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
 		this.providerInfo = providerInfo;

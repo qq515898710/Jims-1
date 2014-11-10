@@ -6,6 +6,7 @@
 package org.mo.jims.coop.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.mo.open.common.util.Sequence;
@@ -35,6 +36,8 @@ public class GoodInfo implements Serializable {
 	private java.lang.String batchNum;
 
 	private java.lang.String memo;
+	
+	private Date time;
 
 	private List<Sell> sell;
 
@@ -52,7 +55,7 @@ public class GoodInfo implements Serializable {
 
 	public GoodInfo(String id, String name, String abbreviation, String origin,
 			String units, String pack, String approvalNum, String batchNum,
-			String memo) {
+			String memo, Date time) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -63,6 +66,7 @@ public class GoodInfo implements Serializable {
 		this.approvalNum = approvalNum;
 		this.batchNum = batchNum;
 		this.memo = memo;
+		this.time = time;
 	}
 
 	public GoodInfo(String name, String abbreviation, String origin,
@@ -150,6 +154,14 @@ public class GoodInfo implements Serializable {
 
 	public void setMemo(java.lang.String memo) {
 		this.memo = memo;
+	}
+	
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
 	}
 
 	public List<Sell> getSell() {
