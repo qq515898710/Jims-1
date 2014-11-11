@@ -78,6 +78,62 @@
 		SELECT * FROM tb_customer_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
 	</select>
 	
+	<select id="selectLastWeek" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
+	</select>
+	
+	<select id="selectThisMonth" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+	</select>
+	
+	<select id="selectLastMonth" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	</select>
+	
+	<select id="selectThisYear" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info WHERE YEAR(time) = YEAR(NOW());
+	</select>
+	
+	<select id="selectLastYear" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+	</select>
+	
+	<select id="selectAll" resultMap="customerInfoResultMap">
+		SELECT * FROM tb_customer_info
+	</select>
+	
+	<select id="countToday" resultMap="customerInfoResultMap">
+		SELECT COUNT(*) FROM tb_customer_info WHERE TO_DAYS(time) = TO_DAYS(NOW());
+	</select>
+	
+	<select id="countYesterday" resultMap="customerInfoResultMap">
+		SELECT COUNT(*) FROM tb_customer_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
+	</select>
+	
+	<select id="countThisWeek" resultMap="customerInfoResultMap">
+		SELECT COUNT(*) FROM tb_customer_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
+	</select>
+	
+	<select id="countLastWeek" resultMap="customerInfoResultMap">
+		SELECT COUNT(*) FROM tb_customer_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
+	</select>
+	
+	<select id="countThisMonth" resultMap="customerInfoResultMap">
+		SELECT COUNT(*) FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+	</select>
+	
+	<select id="countLastMonth" resultMap="customerInfoResultMap">
+		SELECT COUNT(*) FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	</select>
+	
+	<select id="countThisYear" resultMap="customerInfoResultMap">
+		SELECT COUNT(*) FROM tb_customer_info WHERE YEAR(time) = YEAR(NOW());
+	</select>
+	
+	<select id="countLastYear" resultMap="customerInfoResultMap">
+		SELECT COUNT(*) FROM tb_customer_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+	</select>
+	
 	<select id="countAll" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info
 	</select>
@@ -91,6 +147,8 @@
 		SELECT COUNT(*) FROM tb_customer_info
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]><if>
+			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]><if>
 		</where>
 	</select>
 	
@@ -98,6 +156,8 @@
 		<include refid="select_customer_info" />
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]><if>
+			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]><if>
 		</where>
 		LIMIT #{offset}, #{size}
 	</select>

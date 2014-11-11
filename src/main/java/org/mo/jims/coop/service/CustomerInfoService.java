@@ -1,5 +1,6 @@
 package org.mo.jims.coop.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,16 +25,18 @@ public class CustomerInfoService {
 	}
 	
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Page<CustomerInfo> getCustomerInfoByNameOrAbbreviation(String name, int page, int pageSize) {
+	public Page<CustomerInfo> getCustomerInfoByNameOrAbbreviationAndTime(String name,
+			Date beginTime, Date endTime, int page, int pageSize) {
 		Page<CustomerInfo> customerInfoPage = new Page<CustomerInfo>();
-		customerInfoPage.setTotalElement(customerInfoRepository.countAllByNameOrAbbreviation(name), pageSize);
-		if(customerInfoPage.getTotalElement() == 0){
+		customerInfoPage.setTotalElement(customerInfoRepository.countAllByNameOrAbbreviationAndTime(name, beginTime, endTime),
+				pageSize);
+		if (customerInfoPage.getTotalElement() == 0) {
 			return customerInfoPage;
 		}
 		customerInfoPage.setPageSize(pageSize);
 		customerInfoPage.setCurrentPage(page);
-		List<CustomerInfo> selectAllByNameOrAbbreviation = 
-				customerInfoRepository.selectAllByNameOrAbbreviation(name, (page - 1) * pageSize, pageSize);
+		List<CustomerInfo> selectAllByNameOrAbbreviation = customerInfoRepository.selectAllByNameOrAbbreviationAndTime(name, beginTime, endTime,
+						(page - 1) * pageSize, pageSize);
 		customerInfoPage.setContent(selectAllByNameOrAbbreviation);
 		return customerInfoPage;
 	}

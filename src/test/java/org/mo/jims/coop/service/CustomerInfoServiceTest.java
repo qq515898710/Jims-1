@@ -23,14 +23,14 @@ public class CustomerInfoServiceTest extends BaseTest {
 
 	@Test
 	public void testGetCustomerInfoByNameOrAbbreviation() {
-		Page<CustomerInfo> customerInfoByNameOrAbbreviation = customerInfoService.getCustomerInfoByNameOrAbbreviation("城", 1, 10);
-		Assert.assertNotNull("customerInfoByNameOrAbbreviation is null", customerInfoByNameOrAbbreviation);
-		List<CustomerInfo> content = customerInfoByNameOrAbbreviation.getContent();
-		Assert.assertNotNull("content is null", customerInfoByNameOrAbbreviation);
-		for(int i=0;i<content.size();i++){
-			CustomerInfo tbCustomerInfo = content.get(i);
-			System.out.println(tbCustomerInfo.getName());
-		}
+//		Page<CustomerInfo> customerInfoByNameOrAbbreviation = customerInfoService.getCustomerInfoByNameOrAbbreviation("城", 1, 10);
+//		Assert.assertNotNull("customerInfoByNameOrAbbreviation is null", customerInfoByNameOrAbbreviation);
+//		List<CustomerInfo> content = customerInfoByNameOrAbbreviation.getContent();
+//		Assert.assertNotNull("content is null", customerInfoByNameOrAbbreviation);
+//		for(int i=0;i<content.size();i++){
+//			CustomerInfo tbCustomerInfo = content.get(i);
+//			System.out.println(tbCustomerInfo.getName());
+//		}
 	}
 
 	@Test

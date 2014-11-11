@@ -1,5 +1,6 @@
 package org.mo.jims.coop.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -27,16 +28,16 @@ public class GoodInfoService {
 	}
 	
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Page<GoodInfo> getGoodInfoByNameOrAbbreviation(String name, int page, int pageSize) {
+	public Page<GoodInfo> getGoodInfoByNameOrAbbreviation(String name,Date beginTime,Date endTime, int page, int pageSize) {
 		Page<GoodInfo> goodInfoPage = new Page<GoodInfo>();
-		goodInfoPage.setTotalElement(goodInfoRepository.countAllByNameOrAbbreviation(name), pageSize);
+		goodInfoPage.setTotalElement(goodInfoRepository.countAllByCriteria(name,beginTime,endTime), pageSize);
 		if(goodInfoPage.getTotalElement() == 0){
 			return goodInfoPage;
 		}
 		goodInfoPage.setPageSize(pageSize);
 		goodInfoPage.setCurrentPage(page);
 		List<GoodInfo> selectAllByNameOrAbbreviation = 
-				goodInfoRepository.selectAllByNameOrAbbreviation(name, (page - 1) * pageSize, pageSize);
+				goodInfoRepository.selectAllByCriteria(name,beginTime,endTime, (page - 1) * pageSize, pageSize);
 		goodInfoPage.setContent(selectAllByNameOrAbbreviation);
 		return goodInfoPage;
 	}

@@ -1,6 +1,7 @@
 package org.mo.jims.coop.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -57,15 +58,20 @@ public class CustomerInfoController {
 	public Page<CustomerInfo> listByName(
 			@RequestParam(required = true, defaultValue = "1") int page,
 			@RequestParam(required = true, defaultValue = "10") int size,
-			@RequestParam final String name) {
-		String newStr="";
+			@RequestParam final String name,
+			@RequestParam final Date beginTime,
+			@RequestParam final Date endTime) {
+		String newStr = "";
 		try {
-			//编码有问题,get传过来的参数
+			// 编码有问题,get传过来的参数
 			newStr = new String(name.getBytes("iso8859-1"), "UTF-8");
+			System.out.println(beginTime + "---" + endTime);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		Page<CustomerInfo> customerInfoByNameOrAbbreviation = customerInfoService.getCustomerInfoByNameOrAbbreviation(newStr, page, size);
+		Page<CustomerInfo> customerInfoByNameOrAbbreviation = 
+				customerInfoService.getCustomerInfoByNameOrAbbreviationAndTime(
+						newStr, beginTime,endTime, page, size);
 		return customerInfoByNameOrAbbreviation;
 	}
 	
