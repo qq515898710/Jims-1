@@ -90,7 +90,6 @@
 		<result property="amount" column="amount" />
 		<association property="user"  javaType="User">
 			<id property="account" column="user_id"/>
-			<result property="username" column="username"/>
 		</association>
 	</resultMap>
 

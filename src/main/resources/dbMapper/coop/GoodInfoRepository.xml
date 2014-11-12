@@ -141,8 +141,8 @@
 		SELECT COUNT(*) FROM tb_good_info
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
-			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]><if>
-			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]><if>
+			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
 	</select>
 
@@ -150,8 +150,8 @@
 		<include refid="select_good_info" />
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
-			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]><if>
-			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]><if>
+			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
 		LIMIT #{offset}, #{size}
 	</select>
@@ -162,6 +162,18 @@
 			#{id}
 		</foreach>
 	</delete>
+	
+	<select id="selectByProvider">
+		SELECT * FROM tb_good_info 
+		JOIN tb_provider_good ON tb_good_info.id = tb_provider_good.good_id 
+		JOIN tb_provider_info ON tb_provider_info.id = tb_provider_good.provider_id
+		WHERE tb_provider_info.name = #{name}
+	</select>
+	
+	<insert id="saveRelativity" parameterType="ProviderGood">
+		INSERT INTO tb_provider_good(provider_id, good_id)
+		VALUE(#{providerInfo.id}, #{goodInfo.id})
+	</insert>
 
 	<!-- goodInfo -->
 	<resultMap type="GoodInfo" id="goodInfoResultMap">
@@ -169,7 +181,7 @@
 		<result property="name" column="name" />
 		<result property="abbreviation" column="abbreviation" />
 		<result property="origin" column="origin" />
-		<result property="units	" column="units" />
+		<result property="units" column="units" />
 		<result property="pack" column="pack" />
 		<result property="approvalNum" column="approval_num" />
 		<result property="batchNum" column="batch_num" />

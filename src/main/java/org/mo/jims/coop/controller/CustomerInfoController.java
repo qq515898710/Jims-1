@@ -30,7 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/")
 public class CustomerInfoController {
-
+	
 	private CustomerInfoService customerInfoService;
 
 	@RequestMapping(value = "coop/kehuguanli.html", method = RequestMethod.GET)

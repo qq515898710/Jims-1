@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.mo.jims.coop.entity.GoodInfo;
+import org.mo.jims.coop.entity.ProviderGood;
 import org.mo.open.common.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
@@ -30,4 +31,6 @@ public interface GoodInfoRepository extends BaseRepository<GoodInfo, String> {
 	 * @return
 	 */
 	public List<GoodInfo> selectByProvider(String name);
+	
+	public void saveRelativity(ProviderGood providerGood);
 }

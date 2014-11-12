@@ -14,10 +14,10 @@ public interface CustomerInfoRepository extends
 
 	public CustomerInfo selcetByName(@Param("name") String name);
 
-	public int countAllByNameOrAbbreviationAndTime(@Param("name") String param,
+	public int countAllByCriteria(@Param("name") String param,
 			@Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
-	public List<CustomerInfo> selectAllByNameOrAbbreviationAndTime(
+	public List<CustomerInfo> selectAllByCriteria(
 			@Param("name") String param, @Param("beginTime") Date beginTime,
 			@Param("endTime") Date endTime, @Param("offset") int offset,
 			@Param("size") int size);

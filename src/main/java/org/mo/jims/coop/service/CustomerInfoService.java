@@ -28,14 +28,14 @@ public class CustomerInfoService {
 	public Page<CustomerInfo> getCustomerInfoByNameOrAbbreviationAndTime(String name,
 			Date beginTime, Date endTime, int page, int pageSize) {
 		Page<CustomerInfo> customerInfoPage = new Page<CustomerInfo>();
-		customerInfoPage.setTotalElement(customerInfoRepository.countAllByNameOrAbbreviationAndTime(name, beginTime, endTime),
+		customerInfoPage.setTotalElement(customerInfoRepository.countAllByCriteria(name, beginTime, endTime),
 				pageSize);
 		if (customerInfoPage.getTotalElement() == 0) {
 			return customerInfoPage;
 		}
 		customerInfoPage.setPageSize(pageSize);
 		customerInfoPage.setCurrentPage(page);
-		List<CustomerInfo> selectAllByNameOrAbbreviation = customerInfoRepository.selectAllByNameOrAbbreviationAndTime(name, beginTime, endTime,
+		List<CustomerInfo> selectAllByNameOrAbbreviation = customerInfoRepository.selectAllByCriteria(name, beginTime, endTime,
 						(page - 1) * pageSize, pageSize);
 		customerInfoPage.setContent(selectAllByNameOrAbbreviation);
 		return customerInfoPage;
