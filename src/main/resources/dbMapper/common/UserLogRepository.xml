@@ -25,6 +25,90 @@
 		WHERE id = #{id}
 	</select>
 	
+	<select id="getCurrentTime" resultType="Date">
+		SELECT now();
+	</select>
+	
+	<select id="getLatestInsert" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log ORDER BY id DESC LIMIT 1  
+	</select>
+	
+	<select id="getLatestInsertId" resultType="String">
+		SELECT MAX(id) FROM  tb_user_log 
+	</select>
+
+	<select id="selectToday" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log WHERE TO_DAYS(login_time) = TO_DAYS(NOW()) ORDER BY login_time DESC;
+	</select>
+	
+	<select id="selectYesterday" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log WHERE TO_DAYS(NOW())-TO_DAYS(login_time) = 1 ORDER BY login_time DESC;
+	</select>
+	
+	<select id="selectThisWeek" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log WHERE YEARWEEK(DATE_FORMAT(login_time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY login_time DESC;
+	</select>
+	
+	<select id="selectLastWeek" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(login_time,'%Y-%m-%d')) = 1 ORDER BY login_time DESC;
+	</select>
+	
+	<select id="selectThisMonth" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log WHERE DATE_FORMAT(login_time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY login_time DESC;
+	</select>
+	
+	<select id="selectLastMonth" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log WHERE DATE_FORMAT(login_time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY login_time DESC;
+	</select>
+	
+	<select id="selectThisYear" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log WHERE YEAR(login_time) = YEAR(NOW()) ORDER BY login_time DESC;
+	</select>
+	
+	<select id="selectLastYear" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log WHERE YEAR(login_time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY login_time DESC;
+	</select>
+	
+	<select id="selectAll" resultMap="userLogResultMap">
+		SELECT * FROM tb_user_log ORDER BY login_time DESC
+	</select>
+	
+	<select id="countToday" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log WHERE TO_DAYS(login_time) = TO_DAYS(NOW());
+	</select>
+	
+	<select id="countYesterday" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log WHERE TO_DAYS(NOW())-TO_DAYS(login_time) = 1;
+	</select>
+	
+	<select id="countThisWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log WHERE YEARWEEK(DATE_FORMAT(login_time,'%Y-%m-%d')) = YEARWEEK(NOW());
+	</select>
+	
+	<select id="countLastWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(login_time,'%Y-%m-%d')) = 1;
+	</select>
+	
+	<select id="countThisMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log WHERE DATE_FORMAT(login_time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+	</select>
+	
+	<select id="countLastMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log WHERE DATE_FORMAT(login_time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	</select>
+	
+	<select id="countThisYear" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log WHERE YEAR(login_time) = YEAR(NOW());
+	</select>
+	
+	<select id="countLastYear" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log WHERE YEAR(login_time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_user_log
+	</select>
+	
 	<select id="countByAccount" resultType="int">
 		SELECT COUNT(*) FROM tb_user_log 
 		<where>

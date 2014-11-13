@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.mo.open.common.entity.Permission;
 import org.mo.open.common.entity.User;
 import org.mo.open.common.repository.PermissionRepository;
-import org.mo.open.common.repository.UserLogRepository;
 import org.mo.open.common.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +30,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
+		
 		UserDetails userDetails = null;
 		try {
 			User selcetByAccount = userRepository.selectByPK(account);

@@ -45,7 +45,7 @@
 
 	<select id="selectByPK" resultMap="goodInfoResultMap">
 		<include refid="select_good_info" />
-		WHERE id = #{id} ORDER BY time DESC
+		WHERE id = #{id} 
 	</select>
 	
 	<select id="getCurrentTime" resultType="Date">
@@ -168,7 +168,7 @@
 		SELECT * FROM tb_good_info 
 		JOIN tb_provider_good ON tb_good_info.id = tb_provider_good.good_id 
 		JOIN tb_provider_info ON tb_provider_info.id = tb_provider_good.provider_id
-		WHERE tb_provider_info.name = #{name} ORDER BY time DESC
+		WHERE tb_provider_info.name = #{name} ORDER BY tb_good_info.time DESC
 	</select>
 	
 	<insert id="saveRelativity" parameterType="ProviderGood">
@@ -176,7 +176,7 @@
 		VALUE(#{providerInfo.id}, #{goodInfo.id})
 	</insert>
 	
-	<select id="selectAllGoodName">
+	<select id="selectAllGoodName" resultType="String">
 		SELECT name FROM tb_good_info ORDER BY time DESC
 	</select>
 

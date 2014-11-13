@@ -5,8 +5,8 @@
 	<sql id="select_user">SELECT account, username, password, create_date, latest_date FROM tb_user</sql>
 
 	<insert id="insert" parameterType="User">
-		INSERT INTO tb_user(account, username, password,create_date)
-		VALUE(#{account}, #{username},#{password}, #{createDate})
+		INSERT INTO tb_user(account, username, password,create_date,latest_date)
+		VALUE(#{account}, #{username},#{password}, #{createDate},#{latestDate})
 	</insert>
 
 	<update id="updateByPK" parameterType="User">
@@ -38,10 +38,94 @@
 
 	<select id="selectByPK" resultMap="userResultMap">
 		<include refid="select_user" />
-		WHERE account = #{account}
+		WHERE account = #{account} OR username= #{account}
 	</select>
 
+	<select id="getCurrentTime" resultType="Date">
+		SELECT now();
+	</select>
+	
+	<select id="getLatestInsert" resultMap="userResultMap">
+		SELECT * FROM tb_user ORDER BY id DESC LIMIT 1  
+	</select>
+	
+	<select id="getLatestInsertId" resultType="String">
+		SELECT MAX(id) FROM  tb_user 
+	</select>
+
+	<select id="selectToday" resultMap="userResultMap">
+		SELECT * FROM tb_user WHERE TO_DAYS(createDate) = TO_DAYS(NOW()) ORDER BY createDate DESC;
+	</select>
+	
+	<select id="selectYesterday" resultMap="userResultMap">
+		SELECT * FROM tb_user WHERE TO_DAYS(NOW())-TO_DAYS(createDate) = 1 ORDER BY createDate DESC;
+	</select>
+	
+	<select id="selectThisWeek" resultMap="userResultMap">
+		SELECT * FROM tb_user WHERE YEARWEEK(DATE_FORMAT(createDate,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY createDate DESC;
+	</select>
+	
+	<select id="selectLastWeek" resultMap="userResultMap">
+		SELECT * FROM tb_user WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(createDate,'%Y-%m-%d')) = 1 ORDER BY createDate DESC;
+	</select>
+	
+	<select id="selectThisMonth" resultMap="userResultMap">
+		SELECT * FROM tb_user WHERE DATE_FORMAT(createDate,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY createDate DESC;
+	</select>
+	
+	<select id="selectLastMonth" resultMap="userResultMap">
+		SELECT * FROM tb_user WHERE DATE_FORMAT(createDate,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY createDate DESC;
+	</select>
+	
+	<select id="selectThisYear" resultMap="userResultMap">
+		SELECT * FROM tb_user WHERE YEAR(createDate) = YEAR(NOW()) ORDER BY createDate DESC;
+	</select>
+	
+	<select id="selectLastYear" resultMap="userResultMap">
+		SELECT * FROM tb_user WHERE YEAR(createDate) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY createDate DESC;
+	</select>
+	
+	<select id="selectAll" resultMap="userResultMap">
+		SELECT * FROM tb_user ORDER BY createDate DESC
+	</select>
+	
+	<select id="countToday" resultType="int">
+		SELECT COUNT(*) FROM tb_user WHERE TO_DAYS(createDate) = TO_DAYS(NOW());
+	</select>
+	
+	<select id="countYesterday" resultType="int">
+		SELECT COUNT(*) FROM tb_user WHERE TO_DAYS(NOW())-TO_DAYS(createDate) = 1;
+	</select>
+	
+	<select id="countThisWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_user WHERE YEARWEEK(DATE_FORMAT(createDate,'%Y-%m-%d')) = YEARWEEK(NOW());
+	</select>
+	
+	<select id="countLastWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_user WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(createDate,'%Y-%m-%d')) = 1;
+	</select>
+	
+	<select id="countThisMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_user WHERE DATE_FORMAT(createDate,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+	</select>
+	
+	<select id="countLastMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_user WHERE DATE_FORMAT(createDate,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	</select>
+	
+	<select id="countThisYear" resultType="int">
+		SELECT COUNT(*) FROM tb_user WHERE YEAR(createDate) = YEAR(NOW());
+	</select>
+	
+	<select id="countLastYear" resultType="int">
+		SELECT COUNT(*) FROM tb_user WHERE YEAR(createDate) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+	</select>
+	
 	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_user
+	</select>
+	
+	<select id="countAllByCriteria" resultType="int">
 		SELECT COUNT(*) FROM tb_user
 		<where>
 			<if test="account != null and account != ''">account LIKE CONCAT('%', #{account},'%')</if>
@@ -49,7 +133,7 @@
 		</where>
 	</select>
 
-	<select id="selectAll" resultMap="userResultMap">
+	<select id="selectAllByCriteria" resultMap="userResultMap">
 		<include refid="select_user" />
 		<where>
 			<if test="account != null and account != ''">account LIKE CONCAT('%', #{account},'%')</if>
@@ -60,9 +144,17 @@
 	
 	<select id="selectUserByAccountAndPassword" resultMap="userResultMap">
 		<include refid="select_user" />
-		 WHERE account = #{account} AND password = #{password}
+		 WHERE account = #{account} OR username = #{account} AND password = #{password}
 	</select>
 
+	<delete id="deleteRelativity" parameterType="UserRole">
+		DELETE FROM tb_user_role
+		<where>
+			<if test="role.id !=null">role_id = #{role.id}</if>
+			<if test="user.id !=null">user_id = #{user.id}</if>
+		</where>
+	</delete>
+	
 	<!-- user -->
 	<resultMap type="User" id="userResultMap">
 		<id property="account" column="account" />

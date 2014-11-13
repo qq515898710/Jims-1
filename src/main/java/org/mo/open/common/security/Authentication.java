@@ -28,7 +28,7 @@ public class Authentication extends org.springframework.security.core.userdetail
 		super(username, password, enabled, accountNonExpired,
 				credentialsNonExpired, accountNonLocked, authorities);
 		this.user = user;
-		this.expired =false;
+		this.expired = false;
 	}
 
 	public User getTbUser() {

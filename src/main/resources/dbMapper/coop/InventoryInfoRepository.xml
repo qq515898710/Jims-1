@@ -57,7 +57,7 @@
 
 	<select id="selectByPK" resultMap="inventoryInfoResultMap">
 		<include refid="select_inventory_info" />
-		WHERE id = #{id} ORDER BY time DESC
+		WHERE id = #{id} 
 	</select>
 	
 	<select id="getCurrentTime" resultType="Date">
@@ -179,10 +179,10 @@
 	<select id="selectByUser" resultMap="inventoryInfoResultMap">
 		SELECT * FROM tb_inventory_info 
 		JOIN tb_user ON tb_inventory_info.user_id = tb_user.account 
-		WHERE tb_user.username=#{username} ORDER BY time DESC
+		WHERE tb_user.username=#{username} ORDER BY tb_inventory_info.time DESC
 	</select>
 	
-	<select id="selectAllInventoryName">
+	<select id="selectAllInventoryName" resultType="String">
 		SELECT name FROM tb_inventory_info ORDER BY time DESC
 	</select>
 	

@@ -5,7 +5,7 @@
 	<sql id="selcet_role">SELECT id, name, description FROM tb_role </sql>
 	
 	<insert id="insert" parameterType="UserRole" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO tb_role( name, description)
+		INSERT INTO tb_role(name, description)
 		VALUE(#{name},#{description})
 	</insert>
 	
@@ -26,15 +26,50 @@
 		WHERE id = #{id}
 	</select>
 	
-	<select id="countAll" resultType="int">
-		SELECT COUNT(*) FROM tb_user_role
+	<select id="getCurrentTime" resultType="Date">
+		SELECT now();
 	</select>
 	
+	<select id="getLatestInsert" resultMap="roleResultMap">
+		SELECT * FROM tb_role ORDER BY id DESC LIMIT 1  
+	</select>
+	
+	<select id="getLatestInsertId" resultType="String">
+		SELECT MAX(id) FROM  tb_role 
+	</select>
+
 	<select id="selectAll" resultMap="roleResultMap">
-		<include refid="selcet_role"/>
-		ORDER BY id DESC
+		SELECT * FROM tb_role 
+	</select>
+
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_role
 	</select>
 	
+	<select id="selectByUser" resultMap="roleResultMap">
+		<include refid="selcet_role"/>
+		JOIN tb_user_role ON tb_user_role.role_id = tb_role.id
+		WHERE tb_user_role.user_id = #{account}
+	</select>
+	
+	<delete id="deleteRelativity" parameterType="RolePermission">
+		DELETE FROM tb_role_permission
+		<where>
+			<if test="role.id !=null">role_id = #{role.id}</if>
+			<if test="permission.id !=null">permission_id = #{permission.id}</if>
+		</where>
+	</delete>
+	
+	<insert id="saveRelativity" parameterType="UserRole">
+		INSERT INTO tb_user_role(user_id,role_id)
+		VALUE(#{user.id},#{role.id})
+	</insert>
+	
+	<select id="selectByPage" resultMap="roleResultMap">
+		<include refid="selcet_role"/>
+		LIMIT #{offset}, #{size}
+	</select>
+		
 	<!-- userRole -->
 	<resultMap type="Role" id="roleResultMap">
 		<id property="id" column="id" />

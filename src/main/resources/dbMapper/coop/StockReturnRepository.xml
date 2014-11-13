@@ -186,7 +186,7 @@
 			<if test="GoodName != null and GoodName != ''"> AND tb_good_info.name LIKE CONCAT('%', #{GoodName},'%') </if>
 			<if test="UserName != null and UserName != ''"> AND tb_user.username LIKE CONCAT('%', #{UserName},'%') </if>
 		</where>
-		ORDER BY time DESC
+		ORDER BY tb_stock_return.time DESC
 	</select>
 
 	<!-- stock -->

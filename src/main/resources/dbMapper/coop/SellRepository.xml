@@ -173,7 +173,7 @@
 			<if test="beginTime != null"><![CDATA[AND tb_sell.time > #{beginTime}]]></if>
 			<if test="endTime != null"><![CDATA[AND tb_sell.time <= #{endTime}]]></if>
 		</where>
-		ORDER BY time DESC
+		ORDER BY tb_sell.time DESC
 	</select>
 	
 	<!-- sell -->

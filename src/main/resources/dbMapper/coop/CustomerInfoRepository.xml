@@ -51,7 +51,7 @@
 	
 	<select id="selectByPK" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
-		WHERE id = #{id} ORDER BY time DESC
+		WHERE id = #{id} 
 	</select>
 	
 	<select id="getCurrentTime" resultType="Date">
@@ -176,9 +176,10 @@
 		</foreach>
 	</delete>
 	
-	<select id="selectAllCustomerName">
+	<select id="selectAllCustomerName" resultType="String">
 		select name from tb_customer_info ORDER BY time DESC
 	</select>
+	
 	<!-- customerInfo -->
 	<resultMap type="CustomerInfo" id="customerInfoResultMap">
 		<id property="id" column="id" />
