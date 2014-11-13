@@ -22,22 +22,22 @@ public class StockRepositoryTest extends BaseTest {
 	}
 	@Test
 	public void testCountByProviderInfoGoodInfoUserTime() {
-		int countByProviderInfoGoodInfoUserTime = stockRepository
+/*		int countByProviderInfoGoodInfoUserTime = stockRepository
 				.countByProviderInfoGoodInfoUserTime(null, null, "莫梓奇", null,
 						null);
-		System.out.println(countByProviderInfoGoodInfoUserTime);
+		System.out.println(countByProviderInfoGoodInfoUserTime);*/
 	}
 
 	@Test
 	public void testSelectAllByProviderInfoGoodInfoUserTime() {
-		List<Stock> selectAllByProviderInfoGoodInfoUserTime = stockRepository.selectAllByProviderInfoGoodInfoUserTime(null, null,
+/*		List<Stock> selectAllByProviderInfoGoodInfoUserTime = stockRepository.selectAllByProviderInfoGoodInfoUserTime(null, null,
 				"莫梓奇", null, null, 0, 10);
 		System.out.println(selectAllByProviderInfoGoodInfoUserTime.size());
 		Iterator<Stock> iterator = selectAllByProviderInfoGoodInfoUserTime.iterator();
 		while(iterator.hasNext()){
 			Stock next = iterator.next();
 			System.out.println(next.getProviderInfo().getName());
-		}
+		}*/
 	}
 
 }

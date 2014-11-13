@@ -41,12 +41,12 @@ public class UserService {
 		userPage.setCurrentPage(page);
 		userPage.setPageSize(pageSize);
 		userPage.setTotalElement(
-				userRepository.countAllBy(user.getAccount(), user.getUsername()),
+				userRepository.countAllByCriteria(user.getAccount(), user.getUsername()),
 				pageSize);
 		if (userPage.getTotalElement() == 0) {
 			return userPage;
 		}
-		List<User> selectAll = userRepository.selectAll(user.getAccount(),
+		List<User> selectAll = userRepository.selectAllByCriteria(user.getAccount(),
 				user.getUsername(), (page - 1) * pageSize, pageSize);
 		userPage.setContent(selectAll);
 		return userPage;

@@ -33,7 +33,7 @@ public class Sell implements Serializable {
 
 	private java.lang.String clearingForm;
 
-	private java.lang.String headler;
+	private java.lang.String hander;
 
 	private GoodInfo goodInfo;
 
@@ -46,7 +46,7 @@ public class Sell implements Serializable {
 	}
 
 	public Sell(String id, float unitCost, int amount, float sum, Date time,
-			String clearingForm, String headler, GoodInfo goodInfo,
+			String clearingForm, String handler, GoodInfo goodInfo,
 			CustomerInfo customerInfo, User user) {
 		super();
 		this.id = id;
@@ -55,14 +55,14 @@ public class Sell implements Serializable {
 		this.sum = sum;
 		this.time = time;
 		this.clearingForm = clearingForm;
-		this.headler = headler;
+		this.hander = handler;
 		this.goodInfo = goodInfo;
 		this.customerInfo = customerInfo;
 		this.user = user;
 	}
 
 	public Sell(float unitCost, int amount, float sum,
-			String clearingForm, String headler, GoodInfo goodInfo,
+			String clearingForm, String handler, GoodInfo goodInfo,
 			CustomerInfo customerInfo, User user) {
 		super();
 		this.id = "sell" + Sequence.nextId();
@@ -70,7 +70,7 @@ public class Sell implements Serializable {
 		this.amount = amount;
 		this.sum = sum;
 		this.clearingForm = clearingForm;
-		this.headler = headler;
+		this.hander = handler;
 		this.user = user;
 		this.goodInfo = goodInfo;
 		this.customerInfo = customerInfo;
@@ -124,12 +124,12 @@ public class Sell implements Serializable {
 		this.clearingForm = clearingForm;
 	}
 
-	public java.lang.String getHeadler() {
-		return headler;
+	public java.lang.String getHandler() {
+		return hander;
 	}
 
-	public void setHeadler(java.lang.String headler) {
-		this.headler = headler;
+	public void setHandler(java.lang.String handler) {
+		this.hander = handler;
 	}
 
 	public GoodInfo getGoodInfo() {

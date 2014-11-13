@@ -1,5 +1,6 @@
 package org.mo.jims.coop.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,18 +26,21 @@ public class InventoryInfoService {
 		}
 		return selcetByName;
 	}
-	
+
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Page<InventoryInfo> getInventoryInfoByNameOrAbbreviation(String name, int page, int pageSize) {
+	public Page<InventoryInfo> getInventoryInfoByNameOrAbbreviation(
+			String name, Date beginTime, Date endTime, int page, int pageSize) {
 		Page<InventoryInfo> inventoryInfoPage = new Page<InventoryInfo>();
-		inventoryInfoPage.setTotalElement(inventoryInfoRepository.countAllByNameOrAbbreviation(name), pageSize);
-		if(inventoryInfoPage.getTotalElement() == 0){
+		inventoryInfoPage.setTotalElement(inventoryInfoRepository
+				.countAllByCriteria(name, beginTime, endTime), pageSize);
+		if (inventoryInfoPage.getTotalElement() == 0) {
 			return inventoryInfoPage;
 		}
 		inventoryInfoPage.setPageSize(pageSize);
 		inventoryInfoPage.setCurrentPage(page);
-		List<InventoryInfo> selectAllByNameOrAbbreviation = 
-				inventoryInfoRepository.selectAllByNameOrAbbreviation(name, (page - 1) * pageSize, pageSize);
+		List<InventoryInfo> selectAllByNameOrAbbreviation = inventoryInfoRepository
+				.selectAllByCriteria(name, beginTime, endTime, (page - 1)
+						* pageSize, pageSize);
 		inventoryInfoPage.setContent(selectAllByNameOrAbbreviation);
 		return inventoryInfoPage;
 	}

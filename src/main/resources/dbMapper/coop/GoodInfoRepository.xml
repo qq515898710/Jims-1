@@ -45,86 +45,86 @@
 
 	<select id="selectByPK" resultMap="goodInfoResultMap">
 		<include refid="select_good_info" />
-		WHERE id = #{id}
+		WHERE id = #{id} ORDER BY time DESC
 	</select>
 	
 	<select id="getCurrentTime" resultType="Date">
 		SELECT now();
 	</select>
 	
-	<select id="getLatestInsert" resultMap="customerInfoResultMap">
+	<select id="getLatestInsert" resultMap="goodInfoResultMap">
 		SELECT * FROM tb_good_info ORDER BY id DESC LIMIT 1 
 	</select>
 	
 	<select id="getLatestInsertId" resultType="String">
-		SELECT MAX(id) FROM  tb_good_info
+		SELECT MAX(id) FROM  tb_good_info 
 	</select>
 
-	<select id="selectToday" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_good_info WHERE TO_DAYS(time) = TO_DAYS(NOW());
+	<select id="selectToday" resultMap="goodInfoResultMap">
+		SELECT * FROM tb_good_info WHERE TO_DAYS(time) = TO_DAYS(NOW()) ORDER BY time DESC;
 	</select>
 	
-	<select id="selectYesterday" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_good_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
+	<select id="selectYesterday" resultMap="goodInfoResultMap">
+		SELECT * FROM tb_good_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1 ORDER BY time DESC;
 	</select>
 	
-	<select id="selectThisWeek" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_good_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
+	<select id="selectThisWeek" resultMap="goodInfoResultMap">
+		SELECT * FROM tb_good_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY time DESC;
 	</select>
 	
-	<select id="selectLastWeek" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_good_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
+	<select id="selectLastWeek" resultMap="goodInfoResultMap">
+		SELECT * FROM tb_good_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 ORDER BY time DESC;
 	</select>
 	
-	<select id="selectThisMonth" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_good_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+	<select id="selectThisMonth" resultMap="goodInfoResultMap">
+		SELECT * FROM tb_good_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY time DESC;
 	</select>
 	
-	<select id="selectLastMonth" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_good_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	<select id="selectLastMonth" resultMap="goodInfoResultMap">
+		SELECT * FROM tb_good_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY time DESC;
 	</select>
 	
-	<select id="selectThisYear" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_good_info WHERE YEAR(time) = YEAR(NOW());
+	<select id="selectThisYear" resultMap="goodInfoResultMap">
+		SELECT * FROM tb_good_info WHERE YEAR(time) = YEAR(NOW()) ORDER BY time DESC;
 	</select>
 	
-	<select id="selectLastYear" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_good_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+	<select id="selectLastYear" resultMap="goodInfoResultMap">
+		SELECT * FROM tb_good_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY time DESC;
 	</select>
 	
-	<select id="selectAll" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_good_info
+	<select id="selectAll" resultMap="goodInfoResultMap">
+		SELECT * FROM tb_good_info ORDER BY time DESC
 	</select>
 	
-	<select id="countToday" resultMap="customerInfoResultMap">
+	<select id="countToday" resultType="int">
 		SELECT COUNT(*) FROM tb_good_info WHERE TO_DAYS(time) = TO_DAYS(NOW());
 	</select>
 	
-	<select id="countYesterday" resultMap="customerInfoResultMap">
+	<select id="countYesterday" resultType="int">
 		SELECT COUNT(*) FROM tb_good_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
 	</select>
 	
-	<select id="countThisWeek" resultMap="customerInfoResultMap">
+	<select id="countThisWeek" resultType="int">
 		SELECT COUNT(*) FROM tb_good_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
 	</select>
 	
-	<select id="countLastWeek" resultMap="customerInfoResultMap">
+	<select id="countLastWeek" resultType="int">
 		SELECT COUNT(*) FROM tb_good_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
 	</select>
 	
-	<select id="countThisMonth" resultMap="customerInfoResultMap">
+	<select id="countThisMonth" resultType="int">
 		SELECT COUNT(*) FROM tb_good_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
 	</select>
 	
-	<select id="countLastMonth" resultMap="customerInfoResultMap">
+	<select id="countLastMonth" resultType="int">
 		SELECT COUNT(*) FROM tb_good_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
 	</select>
 	
-	<select id="countThisYear" resultMap="customerInfoResultMap">
+	<select id="countThisYear" resultType="int">
 		SELECT COUNT(*) FROM tb_good_info WHERE YEAR(time) = YEAR(NOW());
 	</select>
 	
-	<select id="countLastYear" resultMap="customerInfoResultMap">
+	<select id="countLastYear" resultType="int">
 		SELECT COUNT(*) FROM tb_good_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
 	</select>
 	
@@ -134,7 +134,7 @@
 
 	<select id="selcetByName" resultMap="goodInfoResultMap">
 		<include refid="select_good_info" />
-		WHERE name = #{name}
+		WHERE name = #{name} ORDER BY time DESC
 	</select>
 	
 	<select id="countAllByNameOrAbbreviationAndTime" resultType="int">
@@ -153,7 +153,8 @@
 			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
 			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
-		LIMIT #{offset}, #{size}
+		LIMIT #{offset}, #{size} 
+		ORDER BY time DESC
 	</select>
 	
 	<delete id="batchDelete" parameterType="java.lang.String">
@@ -163,17 +164,21 @@
 		</foreach>
 	</delete>
 	
-	<select id="selectByProvider">
+	<select id="selectByProvider" resultMap="goodInfoResultMap">
 		SELECT * FROM tb_good_info 
 		JOIN tb_provider_good ON tb_good_info.id = tb_provider_good.good_id 
 		JOIN tb_provider_info ON tb_provider_info.id = tb_provider_good.provider_id
-		WHERE tb_provider_info.name = #{name}
+		WHERE tb_provider_info.name = #{name} ORDER BY time DESC
 	</select>
 	
 	<insert id="saveRelativity" parameterType="ProviderGood">
 		INSERT INTO tb_provider_good(provider_id, good_id)
 		VALUE(#{providerInfo.id}, #{goodInfo.id})
 	</insert>
+	
+	<select id="selectAllGoodName">
+		SELECT name FROM tb_good_info ORDER BY time DESC
+	</select>
 
 	<!-- goodInfo -->
 	<resultMap type="GoodInfo" id="goodInfoResultMap">

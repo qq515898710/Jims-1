@@ -1,5 +1,6 @@
 package org.mo.jims.coop.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,7 +20,7 @@ public class ProviderInfoService {
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public ProviderInfo getProviderInfoByName(String name) {
 		ProviderInfo selcetByName = null;
-		selcetByName = providerInfoRepository.selcetByName(name);
+		selcetByName = providerInfoRepository.selectByName(name);
 		if (selcetByName == null) {
 			return null;
 		}
@@ -27,16 +28,19 @@ public class ProviderInfoService {
 	}
 	
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Page<ProviderInfo> getProviderInfoByNameOrAbbreviation(String name, int page, int pageSize) {
+	public Page<ProviderInfo> getProviderInfoByNameOrAbbreviation(String name,
+			Date beginTime, Date endTime, int page, int pageSize) {
 		Page<ProviderInfo> providerInfoPage = new Page<ProviderInfo>();
-		providerInfoPage.setTotalElement(providerInfoRepository.countAllByNameOrAbbreviation(name), pageSize);
-		if(providerInfoPage.getTotalElement() == 0){
+		providerInfoPage.setTotalElement(providerInfoRepository
+				.countAllByCriteria(name, beginTime, endTime), pageSize);
+		if (providerInfoPage.getTotalElement() == 0) {
 			return providerInfoPage;
 		}
 		providerInfoPage.setPageSize(pageSize);
 		providerInfoPage.setCurrentPage(page);
-		List<ProviderInfo> selectAllByNameOrAbbreviation = 
-				providerInfoRepository.selectAllByNameOrAbbreviation(name, (page - 1) * pageSize, pageSize);
+		List<ProviderInfo> selectAllByNameOrAbbreviation = providerInfoRepository
+				.selectAllByCriteria(name, beginTime, endTime, (page - 1)
+						* pageSize, pageSize);
 		providerInfoPage.setContent(selectAllByNameOrAbbreviation);
 		return providerInfoPage;
 	}

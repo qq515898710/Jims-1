@@ -8,9 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository("permissionRepository")
 public interface PermissionRepository extends BaseRepository<Permission, Long> {
 
-	public int count();
-
-	public List<Permission> selectAll();
-
 	public List<Permission> getPermissions(String account);
 }

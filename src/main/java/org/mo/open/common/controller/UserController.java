@@ -2,7 +2,7 @@ package org.mo.open.common.controller;
 
 import javax.annotation.Resource;
 
-import org.mo.jims.coop.dto.LoginDTO;
+import org.mo.open.common.dto.LoginDTO;
 import org.mo.open.common.entity.User;
 import org.mo.open.common.service.UserService;
 import org.mo.open.common.util.JsonResponse;

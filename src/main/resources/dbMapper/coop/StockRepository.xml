@@ -35,9 +35,6 @@
 		 	handler)
 		VALUE(#{id}, #{providerInfo.id},#{user.id},#{goodInfo.id}, #{varietyAmount},#{unitCost},
 			#{amount},#{sum}, #{checkConclusion},#{time},#{clearingForm}, #{handler})
-		<selectKey order="AFTER" resultType="String" keyProperty="id">
-			SELECT LAST_INSERT_ID() AS id
-		</selectKey>
 	</insert>
 
 	<update id="updateByPK" parameterType="Stock">
@@ -66,7 +63,91 @@
 		WHERE id = #{id}
 	</select>
 	
-	<select id="countByProviderInfoGoodInfoUserTime" resultType="int">
+	<select id="getCurrentTime" resultType="Date">
+		SELECT now();
+	</select>
+	
+	<select id="getLatestInsert" resultMap="stockResultMap">
+		SELECT * FROM tb_stock ORDER BY id DESC LIMIT 1 
+	</select>
+	
+	<select id="getLatestInsertId" resultType="String">
+		SELECT MAX(id) FROM  tb_stock 
+	</select>
+
+	<select id="selectToday" resultMap="stockResultMap">
+		SELECT * FROM tb_stock WHERE TO_DAYS(time) = TO_DAYS(NOW()) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectYesterday" resultMap="stockResultMap">
+		SELECT * FROM tb_stock WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1 ORDER BY time DESC;
+	</select>
+	
+	<select id="selectThisWeek" resultMap="stockResultMap">
+		SELECT * FROM tb_stock WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectLastWeek" resultMap="stockResultMap">
+		SELECT * FROM tb_stock WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 ORDER BY time DESC;
+	</select>
+	
+	<select id="selectThisMonth" resultMap="stockResultMap">
+		SELECT * FROM tb_stock WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY time DESC;
+	</select>
+	
+	<select id="selectLastMonth" resultMap="stockResultMap">
+		SELECT * FROM tb_stock WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY time DESC;
+	</select>
+	
+	<select id="selectThisYear" resultMap="stockResultMap">
+		SELECT * FROM tb_stock WHERE YEAR(time) = YEAR(NOW()) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectLastYear" resultMap="stockResultMap">
+		SELECT * FROM tb_stock WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectAll" resultMap="stockResultMap">
+		SELECT * FROM tb_stock ORDER BY time DESC
+	</select>
+	
+	<select id="countToday" resultType="int">
+		SELECT COUNT(*) FROM tb_stock WHERE TO_DAYS(time) = TO_DAYS(NOW());
+	</select>
+	
+	<select id="countYesterday" resultType="int">
+		SELECT COUNT(*) FROM tb_stock WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
+	</select>
+	
+	<select id="countThisWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_stock WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
+	</select>
+	
+	<select id="countLastWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_stock WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
+	</select>
+	
+	<select id="countThisMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_stock WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+	</select>
+	
+	<select id="countLastMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_stock WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	</select>
+	
+	<select id="countThisYear" resultType="int">
+		SELECT COUNT(*) FROM tb_stock WHERE YEAR(time) = YEAR(NOW());
+	</select>
+	
+	<select id="countLastYear" resultType="int">
+		SELECT COUNT(*) FROM tb_stock WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_stock
+	</select>
+	
+	<select id="countAllByCriteria" resultType="int">
 		SELECT COUNT(*) FROM tb_stock 
 		JOIN tb_provider_info ON tb_provider_info.id = tb_stock.provider_id 
 		JOIN tb_user ON tb_user.account = tb_stock.user_id 
@@ -80,20 +161,20 @@
 		</where>
 	</select>
 	
-	<select id="selectAllByProviderInfoGoodInfoUserTime" resultMap="stockResultMap">
+	<select id="selectAllByCriteria" resultMap="stockResultMap">
 		SELECT 
-			tb_stock.id,
+			tb_stock.id AS id,
 		 	tb_provider_info.name AS provider_name,
 		 	tb_user.username AS user_username, 
 		 	tb_good_info.name AS good_name, 
-		 	tb_stock.variety_amount, 
-		 	tb_stock.unit_cost, 
-		 	tb_stock.amount, 
-		 	tb_stock.sum, 
-		 	tb_stock.check_conclusion, 
-		 	tb_stock.time, 
-		 	tb_stock.clearing_form, 
-		 	tb_stock.handler 
+		 	tb_stock.variety_amount AS variety_amount, 
+		 	tb_stock.unit_cost AS unit_cost, 
+		 	tb_stock.amount AS amount, 
+		 	tb_stock.sum AS sum, 
+		 	tb_stock.check_conclusion AS check_conclusion, 
+		 	tb_stock.time AS time, 
+		 	tb_stock.clearing_form AS clearing_form, 
+		 	tb_stock.handler AS handler
 		FROM tb_stock 
 		JOIN tb_provider_info ON tb_provider_info.id = tb_stock.provider_id 
 		JOIN tb_user ON tb_user.account = tb_stock.user_id 
@@ -105,7 +186,7 @@
 			<if test="GoodName != null and GoodName != ''"> AND tb_good_info.name LIKE CONCAT('%', #{GoodName},'%') </if>
 			<if test="UserName != null and UserName != ''"> AND tb_user.username LIKE CONCAT('%', #{UserName},'%') </if>
 		</where>
-		LIMIT #{offset}, #{size}
+		ORDER BY time DESC
 	</select>
 
 	<!-- stock -->

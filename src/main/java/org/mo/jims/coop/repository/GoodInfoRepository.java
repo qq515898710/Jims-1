@@ -33,4 +33,6 @@ public interface GoodInfoRepository extends BaseRepository<GoodInfo, String> {
 	public List<GoodInfo> selectByProvider(String name);
 	
 	public void saveRelativity(ProviderGood providerGood);
+	
+	public List<String> selectAllGoodName();
 }

@@ -4,18 +4,17 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.mo.jims.coop.entity.Stock;
+import org.mo.jims.coop.entity.StockReturn;
 import org.mo.open.common.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * 入库repository
  * 
  * @author moziqi
  *
  */
-@Repository("stockRepository")
-public interface StockRepository extends BaseRepository<Stock, String> {
+@Repository("stockReturnRepository")
+public interface StockReturnRepository extends BaseRepository<StockReturn, String> {
 
 	/**
 	 * @param ProviderName 提供商h
@@ -31,7 +30,7 @@ public interface StockRepository extends BaseRepository<Stock, String> {
 			@Param("UserName") String UserName,
 			@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
-	public List<Stock> selectAllByCriteria(
+	public List<StockReturn> selectAllByCriteria(
 			@Param("ProviderName") String ProviderName,
 			@Param("GoodName") String GoodName,
 			@Param("UserName") String UserName,

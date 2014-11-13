@@ -26,4 +26,6 @@ public interface CustomerInfoRepository extends
 			@Param("size") int size);
 
 	public void batchDelete(String[] ids);// 单参数的不需要@Param
+	
+	public List<String> selectAllCustomerName();
 }

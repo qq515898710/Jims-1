@@ -14,7 +14,8 @@
 		 	contacts, 
 		 	telephone, 
 		 	deposit_bank,
-		 	email
+		 	email,
+		 	time 
 		FROM tb_provider_info
 	</sql>
 
@@ -30,10 +31,11 @@
 		 	contacts, 
 		 	telephone, 
 		 	deposit_bank,
-		 	email
+		 	email,
+		 	time 
 		 )
 		VALUE(#{id}, #{name},#{abbreviation},#{address}, #{postalCode},
-			#{phone},#{fax},#{contacts},#{telephone},#{depositBank},#{email})
+			#{phone},#{fax},#{contacts},#{telephone},#{depositBank},#{email},#{time})
 	</insert>
 
 	<update id="updateByPK" parameterType="ProviderInfo">
@@ -47,7 +49,8 @@
 			contacts=#{contacts},
 			telephone=#{telephone},
 			deposit_bank=#{depositBank},
-			email=#{email}
+			email=#{email},
+			time=#{time}
 		WHERE
 			id=#{id}
 	</update>
@@ -58,29 +61,144 @@
 
 	<select id="selectByPK" resultMap="providerInfoResultMap">
 		<include refid="select_provider_info" />
-		WHERE id = #{id}
-	</select>
-
-	<select id="selcetByName" resultMap="providerInfoResultMap">
-		<include refid="select_provider_info" />
-		WHERE name = #{name}
+		WHERE id = #{id} ORDER BY time DESC
 	</select>
 	
-	<select id="countAllByNameOrAbbreviation" resultType="int">
+	<select id="getCurrentTime" resultType="Date">
+		SELECT now();
+	</select>
+	
+	<select id="getLatestInsert" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info ORDER BY id DESC LIMIT 1 
+	</select>
+	
+	<select id="getLatestInsertId" resultType="String">
+		SELECT MAX(id) FROM  tb_provider_info 
+	</select>
+
+	<select id="selectToday" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info WHERE TO_DAYS(time) = TO_DAYS(NOW()) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectYesterday" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1 ORDER BY time DESC;
+	</select>
+	
+	<select id="selectThisWeek" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectLastWeek" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 ORDER BY time DESC;
+	</select>
+	
+	<select id="selectThisMonth" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY time DESC;
+	</select>
+	
+	<select id="selectLastMonth" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY time DESC;
+	</select>
+	
+	<select id="selectThisYear" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info WHERE YEAR(time) = YEAR(NOW()) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectLastYear" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectAll" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info ORDER BY time DESC
+	</select>
+	
+	<select id="countToday" resultType="int">
+		SELECT COUNT(*) FROM tb_provider_info WHERE TO_DAYS(time) = TO_DAYS(NOW());
+	</select>
+	
+	<select id="countYesterday" resultType="int">
+		SELECT COUNT(*) FROM tb_provider_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
+	</select>
+	
+	<select id="countThisWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_provider_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
+	</select>
+	
+	<select id="countLastWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_provider_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
+	</select>
+	
+	<select id="countThisMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_provider_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+	</select>
+	
+	<select id="countLastMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_provider_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	</select>
+	
+	<select id="countThisYear" resultType="int">
+		SELECT COUNT(*) FROM tb_provider_info WHERE YEAR(time) = YEAR(NOW());
+	</select>
+	
+	<select id="countLastYear" resultType="int">
+		SELECT COUNT(*) FROM tb_provider_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_provider_info
+	</select>
+	
+	<select id="selectByName" resultMap="providerInfoResultMap">
+		<include refid="select_provider_info" />
+		WHERE name = #{name} ORDER BY time DESC
+	</select>
+	
+	<select id="countAllByCriteria" resultType="int">
 		SELECT COUNT(*) FROM tb_provider_info
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
 	</select>
 
-	<select id="selectAllByNameOrAbbreviation" resultMap="providerInfoResultMap">
+	<select id="selectAllByCriteria" resultMap="providerInfoResultMap">
 		<include refid="select_provider_info" />
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
-		LIMIT #{offset}, #{size}
+		LIMIT #{offset}, #{size} 
+		ORDER BY time DESC
+	</select>
+	
+	<delete id="batchDelete" parameterType="java.lang.String">
+		DELETE FROM tb_provider_info WHERE id IN
+		<foreach collection="array" open="(" separator="," close=")"  item="id">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<select id="selectByGood" resultMap="providerInfoResultMap">
+		SELECT * FROM tb_provider_info 
+		JOIN tb_provider_good ON tb_provider_info.id = tb_provider_good.provider_id 
+		JOIN tb_good_info ON tb_good_info.id = tb_provider_good.good_id
+		WHERE tb_good_info.name = #{name} ORDER BY time DESC
 	</select>
 
+	<delete  id="deleteRelativity" parameterType="ProviderGood">
+		DELETE from tb_provider_good
+		<where>
+			<if test="providerInfo.id !=null and providerInfo.id !=''">provider_id=#{providerInfo.id}</if>
+			<if test="goodInfo.id !=null and goodInfo.id !=''">good_id=#{goodInfo.id}</if>
+		</where>
+	</delete>
+	
+	<select id="selectAllProviderName" resultType="String">
+		SELECT name FROM tb_provider_info ORDER BY time DESC
+	</select>
+	
 	<!-- providerInfo -->
 	<resultMap type="ProviderInfo" id="providerInfoResultMap">
 		<id property="id" column="id" />
@@ -94,6 +212,7 @@
 		<result property="telephone" column="telephone" />
 		<result property="depositBank" column="deposit_bank" />
 		<result property="email" column="email" />
+		<result property="time" column="time"/>
 	</resultMap>
 
 </mapper>

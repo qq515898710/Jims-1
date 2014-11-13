@@ -6,6 +6,7 @@
 package org.mo.jims.coop.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.mo.open.common.util.Sequence;
@@ -42,6 +43,8 @@ public class ProviderInfo implements Serializable {
 	private java.lang.String depositBank;
 
 	private java.lang.String email;
+	
+	private Date time;
 
 	private List<Stock> tbStock;
 
@@ -53,10 +56,11 @@ public class ProviderInfo implements Serializable {
 		super();
 	}
 
+
 	public ProviderInfo(String id, String name, String abbreviation,
 			String address, String postalCode, String phone, String fax,
 			String contacts, String telephone, String depositBank,
-			String email) {
+			String email, Date time) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -69,7 +73,9 @@ public class ProviderInfo implements Serializable {
 		this.telephone = telephone;
 		this.depositBank = depositBank;
 		this.email = email;
+		this.time = time;
 	}
+
 
 	public ProviderInfo(String pname, String abbreviation, String address,
 			String postalCode, String phone, String fax, String contacts,
@@ -175,6 +181,17 @@ public class ProviderInfo implements Serializable {
 	public void setEmail(java.lang.String email) {
 		this.email = email;
 	}
+
+	
+	public Date getTime() {
+		return time;
+	}
+
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
 
 	public List<Stock> getTbStock() {
 		return tbStock;

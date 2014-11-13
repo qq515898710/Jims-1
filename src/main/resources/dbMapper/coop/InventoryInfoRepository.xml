@@ -13,7 +13,8 @@
 		 	units, 
 		 	unit_cost, 
 		 	amount, 
-		 	user_id 
+		 	user_id,
+		 	time 
 		FROM tb_inventory_info
 	</sql>
 
@@ -28,9 +29,10 @@
 		 	units, 
 		 	unit_cost, 
 		 	amount, 
-		 	user_id)
+		 	user_id,
+		 	time)
 		VALUE(#{id}, #{name},#{abbreviation},#{origin}, #{specification},
-			#{pack},#{units},#{unitCost},#{amount},#{user.account})
+			#{pack},#{units},#{unitCost},#{amount},#{user.account},#{time})
 	</insert>
 
 	<update id="updateByPK" parameterType="InventoryInfo">
@@ -44,6 +46,7 @@
 		 	unit_cost=#{unitCost}, 
 		 	amount=#{amount}, 
 		 	user_id=#{user.account},
+		 	time=#{time}
 		WHERE
 			id=#{id}
 	</update>
@@ -54,29 +57,135 @@
 
 	<select id="selectByPK" resultMap="inventoryInfoResultMap">
 		<include refid="select_inventory_info" />
-		WHERE id = #{id}
-	</select>
-
-	<select id="selcetByName" resultMap="inventoryInfoResultMap">
-		<include refid="select_inventory_info" />
-		WHERE name = #{name}
+		WHERE id = #{id} ORDER BY time DESC
 	</select>
 	
-	<select id="countAllByNameOrAbbreviation" resultType="int">
+	<select id="getCurrentTime" resultType="Date">
+		SELECT now();
+	</select>
+	
+	<select id="getLatestInsert" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info ORDER BY id DESC LIMIT 1 
+	</select>
+	
+	<select id="getLatestInsertId" resultType="String">
+		SELECT MAX(id) FROM tb_inventory_info 
+	</select>
+
+	<select id="selectToday" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info WHERE TO_DAYS(time) = TO_DAYS(NOW()) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectYesterday" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1 ORDER BY time DESC;
+	</select>
+	
+	<select id="selectThisWeek" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectLastWeek" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 ORDER BY time DESC;
+	</select>
+	
+	<select id="selectThisMonth" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY time DESC;
+	</select>
+	
+	<select id="selectLastMonth" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY time DESC;
+	</select>
+	
+	<select id="selectThisYear" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info WHERE YEAR(time) = YEAR(NOW()) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectLastYear" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY time DESC;
+	</select>
+	
+	<select id="selectAll" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info ORDER BY time DESC
+	</select>
+	
+	<select id="countToday" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info WHERE TO_DAYS(time) = TO_DAYS(NOW());
+	</select>
+	
+	<select id="countYesterday" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
+	</select>
+	
+	<select id="countThisWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
+	</select>
+	
+	<select id="countLastWeek" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
+	</select>
+	
+	<select id="countThisMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+	</select>
+	
+	<select id="countLastMonth" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+	</select>
+	
+	<select id="countThisYear" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info WHERE YEAR(time) = YEAR(NOW());
+	</select>
+	
+	<select id="countLastYear" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*) FROM tb_inventory_info
+	</select>
+	
+	<select id="selcetByName" resultMap="inventoryInfoResultMap">
+		<include refid="select_inventory_info" />
+		WHERE name = #{name} ORDER BY time DESC
+	</select>
+	
+	<select id="countAllByCriteria" resultType="int">
 		SELECT COUNT(*) FROM tb_inventory_info
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
 	</select>
 
-	<select id="selectAllByNameOrAbbreviation" resultMap="inventoryInfoResultMap">
+	<select id="selectAllByCriteria" resultMap="inventoryInfoResultMap">
 		<include refid="select_inventory_info" />
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
 		LIMIT #{offset}, #{size}
+		ORDER BY time DESC
 	</select>
-
+	
+	<delete id="batchDelete" parameterType="java.lang.String">
+		DELETE FROM tb_inventory_info WHERE id IN
+		<foreach collection="array" open="(" separator="," close=")"  item="id">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<select id="selectByUser" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info 
+		JOIN tb_user ON tb_inventory_info.user_id = tb_user.account 
+		WHERE tb_user.username=#{username} ORDER BY time DESC
+	</select>
+	
+	<select id="selectAllInventoryName">
+		SELECT name FROM tb_inventory_info ORDER BY time DESC
+	</select>
+	
 	<!-- inventoryInfo -->
 	<resultMap type="InventoryInfo" id="inventoryInfoResultMap">
 		<id property="id" column="id" />
@@ -88,6 +197,7 @@
 		<result property="units" column="units" />
 		<result property="unitCost" column="unit_cost" />
 		<result property="amount" column="amount" />
+		<result property="time" column="time"/>
 		<association property="user"  javaType="User">
 			<id property="account" column="user_id"/>
 		</association>

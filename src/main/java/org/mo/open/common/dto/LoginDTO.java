@@ -1,4 +1,4 @@
-package org.mo.jims.coop.dto;
+package org.mo.open.common.dto;
 
 import java.io.Serializable;
 

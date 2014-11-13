@@ -51,7 +51,7 @@
 	
 	<select id="selectByPK" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
-		WHERE id = #{id}
+		WHERE id = #{id} ORDER BY time DESC
 	</select>
 	
 	<select id="getCurrentTime" resultType="Date">
@@ -59,78 +59,78 @@
 	</select>
 	
 	<select id="getLatestInsert" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info ORDER BY id DESC LIMIT 1 
+		SELECT * FROM tb_customer_info ORDER BY id DESC LIMIT 1  
 	</select>
 	
 	<select id="getLatestInsertId" resultType="String">
-		SELECT MAX(id) FROM  tb_customer_info
+		SELECT MAX(id) FROM  tb_customer_info 
 	</select>
 
 	<select id="selectToday" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info WHERE TO_DAYS(time) = TO_DAYS(NOW());
+		SELECT * FROM tb_customer_info WHERE TO_DAYS(time) = TO_DAYS(NOW()) ORDER BY time DESC;
 	</select>
 	
 	<select id="selectYesterday" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
+		SELECT * FROM tb_customer_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1 ORDER BY time DESC;
 	</select>
 	
 	<select id="selectThisWeek" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
+		SELECT * FROM tb_customer_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY time DESC;
 	</select>
 	
 	<select id="selectLastWeek" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
+		SELECT * FROM tb_customer_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 ORDER BY time DESC;
 	</select>
 	
 	<select id="selectThisMonth" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+		SELECT * FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY time DESC;
 	</select>
 	
 	<select id="selectLastMonth" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+		SELECT * FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY time DESC;
 	</select>
 	
 	<select id="selectThisYear" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info WHERE YEAR(time) = YEAR(NOW());
+		SELECT * FROM tb_customer_info WHERE YEAR(time) = YEAR(NOW()) ORDER BY time DESC;
 	</select>
 	
 	<select id="selectLastYear" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+		SELECT * FROM tb_customer_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY time DESC;
 	</select>
 	
 	<select id="selectAll" resultMap="customerInfoResultMap">
-		SELECT * FROM tb_customer_info
+		SELECT * FROM tb_customer_info ORDER BY time DESC
 	</select>
 	
-	<select id="countToday" resultMap="customerInfoResultMap">
+	<select id="countToday" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info WHERE TO_DAYS(time) = TO_DAYS(NOW());
 	</select>
 	
-	<select id="countYesterday" resultMap="customerInfoResultMap">
+	<select id="countYesterday" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
 	</select>
 	
-	<select id="countThisWeek" resultMap="customerInfoResultMap">
+	<select id="countThisWeek" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
 	</select>
 	
-	<select id="countLastWeek" resultMap="customerInfoResultMap">
+	<select id="countLastWeek" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
 	</select>
 	
-	<select id="countThisMonth" resultMap="customerInfoResultMap">
+	<select id="countThisMonth" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
 	</select>
 	
-	<select id="countLastMonth" resultMap="customerInfoResultMap">
+	<select id="countLastMonth" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
 	</select>
 	
-	<select id="countThisYear" resultMap="customerInfoResultMap">
+	<select id="countThisYear" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info WHERE YEAR(time) = YEAR(NOW());
 	</select>
 	
-	<select id="countLastYear" resultMap="customerInfoResultMap">
+	<select id="countLastYear" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
 	</select>
 	
@@ -140,10 +140,10 @@
 	
 	<select id="selcetByName" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
-		WHERE name = #{name}
+		WHERE name = #{name} ORDER BY time DESC
 	</select>
 	
-	<select id="countAllByNameOrAbbreviation" resultType="int">
+	<select id="countAllByCriteria" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
@@ -152,19 +152,21 @@
 		</where>
 	</select>
 	
-	<select id="selectAllByNameOrAbbreviation" resultMap="customerInfoResultMap">
+	<select id="selectAllByCriteria" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
 			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
 			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
-		LIMIT #{offset}, #{size}
+		LIMIT #{offset}, #{size} 
+		ORDER BY time DESC
 	</select>
 	
 	<select id="selectAllByPage" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
-		LIMIT #{offset}, #{size}
+		LIMIT #{offset}, #{size} 
+		ORDER BY time DESC
 	</select>
 	
 	<delete id="batchDelete" parameterType="java.lang.String">
@@ -174,6 +176,9 @@
 		</foreach>
 	</delete>
 	
+	<select id="selectAllCustomerName">
+		select name from tb_customer_info ORDER BY time DESC
+	</select>
 	<!-- customerInfo -->
 	<resultMap type="CustomerInfo" id="customerInfoResultMap">
 		<id property="id" column="id" />

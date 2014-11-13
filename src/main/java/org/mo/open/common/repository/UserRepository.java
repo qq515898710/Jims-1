@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository("userRepository")
 public interface UserRepository extends BaseRepository<User, String> {
 	
-	public int countAllBy(@Param("account") String account,
+	public int countAllByCriteria(@Param("account") String account,
 			@Param("username") String username);
 
-	public List<User> selectAll(@Param("account") String account,
+	public List<User> selectAllByCriteria(@Param("account") String account,
 			@Param("username") String username, @Param("offset") int offset,
 			@Param("size") int size);
 

@@ -4,18 +4,18 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.mo.jims.coop.entity.Sell;
+import org.mo.jims.coop.entity.SellReturn;
 import org.mo.open.common.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("sellRepository")
-public interface SellRepository extends BaseRepository<Sell, String> {
+@Repository("sellReturnRepository")
+public interface SellReturnRepository extends BaseRepository<SellReturn, String> {
 	
 	public int countAllByCriteria(@Param("goodName") String goodName,
 			@Param("customerName") String customerName, String InventoryName,
 			Date beginTime, Date endTime);
 
-	public List<Sell> selectAllByCriteria(@Param("goodName") String goodName,
+	public List<SellReturn> selectAllByCriteria(@Param("goodName") String goodName,
 			@Param("customerName") String customerName, String InventoryName,
 			Date beginTime, Date endTime);
 }
