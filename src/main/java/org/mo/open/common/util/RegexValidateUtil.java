@@ -1,7 +1,5 @@
 package org.mo.open.common.util;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 校验表单工具类

@@ -1,5 +1,6 @@
 package org.mo.open.common.security;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +31,16 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-		
+		String newStr = null;
+		try {
+			newStr = new String(account.getBytes("iso8859-1"), "UTF-8");
+			System.out.println(newStr+"-------------------------------------");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
 		UserDetails userDetails = null;
 		try {
-			User selcetByAccount = userRepository.selectByPK(account);
+			User selcetByAccount = userRepository.selectByPK(newStr);
 			if (selcetByAccount == null) {
 				throw new UsernameNotFoundException("该" + account + "不存在");
 			}

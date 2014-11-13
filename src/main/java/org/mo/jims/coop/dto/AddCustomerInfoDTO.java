@@ -1,6 +1,5 @@
 package org.mo.jims.coop.dto;
 
-import java.util.Date;
 
 import org.mo.jims.coop.entity.CustomerInfo;
 

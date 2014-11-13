@@ -1,7 +1,6 @@
 package org.mo.open.common.service;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 
