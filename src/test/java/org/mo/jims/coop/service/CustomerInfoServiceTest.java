@@ -1,6 +1,6 @@
 package org.mo.jims.coop.service;
 
-import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -14,6 +14,15 @@ public class CustomerInfoServiceTest extends BaseTest {
 	
 	@Autowired
 	private CustomerInfoService customerInfoService;
+	
+	@Test
+	public void testGetAllCustomerName(){
+		List<String> allCustomerName = customerInfoService.getAllCustomerName();
+		Iterator<String> iterator = allCustomerName.iterator();
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+	}
 
 	@Test
 	public void testGetCustomerInfoByName() {
@@ -35,7 +44,7 @@ public class CustomerInfoServiceTest extends BaseTest {
 
 	@Test
 	public void testGetByPK() {
-		CustomerInfo tbCustomerInfo = customerInfoService.getByPK("cFri Oct 03 18:07:32 CST 2014");
+		CustomerInfo tbCustomerInfo = customerInfoService.getCustomerInfoByPK("cFri Oct 03 18:07:32 CST 2014");
 		Assert.assertNotNull("tbCustomerInfo is null",tbCustomerInfo);
 	}
 
@@ -53,9 +62,9 @@ public class CustomerInfoServiceTest extends BaseTest {
 		String email="mo@163.com";
 		String depositBank="东莞银行";
 		String accountBank="5345 3453 3453 6565";
-		for(int i=1;i<20;i++){
-			tbCustomerInfo = new CustomerInfo( cname, abbreviation+"i", address, postalCode, phone, fax, contacts, telephone, email, depositBank, accountBank);
-			customerInfoService.save(tbCustomerInfo);
+		for(int i=1;i<10;i++){
+			tbCustomerInfo = new CustomerInfo(cname+i, abbreviation+"9", address, postalCode, phone, fax, contacts, telephone, email, depositBank, accountBank);
+			customerInfoService.saveCustomerInfo(tbCustomerInfo);
 		}
 	}
 

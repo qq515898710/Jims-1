@@ -58,14 +58,6 @@ public class Page<T> implements Iterable<T>, Serializable {
 		return content.iterator();
 	}
 
-//	public void setTotalElement(long totalElement) {
-//		this.totalElement = totalElement;
-//	}
-//
-//	public void setTotalPage(int totalPage) {
-//		this.totalPage = totalPage;
-//	}
-
 	public int getCurrentPage() {
 		return currentPage;
 	}

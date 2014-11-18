@@ -204,4 +204,13 @@ public class GoodInfo implements Serializable {
 		this.providerInfo = providerInfo;
 	}
 
+	@Override
+	public String toString() {
+		return "GoodInfo [id=" + id + ", name=" + name + ", abbreviation="
+				+ abbreviation + ", origin=" + origin + ", units=" + units
+				+ ", pack=" + pack + ", approvalNum=" + approvalNum
+				+ ", batchNum=" + batchNum + ", memo=" + memo + ", time="
+				+ time + "]";
+	}
+	
 }

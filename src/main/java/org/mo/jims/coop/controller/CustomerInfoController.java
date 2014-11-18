@@ -46,9 +46,9 @@ public class CustomerInfoController {
 		String[] ids = searchId.split(",");
 		CustomerInfo customerInfo = null;
 		if (ids.length < 1) {
-			customerInfo = customerInfoService.getByPK(searchId);
+			customerInfo = customerInfoService.getCustomerInfoByPK(searchId);
 		} else {
-			customerInfo = customerInfoService.getByPK(ids[0]);
+			customerInfo = customerInfoService.getCustomerInfoByPK(ids[0]);
 		}
 		return customerInfo;
 	}
@@ -70,7 +70,7 @@ public class CustomerInfoController {
 			e.printStackTrace();
 		}
 		Page<CustomerInfo> customerInfoByNameOrAbbreviation = 
-				customerInfoService.getCustomerInfoByNameOrAbbreviationAndTime(
+				customerInfoService.getCustomerInfoByCriteria(
 						newStr, beginTime,endTime, page, size);
 		return customerInfoByNameOrAbbreviation;
 	}
@@ -80,7 +80,7 @@ public class CustomerInfoController {
 	public Page<CustomerInfo> list(
 			@RequestParam(required = true, defaultValue = "1") int page,
 			@RequestParam(required = true, defaultValue = "10") int size) {
-		Page<CustomerInfo> allCustomerInfo = customerInfoService.getAllCustomerInfo(page, size);
+		Page<CustomerInfo> allCustomerInfo = customerInfoService.getAllCustomerInfoByPage(page, size);
 		return allCustomerInfo;
 	}
 	
@@ -102,7 +102,7 @@ public class CustomerInfoController {
 						try {
 							Thread.sleep(3000);
 							CustomerInfo entity = customerInfoDTO.toObject();
-							customerInfoService.alter(entity);
+							customerInfoService.alterCustomerInfo(entity);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -126,7 +126,7 @@ public class CustomerInfoController {
 			boolean batchRemove = customerInfoService.batchRemove(ids);
 			 jsonResponse = deleteTip(batchRemove);
 		}
-		boolean removeByPK = customerInfoService.removeByPK(deleteId);
+		boolean removeByPK = customerInfoService.removeCustomerInfoByPK(deleteId);
 		jsonResponse = deleteTip(removeByPK);
 		return jsonResponse;
 	}
@@ -150,7 +150,7 @@ public class CustomerInfoController {
 						try {
 							Thread.sleep(3000);
 							CustomerInfo entity = addCustomerInfoDTO.toObject();
-							customerInfoService.save(entity);
+							customerInfoService.saveCustomerInfo(entity);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}

@@ -10,5 +10,9 @@
 		<setting name="aggressiveLazyLoading" value="false" />
 		<!-- 对于未知的SQL查询，允许返回不同的结果集以达到通用的效果 -->
 		<setting name="multipleResultSetsEnabled" value="true" />
-		</settings>
+	</settings>
+	<typeHandlers>
+		<typeHandler handler="org.mo.jims.coop.typehandler.ApprovalHadler"
+			javaType="org.mo.jims.coop.enumtype.Approval"/>
+	</typeHandlers>
 </configuration>

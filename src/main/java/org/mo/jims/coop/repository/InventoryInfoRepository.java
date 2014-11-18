@@ -11,12 +11,10 @@ import org.springframework.stereotype.Repository;
 @Repository("inventoryInfoRepository")
 public interface InventoryInfoRepository extends BaseRepository<InventoryInfo, String> {
 
-	public InventoryInfo selcetByName(@Param("name") String name);
-
-	public int countAllByCriteria(@Param("name") String param,
+	public int countAllByCriteria(@Param("goodName") String goodName,
 			@Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
-	public List<InventoryInfo> selectAllByCriteria(@Param("name") String param,
+	public List<InventoryInfo> selectAllByCriteria(@Param("goodName") String goodName,
 			@Param("beginTime") Date beginTime, @Param("endTime") Date endTime,
 			@Param("offset") int offset, @Param("size") int size);
 
@@ -30,6 +28,6 @@ public interface InventoryInfoRepository extends BaseRepository<InventoryInfo, S
 	 */
 	public List<InventoryInfo> selectByUser(String username);
 	
-	public List<String> selectAllInventoryName();
+	public List<InventoryInfo> selectByGoodName(String goodName);
 
 }

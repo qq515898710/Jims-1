@@ -8,6 +8,7 @@ package org.mo.jims.coop.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.mo.jims.coop.enumtype.Approval;
 import org.mo.open.common.entity.User;
 import org.mo.open.common.util.Sequence;
 
@@ -35,7 +36,9 @@ public class SellReturn implements Serializable {
 
 	private java.lang.String handler;
 
-	private GoodInfo goodInfo;
+	private Approval approval;
+	
+	private InventoryInfo inventoryInfo;
 
 	private CustomerInfo customerInfo;
 
@@ -46,8 +49,8 @@ public class SellReturn implements Serializable {
 	}
 
 	public SellReturn(String id, float unitCost, int amount, float sum,
-			Date time, String clearingForm, String handler, GoodInfo goodInfo,
-			CustomerInfo customerInfo, User user) {
+			Date time, String clearingForm, String handler, Approval approval,
+			InventoryInfo inventoryInfo, CustomerInfo customerInfo, User user) {
 		super();
 		this.id = id;
 		this.unitCost = unitCost;
@@ -56,14 +59,15 @@ public class SellReturn implements Serializable {
 		this.time = time;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
-		this.goodInfo = goodInfo;
+		this.approval = approval;
+		this.inventoryInfo = inventoryInfo;
 		this.customerInfo = customerInfo;
 		this.user = user;
 	}
 
-	public SellReturn(float unitCost, int amount, float sum, 
-			String clearingForm, String handler, GoodInfo goodInfo,
-			CustomerInfo customerInfo, User user) {
+	public SellReturn(float unitCost, int amount, float sum,
+			String clearingForm, String handler, Approval approval,
+			InventoryInfo inventoryInfo, CustomerInfo customerInfo, User user) {
 		super();
 		this.id = "sellr" + Sequence.nextId();
 		this.unitCost = unitCost;
@@ -71,7 +75,8 @@ public class SellReturn implements Serializable {
 		this.sum = sum;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
-		this.goodInfo = goodInfo;
+		this.approval = approval;
+		this.inventoryInfo = inventoryInfo;
 		this.customerInfo = customerInfo;
 		this.user = user;
 	}
@@ -131,13 +136,21 @@ public class SellReturn implements Serializable {
 	public void setHandler(java.lang.String handler) {
 		this.handler = handler;
 	}
-
-	public GoodInfo getGoodInfo() {
-		return goodInfo;
+	
+	public Approval getApproval() {
+		return approval;
 	}
 
-	public void setGoodInfo(GoodInfo goodInfo) {
-		this.goodInfo = goodInfo;
+	public void setApproval(Approval approval) {
+		this.approval = approval;
+	}
+
+	public InventoryInfo getInventoryInfo() {
+		return inventoryInfo;
+	}
+
+	public void setInventoryInfo(InventoryInfo inventoryInfo) {
+		this.inventoryInfo = inventoryInfo;
 	}
 
 	public CustomerInfo getCustomerInfo() {
@@ -154,6 +167,15 @@ public class SellReturn implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "SellReturn [id=" + id + ", unitCost=" + unitCost + ", amount="
+				+ amount + ", sum=" + sum + ", time=" + time
+				+ ", clearingForm=" + clearingForm + ", handler=" + handler
+				+ ", approval=" + approval + ", inventoryInfo=" + inventoryInfo
+				+ ", customerInfo=" + customerInfo + ", user=" + user + "]";
 	}
 
 }

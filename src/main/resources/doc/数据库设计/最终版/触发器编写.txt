@@ -1,0 +1,71 @@
+//销售表添加一条记录并状态显示为通过,库存就减一
+create trigger trigger_reduce_inventory_sell_insert after insert 
+   on tb_sell 
+   for each row 
+   begin
+     update tb_inventory_info set amount=amount - new.amount 
+     where good_id = new.good_id and new.state = '0';
+   end;
+
+//更新销售表的状态(通过),库存就减一
+create trigger trigger_reduce_inventory_sell_update after update 
+   on tb_sell 
+   for each row 
+   begin
+     update tb_inventory_info set amount=amount - new.amount 
+     where good_id = old.good_id and new.state = '0';
+   end;
+
+//销售退货表添加一条记录并状态显示为通过,库存就加一
+create trigger trigger_reduce_inventory_sell_return_insert after insert 
+   on tb_sell_return 
+   for each row 
+   begin
+     update tb_inventory_info set amount=amount + new.amount 
+     where good_id = new.good_id and new.state = '0';
+   end;
+
+//更新销售退货表的状态(通过),库存就加一
+create trigger trigger_reduce_inventory_sell_return_update after update 
+   on tb_sell_return 
+   for each row 
+   begin
+     update tb_inventory_info set amount=amount + new.amount 
+     where good_id = old.good_id and new.state = '0';
+   end;
+
+//入库表添加一条记录并状态显示为通过,库存就加一
+create trigger trigger_reduce_inventory_stock_insert after insert 
+   on tb_stock  
+   for each row 
+   begin
+     update tb_inventory_info set amount=amount + new.amount 
+     where good_id = new.good_id and new.state = '0';
+   end;
+
+//更新入库表的状态(通过),库存就加一
+create trigger trigger_reduce_inventory_stock_update after update 
+   on tb_stock 
+   for each row 
+   begin
+     update tb_inventory_info set amount = amount + new.amount 
+     where good_id = old.good_id and new.state = '0';
+   end;
+
+//入库退货表添加一条记录并状态显示为通过,库存就减一
+create trigger trigger_reduce_inventory_stock_return_insert after insert 
+   on tb_stock_return 
+   for each row 
+   begin
+     update tb_inventory_info set amount=amount - new.amount 
+     where good_id = new.good_id and new.state = '0';
+   end;
+
+//更新入库退货表的状态(通过),库存就减一
+create trigger trigger_reduce_inventory_stock_return_update after update 
+   on tb_stock_return  
+   for each row 
+   begin
+     update tb_inventory_info set amount=amount - new.amount 
+     where good_id = old.good_id and new.state = '0';
+   end;

@@ -5,15 +5,11 @@
 	<sql id="select_inventory_info">
 		SELECT 
 			id,
-		 	name, 
-		 	abbreviation,
-		 	origin, 
+		 	good_id, 
+		 	user_id,
 		 	specification, 
-		 	pack, 
-		 	units, 
 		 	unit_cost, 
 		 	amount, 
-		 	user_id,
 		 	time 
 		FROM tb_inventory_info
 	</sql>
@@ -21,31 +17,23 @@
 	<insert id="insert" parameterType="InventoryInfo">
 		INSERT INTO tb_inventory_info(
 			id,
-		 	name, 
-		 	abbreviation,
-		 	origin, 
+		 	good_id, 
+		 	user_id,
 		 	specification, 
-		 	pack, 
-		 	units, 
 		 	unit_cost, 
 		 	amount, 
-		 	user_id,
 		 	time)
-		VALUE(#{id}, #{name},#{abbreviation},#{origin}, #{specification},
-			#{pack},#{units},#{unitCost},#{amount},#{user.account},#{time})
+		VALUE(#{id},#{goodInfo.id},#{user.acccount},
+		#{specification},#{unitCost},#{amount},#{time})
 	</insert>
 
 	<update id="updateByPK" parameterType="InventoryInfo">
 		UPDATE tb_inventory_info SET
-		 	name=#{name}, 
-		 	abbreviation=#{abbreviation},
-		 	origin=#{origin}, 
+		 	good_id=#{goodInfo.id}, 
+		 	user_id=#{user.account},
 		 	specification=#{specification}, 
-		 	pack=#{pack}, 
-		 	units=#{units}, 
 		 	unit_cost=#{unitCost}, 
 		 	amount=#{amount}, 
-		 	user_id=#{user.account},
 		 	time=#{time}
 		WHERE
 			id=#{id}
@@ -182,24 +170,26 @@
 		WHERE tb_user.username=#{username} ORDER BY tb_inventory_info.time DESC
 	</select>
 	
-	<select id="selectAllInventoryName" resultType="String">
-		SELECT name FROM tb_inventory_info ORDER BY time DESC
+	<select id="selectByGoodName" resultMap="inventoryInfoResultMap">
+		SELECT * FROM tb_inventory_info 
+		JOIN tb_user ON tb_inventory_info.good_id = tb_good_info.id
+		WHERE tb_good_info.name=#{goodName} ORDER BY tb_inventory_info.time DESC
 	</select>
 	
 	<!-- inventoryInfo -->
 	<resultMap type="InventoryInfo" id="inventoryInfoResultMap">
 		<id property="id" column="id" />
-		<result property="name" column="name" />
-		<result property="abbreviation" column="abbreviation" />
-		<result property="origin" column="origin" />
 		<result property="specification" column="specification" />
-		<result property="pack" column="pack" />
-		<result property="units" column="units" />
 		<result property="unitCost" column="unit_cost" />
 		<result property="amount" column="amount" />
 		<result property="time" column="time"/>
 		<association property="user"  javaType="User">
 			<id property="account" column="user_id"/>
+			<result property="username" column="user_username"/>
+		</association>
+		<association property="goodInfo" javaType="GoodInfo">
+			<id property="id" column="good_id"/>
+			<result property="name" column="good_name"/>
 		</association>
 	</resultMap>
 

@@ -167,14 +167,12 @@ public class User implements Serializable {
 		this.inventoryInfo = inventoryInfo;
 	}
 
+
 	@Override
 	public String toString() {
 		return "User [account=" + account + ", username=" + username
 				+ ", password=" + password + ", createDate=" + createDate
-				+ ", latestDate=" + latestDate + ", role=" + role
-				+ ", userLog=" + userLog + ", sell=" + sell + ", sellReturn="
-				+ sellReturn + ", stock=" + stock + ", stockReturn="
-				+ stockReturn + ", inventoryInfo=" + inventoryInfo + "]";
+				+ ", latestDate=" + latestDate + "]";
 	}
 	
 }

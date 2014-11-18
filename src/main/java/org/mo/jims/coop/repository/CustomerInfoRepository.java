@@ -9,10 +9,9 @@ import org.mo.open.common.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository("customerInfoRepository")
-public interface CustomerInfoRepository extends
-		BaseRepository<CustomerInfo, String> {
+public interface CustomerInfoRepository extends BaseRepository<CustomerInfo, String> {
 
-	public CustomerInfo selcetByName(@Param("name") String name);
+	public CustomerInfo selectByName(@Param("name") String name);
 
 	public int countAllByCriteria(@Param("name") String param,
 			@Param("beginTime") Date beginTime, @Param("endTime") Date endTime);

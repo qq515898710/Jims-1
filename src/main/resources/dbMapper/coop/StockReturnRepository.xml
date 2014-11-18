@@ -15,7 +15,8 @@
 		 	check_conclusion, 
 		 	time, 
 		 	clearing_form, 
-		 	handler 
+		 	handler,
+		 	state
 		FROM tb_stock_return
 	</sql>
 
@@ -49,7 +50,8 @@
 		 	check_conclusion =#{checkConclusion},
 		 	time=#{time}, 
 		 	clearing_form=#{clearingForm}, 
-		 	handler=#{handler}
+		 	handler=#{handler},
+		 	state=#{approval.content}
 		WHERE
 			id=#{id}
 	</update>
@@ -186,6 +188,7 @@
 			<if test="GoodName != null and GoodName != ''"> AND tb_good_info.name LIKE CONCAT('%', #{GoodName},'%') </if>
 			<if test="UserName != null and UserName != ''"> AND tb_user.username LIKE CONCAT('%', #{UserName},'%') </if>
 		</where>
+		LIMIT #{offset}, #{size} 
 		ORDER BY tb_stock_return.time DESC
 	</select>
 
@@ -200,6 +203,7 @@
 		<result property="time" column="time" />
 		<result property="clearingForm" column="clearing_form" />
 		<result property="handler" column="handler" />
+		<result property="approval" column="state"/>
 		<association property="providerInfo" javaType="ProviderInfo">
 			<id property="id" column="provider_id"/>
 			<result property="name" column="provider_name" />

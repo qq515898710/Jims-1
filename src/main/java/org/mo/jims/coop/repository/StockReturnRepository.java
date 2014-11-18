@@ -34,5 +34,6 @@ public interface StockReturnRepository extends BaseRepository<StockReturn, Strin
 			@Param("ProviderName") String ProviderName,
 			@Param("GoodName") String GoodName,
 			@Param("UserName") String UserName,
-			@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+			@Param("startTime") Date startTime, @Param("endTime") Date endTime,
+			@Param("offset") int offset, @Param("size") int size);
 }

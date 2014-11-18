@@ -35,5 +35,6 @@ public interface StockRepository extends BaseRepository<Stock, String> {
 			@Param("ProviderName") String ProviderName,
 			@Param("GoodName") String GoodName,
 			@Param("UserName") String UserName,
-			@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+			@Param("startTime") Date startTime, @Param("endTime") Date endTime,
+			@Param("offset") int offset, @Param("size") int size);
 }

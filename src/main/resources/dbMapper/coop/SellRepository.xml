@@ -5,7 +5,7 @@
 	<sql id="select_sell_info">
 		SELECT 
 			id,
-		 	good_id, 
+		 	inventory_id, 
 		 	customer_id,
 		 	user_id, 
 		 	unit_cost, 
@@ -13,14 +13,15 @@
 		 	sum, 
 		 	time, 
 		 	clearing_form, 
-		 	handler 
+		 	handler,
+		 	state 
 		FROM tb_sell
 	</sql>
 
 	<insert id="insert" parameterType="Sell">
 		INSERT INTO tb_sell(
 			id,
-		 	good_id, 
+		 	inventory_id, 
 		 	customer_id,
 		 	user_id, 
 		 	unit_cost, 
@@ -28,14 +29,15 @@
 		 	sum, 
 		 	time, 
 		 	clearing_form, 
-		 	handler)
-		VALUE(#{id}, #{goodInfo.id},#{customerInfo.id},#{user.id}, #{unitCost},
-			#{amount},#{sum},#{time},#{clearingForm},#{handler})
+		 	handler,
+		 	state)
+		VALUE(#{id}, #{inventoryInfo.id},#{customerInfo.id},#{user.id}, #{unitCost},
+			#{amount},#{sum},#{time},#{clearingForm},#{handler},#{approval, typeHandler=org.mo.jims.coop.typehandler.ApprovalHadler})
 	</insert>
 
 	<update id="updateByPK" parameterType="Sell">
 		UPDATE tb_sell SET
-		 	good_id=#{goodInfo.id}, 
+		 	inventory_id=#{inventoryInfo.id}, 
 		 	customer_id=#{customerInfo.id},
 		 	user_id=#{user.id}, 
 		 	unit_cost=#{unitCost}, 
@@ -43,7 +45,8 @@
 		 	sum=#{sum}, 
 		 	time=#{time}, 
 		 	clearing_form=#{clearingForm}, 
-		 	handler=#{handler}
+		 	handler=#{handler},
+		 	state=#{approval, typeHandler=org.mo.jims.coop.typehandler.ApprovalHadler}
 		WHERE
 			id=#{id}
 	</update>
@@ -143,10 +146,10 @@
 	
 	<select id="countAllByCriteria" resultType="int">
 		SELECT COUNT(*) FROM tb_sell
-		JOIN tb_good_info ON tb_good_info.id = tb_sell.good_id
+		JOIN tb_inventory_info ON tb_inventory_info.id = tb_sell.inventory_id
 		JOIN tb_customer_info ON tb_customer_info.id = tb_sell.customer_id
 		<where>
-			<if test="goodName != null and goodName !='' ">tb_good_info.name = #{goodName}</if>
+			<if test="inventoryName != null and inventoryName !='' ">tb_inventory_info.name = #{inventoryName}</if>
 			<if test="customerName != null and customerName !='' ">AND tb_customer_info.name = #{customerName}</if>
 			<if test="beginTime != null"><![CDATA[AND tb_sell.time > #{beginTime}]]></if>
 			<if test="endTime != null"><![CDATA[AND tb_sell.time <= #{endTime}]]></if>
@@ -156,7 +159,7 @@
 	<select id="selectAllByCriteria" resultMap="sellResultMap">
 		SELECT 
 			tb_sell.id AS id,
-		 	tb_good_info.name AS good_name, 
+		 	tb_inventory_info.name AS inventory_name, 
 		 	tb_customer_info.name AS customer_name,
 		 	tb_sell.unit_cost AS unit_cost, 
 		 	tb_sell.amount AS amount, 
@@ -165,14 +168,15 @@
 		 	tb_sell.clearing_form AS clearing_form, 
 		 	tb_sell.handler AS handler 
 		FROM tb_sell
-		JOIN tb_good_info ON tb_good_info.id = tb_sell.good_id
+		JOIN tb_inventory_info ON tb_inventory_info.id = tb_sell.inventory_id
 		JOIN tb_customer_info ON tb_customer_info.id = tb_sell.customer_id
 		<where>
-			<if test="goodName != null and goodName !='' ">tb_good_info.name LIKE CONCAT('%', #{goodName},'%')</if>
+			<if test="inventoryName != null and inventoryName !='' ">tb_inventory_info.name LIKE CONCAT('%', #{inventoryName},'%')</if>
 			<if test="customerName != null and customerName !='' ">AND tb_customer_info.name LIKE CONCAT('%', #{customerName},'%')</if>
 			<if test="beginTime != null"><![CDATA[AND tb_sell.time > #{beginTime}]]></if>
 			<if test="endTime != null"><![CDATA[AND tb_sell.time <= #{endTime}]]></if>
 		</where>
+		LIMIT #{offset}, #{size} 
 		ORDER BY tb_sell.time DESC
 	</select>
 	
@@ -185,9 +189,10 @@
 		<result property="time" column="time" />
 		<result property="clearingForm" column="clearing_form" />
 		<result property="handler" column="handler" />
-			<association property="goodInfo" javaType="GoodInfo">
-				<id property="id" column="good_id"/>
-				<result property="name" column="good_name"/>	
+		<result property="approval" column="state" typeHandler="org.mo.jims.coop.typehandler.ApprovalHadler"/>
+			<association property="inventoryInfo" javaType="InventoryInfo">
+				<id property="id" column="inventory_id"/>
+				<result property="name" column="inventory_name"/>	
 			</association>
 			<association property="customerInfo" javaType="CustomerInfo">
 				<id property="id" column="customer_id"/>

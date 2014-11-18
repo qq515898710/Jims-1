@@ -21,21 +21,13 @@ public class InventoryInfo implements Serializable {
 
 	private java.lang.String id;
 
-	private java.lang.String name;
-
-	private java.lang.String abbreviation;
-
-	private java.lang.String origin;
-
 	private java.lang.String specification;
-
-	private java.lang.String pack;
-
-	private java.lang.String units;
 
 	private float unitCost;
 
 	private int amount;
+	
+	private GoodInfo goodInfo;
 
 	private User user;
 
@@ -45,37 +37,28 @@ public class InventoryInfo implements Serializable {
 		super();
 	}
 
-	public InventoryInfo(String id, String name, String abbreviation,
-			String origin, String specification, String pack, String units,
-			float unitCost, int amount, User user, Date time) {
+	public InventoryInfo(String id, String specification, float unitCost,
+			int amount, GoodInfo goodInfo, User user, Date time) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.abbreviation = abbreviation;
-		this.origin = origin;
 		this.specification = specification;
-		this.pack = pack;
-		this.units = units;
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.user = user;
+		this.goodInfo = goodInfo;
 		this.time = time;
 	}
 
-	public InventoryInfo(String name, String abbreviation, String origin,
-			String specification, String pack, String units, float unitCost,
-			int amount, User user) {
+	public InventoryInfo(String specification, float unitCost, int amount,
+			GoodInfo goodInfo, User user, Date time) {
 		super();
 		this.id = "i" + Sequence.nextId();
-		this.name = name;
-		this.abbreviation = abbreviation;
-		this.origin = origin;
 		this.specification = specification;
-		this.pack = pack;
-		this.units = units;
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.user = user;
+		this.goodInfo = goodInfo;
+		this.time = time;
 	}
 
 	public java.lang.String getId() {
@@ -86,29 +69,6 @@ public class InventoryInfo implements Serializable {
 		this.id = id;
 	}
 
-	public java.lang.String getName() {
-		return name;
-	}
-
-	public void setName(java.lang.String name) {
-		this.name = name;
-	}
-
-	public java.lang.String getAbbreviation() {
-		return abbreviation;
-	}
-
-	public void setAbbreviation(java.lang.String abbreviation) {
-		this.abbreviation = abbreviation;
-	}
-
-	public java.lang.String getOrigin() {
-		return origin;
-	}
-
-	public void setOrigin(java.lang.String origin) {
-		this.origin = origin;
-	}
 
 	public java.lang.String getSpecification() {
 		return specification;
@@ -116,22 +76,6 @@ public class InventoryInfo implements Serializable {
 
 	public void setSpecification(java.lang.String specification) {
 		this.specification = specification;
-	}
-
-	public java.lang.String getPack() {
-		return pack;
-	}
-
-	public void setPack(java.lang.String pack) {
-		this.pack = pack;
-	}
-
-	public java.lang.String getUnits() {
-		return units;
-	}
-
-	public void setUnits(java.lang.String units) {
-		this.units = units;
 	}
 
 	public float getUnitCost() {
@@ -150,6 +94,14 @@ public class InventoryInfo implements Serializable {
 		this.amount = amount;
 	}
 
+	public GoodInfo getGoodInfo() {
+		return goodInfo;
+	}
+
+	public void setGoodInfo(GoodInfo goodInfo) {
+		this.goodInfo = goodInfo;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -165,5 +117,15 @@ public class InventoryInfo implements Serializable {
 	public void setTime(Date time) {
 		this.time = time;
 	}
+
+	@Override
+	public String toString() {
+		return "InventoryInfo [id=" + id + ", specification=" + specification
+				+ ", unitCost=" + unitCost + ", amount=" + amount
+				+ ", goodInfo=" + goodInfo.toString() + ", user=" + user.toString() + ", time="
+				+ time + "]";
+	}
+	
+	
 
 }
