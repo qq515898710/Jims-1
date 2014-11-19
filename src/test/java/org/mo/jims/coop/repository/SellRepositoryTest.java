@@ -4,11 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
-import org.mo.jims.coop.entity.CustomerInfo;
-import org.mo.jims.coop.entity.InventoryInfo;
 import org.mo.jims.coop.entity.Sell;
-import org.mo.jims.coop.enumtype.Approval;
-import org.mo.open.common.entity.User;
 import org.mo.open.common.repository.UserRepository;
 import org.mo.open.common.util.BaseTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +13,6 @@ public class SellRepositoryTest extends BaseTest {
 
 	@Autowired
 	private SellRepository sellRepository;
-	
-	@Autowired
-	private InventoryInfoRepository inventoryInfoRepository;
 	
 	@Autowired
 	private CustomerInfoRepository customerInfoRepository;
@@ -39,12 +32,6 @@ public class SellRepositoryTest extends BaseTest {
 
 	@Test
 	public void testInsert() {
-		Approval approval=Approval.PASS;
-		InventoryInfo inventoryInfo = inventoryInfoRepository.getLatestInsert();
-		CustomerInfo customerInfo = customerInfoRepository.getLatestInsert();
-		User user = userRepository.getLatestInsert();
-		Sell entity = new Sell(10.1f, 2, 10.1f*2, "现金", "未知", approval, inventoryInfo, customerInfo, user);
-		sellRepository.insert(entity);
 	}
 
 	@Test
@@ -109,12 +96,24 @@ public class SellRepositoryTest extends BaseTest {
 
 	@Test
 	public void testSelectThisYear() {
-		
+		List<Sell> selectLastYear = sellRepository.selectThisYear();
+		System.out.println(selectLastYear.size());
+		Iterator<Sell> iterator = selectLastYear.iterator();
+		while(iterator.hasNext()){
+			Sell next = iterator.next();
+			System.out.println(next.toString());
+		}
 	}
 
 	@Test
 	public void testSelectLastYear() {
-		
+		List<Sell> selectLastYear = sellRepository.selectLastYear();
+		System.out.println(selectLastYear.size());
+		Iterator<Sell> iterator = selectLastYear.iterator();
+		while(iterator.hasNext()){
+			Sell next = iterator.next();
+			System.out.println(next.toString());
+		}
 	}
 
 	@Test

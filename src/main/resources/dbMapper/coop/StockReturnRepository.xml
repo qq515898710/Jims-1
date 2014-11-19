@@ -2,25 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.mo.jims.coop.repository.StockReturnRepository">
 
-	<sql id="select_stock_return_info">
+	<sql id="select_stock_return_info_join">
 		SELECT 
-			id,
-		 	provider_id,
-		 	user_id, 
-		 	good_id, 
-		 	variety_amount, 
-		 	unit_cost, 
-		 	amount, 
-		 	sum, 
-		 	check_conclusion, 
-		 	time, 
-		 	clearing_form, 
-		 	handler,
-		 	state
-		FROM tb_stock_return
+			tb_stock_return.id AS id,
+			tb_stock_return.provider_id AS provider_id, 
+		 	tb_provider_info.name AS provider_name,
+		 	tb_stock_return.user_id AS user_id,
+		 	tb_user.username AS user_username, 
+		 	tb_stock_return.good_id AS good_id, 
+		 	tb_good_info.name AS good_name, 
+		 	tb_stock_return.variety_amount AS variety_amount, 
+		 	tb_stock_return.unit_cost AS unit_cost, 
+		 	tb_stock_return.amount AS amount, 
+		 	tb_stock_return.sum AS sum, 
+		 	tb_stock_return.check_conclusion AS check_conclusion, 
+		 	tb_stock_return.time AS time, 
+		 	tb_stock_return.clearing_form AS clearing_form, 
+		 	tb_stock_return.handler AS handler
+		FROM tb_stock_return 
+		JOIN tb_provider_info ON tb_provider_info.id = tb_stock_return.provider_id 
+		JOIN tb_user ON tb_user.account = tb_stock_return.user_id 
+		JOIN tb_good_info ON tb_good_info.id = tb_stock_return.good_id 
 	</sql>
-
-	<insert id="insert" parameterType="Stock">
+	
+	<sql id="count_stock_return_info">
+		SELECT COUNT(*) FROM tb_stock_return 
+		JOIN tb_provider_info ON tb_provider_info.id = tb_stock_return.provider_id 
+		JOIN tb_user ON tb_user.account = tb_stock_return.user_id 
+		JOIN tb_good_info ON tb_good_info.id = tb_stock_return.good_id 
+	</sql>
+	
+	<insert id="insert" parameterType="StockReturn">
 		INSERT INTO tb_stock_return(
 			id,
 		 	provider_id,
@@ -50,8 +62,7 @@
 		 	check_conclusion =#{checkConclusion},
 		 	time=#{time}, 
 		 	clearing_form=#{clearingForm}, 
-		 	handler=#{handler},
-		 	state=#{approval.content}
+		 	handler=#{handler}
 		WHERE
 			id=#{id}
 	</update>
@@ -70,90 +81,113 @@
 	</select>
 	
 	<select id="getLatestInsert" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return ORDER BY id DESC LIMIT 1 
+		<include refid="select_stock_return_info_join"/> 
+		ORDER BY tb_stock_return.id DESC LIMIT 1 
 	</select>
 	
 	<select id="getLatestInsertId" resultType="String">
-		SELECT MAX(id) FROM  tb_stock_return 
+		SELECT MAX(id) FROM tb_stock_return 
 	</select>
 
 	<select id="selectToday" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return WHERE TO_DAYS(time) = TO_DAYS(NOW()) ORDER BY time DESC;
+		<include refid="select_stock_return_info_join"/> 
+		WHERE TO_DAYS(tb_stock_return.time) = TO_DAYS(NOW()) 
+		ORDER BY tb_stock_return.time DESC;
 	</select>
 	
 	<select id="selectYesterday" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1 ORDER BY time DESC;
+		<include refid="select_stock_return_info_join"/> 
+		WHERE TO_DAYS(NOW())-TO_DAYS(tb_stock_return.time) = 1 
+		ORDER BY tb_stock_return.time DESC;
 	</select>
 	
 	<select id="selectThisWeek" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY time DESC;
+		<include refid="select_stock_return_info_join"/> 
+		WHERE YEARWEEK(DATE_FORMAT(tb_stock_return.time,'%Y-%m-%d')) = YEARWEEK(NOW()) 
+		ORDER BY tb_stock_return.time DESC;
 	</select>
 	
 	<select id="selectLastWeek" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 ORDER BY time DESC;
+		<include refid="select_stock_return_info_join"/> 
+		WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 
+		ORDER BY tb_stock_return.time DESC;
 	</select>
 	
 	<select id="selectThisMonth" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY time DESC;
+		<include refid="select_stock_return_info_join"/> 
+		WHERE DATE_FORMAT(tb_stock_return.time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') 
+		ORDER BY tb_stock_return.time DESC;
 	</select>
 	
 	<select id="selectLastMonth" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY time DESC;
+		<include refid="select_stock_return_info_join"/> 
+		WHERE DATE_FORMAT(tb_stock_return.time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') 
+		ORDER BY tb_stock_return.time DESC;
 	</select>
 	
 	<select id="selectThisYear" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return WHERE YEAR(time) = YEAR(NOW()) ORDER BY time DESC;
+		<include refid="select_stock_return_info_join"/> 
+		WHERE YEAR(tb_stock_return.time) = YEAR(NOW()) 
+		ORDER BY tb_stock_return.time DESC;
 	</select>
 	
 	<select id="selectLastYear" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY time DESC;
+		<include refid="select_stock_return_info_join"/> 
+		WHERE YEAR(tb_stock_return.time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) 
+		ORDER BY tb_stock_return.time DESC;
 	</select>
 	
 	<select id="selectAll" resultMap="stockReturnResultMap">
-		SELECT * FROM tb_stock_return ORDER BY time DESC
+		<include refid="select_stock_return_info_join"/> 
+		ORDER BY tb_stock_return.time DESC
 	</select>
 	
 	<select id="countToday" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return WHERE TO_DAYS(time) = TO_DAYS(NOW());
+		<include refid="count_stock_return_info"/> 
+		WHERE TO_DAYS(tb_stock_return.time) = TO_DAYS(NOW());
 	</select>
 	
 	<select id="countYesterday" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
+		<include refid="count_stock_return_info"/> 
+		WHERE TO_DAYS(NOW())-TO_DAYS(tb_stock_return.time) = 1;
 	</select>
 	
 	<select id="countThisWeek" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
+		<include refid="count_stock_return_info"/> 
+		WHERE YEARWEEK(DATE_FORMAT(tb_stock_return.time,'%Y-%m-%d')) = YEARWEEK(NOW());
 	</select>
 	
 	<select id="countLastWeek" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
+		<include refid="count_stock_return_info"/> 
+		WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(tb_stock_return.time,'%Y-%m-%d')) = 1;
 	</select>
 	
 	<select id="countThisMonth" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+		<include refid="count_stock_return_info"/> 
+		WHERE DATE_FORMAT(tb_stock_return.time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
 	</select>
 	
 	<select id="countLastMonth" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+		<include refid="count_stock_return_info"/> 
+		WHERE DATE_FORMAT(tb_stock_return.time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
 	</select>
 	
 	<select id="countThisYear" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return WHERE YEAR(time) = YEAR(NOW());
+		<include refid="count_stock_return_info"/> 
+		WHERE YEAR(tb_stock_return.time) = YEAR(NOW());
 	</select>
 	
 	<select id="countLastYear" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+		<include refid="count_stock_return_info"/> 
+		WHERE YEAR(tb_stock_return.time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
 	</select>
 	
 	<select id="countAll" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return
+		<include refid="count_stock_return_info"/>
 	</select>
 	
 	<select id="countAllByCriteria" resultType="int">
-		SELECT COUNT(*) FROM tb_stock_return 
-		JOIN tb_provider_info ON tb_provider_info.id = tb_stock_return.provider_id 
-		JOIN tb_user ON tb_user.account = tb_stock_return.user_id 
-		JOIN tb_good_info ON tb_good_info.id = tb_stock_return.good_id 
+		<include refid="count_stock_return_info"/>
 		<where>
 			<if test="startTime != null"><![CDATA[ tb_stock_return.time >= #{startTime} ]]> </if>
 			<if test="endTime != null"><![CDATA[ AND tb_stock_return.time <= #{endTime} ]]> </if>
@@ -164,23 +198,7 @@
 	</select>
 	
 	<select id="selectAllByCriteria" resultMap="stockReturnResultMap">
-		SELECT 
-			tb_stock_return.id AS id,
-		 	tb_provider_info.name AS provider_name,
-		 	tb_user.username AS user_username, 
-		 	tb_good_info.name AS good_name, 
-		 	tb_stock_return.variety_amount AS variety_amount, 
-		 	tb_stock_return.unit_cost AS unit_cost, 
-		 	tb_stock_return.amount AS amount, 
-		 	tb_stock_return.sum AS sum, 
-		 	tb_stock_return.check_conclusion AS check_conclusion, 
-		 	tb_stock_return.time AS time, 
-		 	tb_stock_return.clearing_form AS clearing_form, 
-		 	tb_stock_return.handler AS handler
-		FROM tb_stock_return 
-		JOIN tb_provider_info ON tb_provider_info.id = tb_stock_return.provider_id 
-		JOIN tb_user ON tb_user.account = tb_stock_return.user_id 
-		JOIN tb_good_info ON tb_good_info.id = tb_stock_return.good_id 
+		<include refid="select_stock_return_info_join"/>
 		<where>
 			<if test="startTime != null"><![CDATA[ tb_stock_return.time >= #{startTime} ]]> </if>
 			<if test="endTime != null"><![CDATA[ AND tb_stock_return.time <= #{endTime} ]]> </if>
@@ -192,7 +210,7 @@
 		ORDER BY tb_stock_return.time DESC
 	</select>
 
-	<!-- stock -->
+	<!-- stock_return -->
 	<resultMap type="StockReturn" id="stockReturnResultMap">
 		<id property="id" column="id" />
 		<result property="varietyAmount" column="variety_amount" />
@@ -203,7 +221,6 @@
 		<result property="time" column="time" />
 		<result property="clearingForm" column="clearing_form" />
 		<result property="handler" column="handler" />
-		<result property="approval" column="state"/>
 		<association property="providerInfo" javaType="ProviderInfo">
 			<id property="id" column="provider_id"/>
 			<result property="name" column="provider_name" />

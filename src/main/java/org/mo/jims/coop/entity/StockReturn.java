@@ -8,6 +8,7 @@ package org.mo.jims.coop.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.mo.jims.coop.enumtype.Approval;
 import org.mo.open.common.entity.User;
 import org.mo.open.common.util.Sequence;
 
@@ -36,6 +37,8 @@ public class StockReturn implements Serializable {
 	private java.lang.String clearingForm;
 
 	private java.lang.String handler;
+
+	private Approval approval;
 
 	private ProviderInfo providerInfo;
 
@@ -156,6 +159,14 @@ public class StockReturn implements Serializable {
 		this.handler = handler;
 	}
 
+	public Approval getApproval() {
+		return approval;
+	}
+
+	public void setApproval(Approval approval) {
+		this.approval = approval;
+	}
+
 	public ProviderInfo getProviderInfo() {
 		return providerInfo;
 	}
@@ -178,6 +189,17 @@ public class StockReturn implements Serializable {
 
 	public void setGoodInfo(GoodInfo goodInfo) {
 		this.goodInfo = goodInfo;
+	}
+
+	@Override
+	public String toString() {
+		return "StockReturn [id=" + id + ", varietyAmount=" + varietyAmount
+				+ ", unitCost=" + unitCost + ", amount=" + amount + ", sum="
+				+ sum + ", check_conclusion=" + check_conclusion + ", time="
+				+ time + ", clearingForm=" + clearingForm + ", handler="
+				+ handler + ", approval=" + approval.getContent()
+				+ ", providerInfo=" + providerInfo.toString() + ", user="
+				+ user.toString() + ", goodInfo=" + goodInfo.toString() + "]";
 	}
 
 }

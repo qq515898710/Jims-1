@@ -4,24 +4,37 @@
 
 	<sql id="select_sell_info">
 		SELECT 
-			id,
-		 	inventory_id, 
-		 	customer_id,
-		 	user_id, 
-		 	unit_cost, 
-		 	amount, 
-		 	sum, 
-		 	time, 
-		 	clearing_form, 
-		 	handler,
-		 	state 
-		FROM tb_sell
+			tb_sell.id AS id,
+		 	tb_sell.good_id AS good_id, 
+		 	tb_good_info.name AS good_name, 
+		 	tb_sell.customer_id AS customer_id,
+		 	tb_customer_info.name AS customer_name, 
+		 	tb_sell.user_id AS user_id, 
+		 	tb_user.username AS user_username, 
+		 	tb_sell.unit_cost AS unit_cost, 
+		 	tb_sell.amount AS amount, 
+		 	tb_sell.sum AS sum, 
+		 	tb_sell.time AS time, 
+		 	tb_sell.clearing_form AS clearing_form, 
+		 	tb_sell.handler AS handler,
+		 	tb_sell.state AS state
+		FROM tb_sell 
+		JOIN tb_good_info ON tb_sell.good_id = tb_good_info.id 
+		JOIN tb_customer_info ON tb_sell.customer_id = tb_customer_info.id
+		JOIN tb_user ON tb_sell.user_id = tb_user.account
+	</sql>
+	
+	<sql id="count_sell_info">
+		SELECT count(*) FROM tb_sell
+		JOIN tb_good_info ON tb_sell.good_id = tb_good_info.id 
+		JOIN tb_customer_info ON tb_sell.customer_id = tb_customer_info.id
+		JOIN tb_user ON tb_sell.user_id = tb_user.account
 	</sql>
 
 	<insert id="insert" parameterType="Sell">
 		INSERT INTO tb_sell(
 			id,
-		 	inventory_id, 
+		 	good_id, 
 		 	customer_id,
 		 	user_id, 
 		 	unit_cost, 
@@ -31,13 +44,13 @@
 		 	clearing_form, 
 		 	handler,
 		 	state)
-		VALUE(#{id}, #{inventoryInfo.id},#{customerInfo.id},#{user.id}, #{unitCost},
+		VALUE(#{id}, #{goodInfo.id},#{customerInfo.id},#{user.id}, #{unitCost},
 			#{amount},#{sum},#{time},#{clearingForm},#{handler},#{approval, typeHandler=org.mo.jims.coop.typehandler.ApprovalHadler})
 	</insert>
 
 	<update id="updateByPK" parameterType="Sell">
 		UPDATE tb_sell SET
-		 	inventory_id=#{inventoryInfo.id}, 
+		 	good_id=#{goodInfo.id}, 
 		 	customer_id=#{customerInfo.id},
 		 	user_id=#{user.id}, 
 		 	unit_cost=#{unitCost}, 
@@ -57,7 +70,7 @@
 
 	<select id="selectByPK" resultMap="sellResultMap">
 		<include refid="select_sell_info" />
-		WHERE id = #{id}
+		WHERE tb_sell.id = #{id}
 	</select>
 
 	<select id="getCurrentTime" resultType="Date">
@@ -65,91 +78,115 @@
 	</select>
 	
 	<select id="getLatestInsert" resultMap="sellResultMap">
-		SELECT * FROM tb_sell ORDER BY id DESC LIMIT 1 
+		<include refid="select_sell_info" /> 
+		ORDER BY tb_sell.id DESC LIMIT 1 
 	</select>
 	
 	<select id="getLatestInsertId" resultType="String">
-		SELECT MAX(id) FROM  tb_sell 
+		SELECT MAX(id) FROM tb_sell 
 	</select>
 
 	<select id="selectToday" resultMap="sellResultMap">
-		SELECT * FROM tb_sell WHERE TO_DAYS(time) = TO_DAYS(NOW()) ORDER BY time DESC;
+		<include refid="select_sell_info" /> 
+		WHERE TO_DAYS(time) = TO_DAYS(NOW()) 
+		ORDER BY tb_sell.time DESC;
 	</select>
 	
 	<select id="selectYesterday" resultMap="sellResultMap">
-		SELECT * FROM tb_sell WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1 ORDER BY time DESC;
+		<include refid="select_sell_info" /> 
+		WHERE TO_DAYS(NOW())-TO_DAYS(tb_sell.time) = 1 
+		ORDER BY tb_sell.time DESC;
 	</select>
 	
 	<select id="selectThisWeek" resultMap="sellResultMap">
-		SELECT * FROM tb_sell WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY time DESC;
+		<include refid="select_sell_info" /> 
+		WHERE YEARWEEK(DATE_FORMAT(tb_sell.time,'%Y-%m-%d')) = YEARWEEK(NOW()) 
+		ORDER BY tb_sell.time DESC;
 	</select>
 	
 	<select id="selectLastWeek" resultMap="sellResultMap">
-		SELECT * FROM tb_sell WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 ORDER BY time DESC;
+		<include refid="select_sell_info" /> 
+		WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(tb_sell.time,'%Y-%m-%d')) = 1 
+		ORDER BY tb_sell.time DESC;
 	</select>
 	
 	<select id="selectThisMonth" resultMap="sellResultMap">
-		SELECT * FROM tb_sell WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY time DESC;
+		<include refid="select_sell_info" /> 
+		WHERE DATE_FORMAT(tb_sell.time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') 
+		ORDER BY tb_sell.time DESC;
 	</select>
 	
 	<select id="selectLastMonth" resultMap="sellResultMap">
-		SELECT * FROM tb_sell WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY time DESC;
+		<include refid="select_sell_info" /> 
+		WHERE DATE_FORMAT(tb_sell.time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') 
+		ORDER BY tb_sell.time DESC;
 	</select>
 	
 	<select id="selectThisYear" resultMap="sellResultMap">
-		SELECT * FROM tb_sell WHERE YEAR(time) = YEAR(NOW()) ORDER BY time DESC;
+		<include refid="select_sell_info" /> 
+		WHERE YEAR(tb_sell.time) = YEAR(NOW()) 
+		ORDER BY tb_sell.time DESC;
 	</select>
 	
 	<select id="selectLastYear" resultMap="sellResultMap">
-		SELECT * FROM tb_sell WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY time DESC;
+		<include refid="select_sell_info" /> 
+		WHERE YEAR(tb_sell.time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) 
+		ORDER BY tb_sell.time DESC;
 	</select>
 	
 	<select id="selectAll" resultMap="sellResultMap">
-		SELECT * FROM tb_sell ORDER BY time DESC
+		<include refid="select_sell_info" /> 
+		ORDER BY tb_sell.time DESC
 	</select>
 	
 	<select id="countToday" resultType="int">
-		SELECT COUNT(*) FROM tb_sell WHERE TO_DAYS(time) = TO_DAYS(NOW());
+		<include refid="count_sell_info"/> 
+		WHERE TO_DAYS(tb_sell.time) = TO_DAYS(NOW());
 	</select>
 	
 	<select id="countYesterday" resultType="int">
-		SELECT COUNT(*) FROM tb_sell WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1;
+		<include refid="count_sell_info"/> 
+		WHERE TO_DAYS(NOW())-TO_DAYS(tb_sell.time) = 1;
 	</select>
 	
 	<select id="countThisWeek" resultType="int">
-		SELECT COUNT(*) FROM tb_sell WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW());
+		<include refid="count_sell_info"/> 
+		WHERE YEARWEEK(DATE_FORMAT(tb_sell.time,'%Y-%m-%d')) = YEARWEEK(NOW());
 	</select>
 	
 	<select id="countLastWeek" resultType="int">
-		SELECT COUNT(*) FROM tb_sell WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1;
+		<include refid="count_sell_info"/> 
+		WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(tb_sell.time,'%Y-%m-%d')) = 1;
 	</select>
 	
 	<select id="countThisMonth" resultType="int">
-		SELECT COUNT(*) FROM tb_sell WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
+		<include refid="count_sell_info"/> 
+		WHERE DATE_FORMAT(tb_sell.time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m');
 	</select>
 	
 	<select id="countLastMonth" resultType="int">
-		SELECT COUNT(*) FROM tb_sell WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
+		<include refid="count_sell_info"/> 
+		WHERE DATE_FORMAT(tb_sell.time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m');
 	</select>
 	
 	<select id="countThisYear" resultType="int">
-		SELECT COUNT(*) FROM tb_sell WHERE YEAR(time) = YEAR(NOW());
+		<include refid="count_sell_info"/> 
+		WHERE YEAR(tb_sell.time) = YEAR(NOW());
 	</select>
 	
 	<select id="countLastYear" resultType="int">
-		SELECT COUNT(*) FROM tb_sell WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
+		<include refid="count_sell_info"/> 
+		WHERE YEAR(tb_sell.time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR));
 	</select>
 	
 	<select id="countAll" resultType="int">
-		SELECT COUNT(*) FROM tb_sell
+		<include refid="count_sell_info"/>
 	</select>
 	
 	<select id="countAllByCriteria" resultType="int">
-		SELECT COUNT(*) FROM tb_sell
-		JOIN tb_inventory_info ON tb_inventory_info.id = tb_sell.inventory_id
-		JOIN tb_customer_info ON tb_customer_info.id = tb_sell.customer_id
+		<include refid="count_sell_info"/>
 		<where>
-			<if test="inventoryName != null and inventoryName !='' ">tb_inventory_info.name = #{inventoryName}</if>
+			<if test="goodName != null and goodName !='' ">tb_good_info.name = #{goodName}</if>
 			<if test="customerName != null and customerName !='' ">AND tb_customer_info.name = #{customerName}</if>
 			<if test="beginTime != null"><![CDATA[AND tb_sell.time > #{beginTime}]]></if>
 			<if test="endTime != null"><![CDATA[AND tb_sell.time <= #{endTime}]]></if>
@@ -157,21 +194,9 @@
 	</select>
 	
 	<select id="selectAllByCriteria" resultMap="sellResultMap">
-		SELECT 
-			tb_sell.id AS id,
-		 	tb_inventory_info.name AS inventory_name, 
-		 	tb_customer_info.name AS customer_name,
-		 	tb_sell.unit_cost AS unit_cost, 
-		 	tb_sell.amount AS amount, 
-		 	tb_sell.sum AS sum, 
-		 	tb_sell.time AS time, 
-		 	tb_sell.clearing_form AS clearing_form, 
-		 	tb_sell.handler AS handler 
-		FROM tb_sell
-		JOIN tb_inventory_info ON tb_inventory_info.id = tb_sell.inventory_id
-		JOIN tb_customer_info ON tb_customer_info.id = tb_sell.customer_id
+		<include refid="select_sell_info" />
 		<where>
-			<if test="inventoryName != null and inventoryName !='' ">tb_inventory_info.name LIKE CONCAT('%', #{inventoryName},'%')</if>
+			<if test="goodName != null and goodName !='' ">tb_good_info.name LIKE CONCAT('%', #{goodName},'%')</if>
 			<if test="customerName != null and customerName !='' ">AND tb_customer_info.name LIKE CONCAT('%', #{customerName},'%')</if>
 			<if test="beginTime != null"><![CDATA[AND tb_sell.time > #{beginTime}]]></if>
 			<if test="endTime != null"><![CDATA[AND tb_sell.time <= #{endTime}]]></if>
@@ -190,9 +215,9 @@
 		<result property="clearingForm" column="clearing_form" />
 		<result property="handler" column="handler" />
 		<result property="approval" column="state" typeHandler="org.mo.jims.coop.typehandler.ApprovalHadler"/>
-			<association property="inventoryInfo" javaType="InventoryInfo">
-				<id property="id" column="inventory_id"/>
-				<result property="name" column="inventory_name"/>	
+			<association property="goodInfo" javaType="GoodInfo">
+				<id property="id" column="good_id"/>
+				<result property="name" column="good_name"/>	
 			</association>
 			<association property="customerInfo" javaType="CustomerInfo">
 				<id property="id" column="customer_id"/>
@@ -200,6 +225,7 @@
 			</association>
 			<association property="user" javaType="User">
 				<id property="account" column="user_id"/>
+				<result property="username" column="user_username"/>
 			</association>
 	</resultMap>
 
