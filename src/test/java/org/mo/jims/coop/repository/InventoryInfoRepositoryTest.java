@@ -1,9 +1,18 @@
 package org.mo.jims.coop.repository;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.Test;
+import org.mo.jims.coop.entity.InventoryInfo;
+import org.mo.open.common.util.BaseTest;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class InventoryInfoRepositoryTest {
+public class InventoryInfoRepositoryTest extends  BaseTest{
 
+	@Autowired
+	private InventoryInfoRepository inventoryInfoRepository;
+	
 	@Test
 	public void testCountAllByCriteria() {
 		
@@ -26,7 +35,12 @@ public class InventoryInfoRepositoryTest {
 
 	@Test
 	public void testSelectByGoodName() {
-		
+		List<InventoryInfo> selectByGoodName = inventoryInfoRepository.selectByGoodName("杜蕾斯");
+		Iterator<InventoryInfo> iterator = selectByGoodName.iterator();
+		while(iterator.hasNext()){
+			InventoryInfo next = iterator.next();
+			System.out.println(next.toString());
+		}
 	}
 
 	@Test
@@ -106,7 +120,12 @@ public class InventoryInfoRepositoryTest {
 
 	@Test
 	public void testSelectAll() {
-		
+		List<InventoryInfo> selectAll = inventoryInfoRepository.selectAll();
+		Iterator<InventoryInfo> iterator = selectAll.iterator();
+		while(iterator.hasNext()){
+			InventoryInfo next = iterator.next();
+			System.out.println(next.toString());
+		}
 	}
 
 	@Test

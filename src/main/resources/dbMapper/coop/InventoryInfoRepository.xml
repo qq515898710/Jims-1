@@ -4,14 +4,18 @@
 
 	<sql id="select_inventory_info">
 		SELECT 
-			id,
-		 	good_id, 
-		 	user_id,
-		 	specification, 
-		 	unit_cost, 
-		 	amount, 
-		 	time 
-		FROM tb_inventory_info
+			tb_inventory_info.id AS id,
+		 	tb_inventory_info.good_id AS good_id, 
+		 	tb_good_info.name AS good_name,
+		 	tb_inventory_info.user_id AS user_id, 
+		 	tb_user.username AS user_username, 
+		 	tb_inventory_info.specification AS specification, 
+		 	tb_inventory_info.unit_cost AS unit_cost, 
+		 	tb_inventory_info.amount AS amount, 
+		 	tb_inventory_info.time AS time
+		FROM tb_inventory_info 
+		JOIN tb_good_info ON tb_inventory_info.good_id = tb_good_info.id 
+		JOIN tb_user ON tb_inventory_info.user_id = tb_user.account
 	</sql>
 
 	<insert id="insert" parameterType="InventoryInfo">
@@ -53,7 +57,8 @@
 	</select>
 	
 	<select id="getLatestInsert" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info ORDER BY id DESC LIMIT 1 
+		<include refid="select_inventory_info"/> 
+		ORDER BY tb_inventory_info.id DESC LIMIT 1 
 	</select>
 	
 	<select id="getLatestInsertId" resultType="String">
@@ -61,39 +66,56 @@
 	</select>
 
 	<select id="selectToday" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info WHERE TO_DAYS(time) = TO_DAYS(NOW()) ORDER BY time DESC;
+		<include refid="select_inventory_info"/> 
+		WHERE TO_DAYS(tb_inventory_info.time) = TO_DAYS(NOW()) 
+		ORDER BY tb_inventory_info.time DESC;
 	</select>
 	
 	<select id="selectYesterday" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1 ORDER BY time DESC;
+		<include refid="select_inventory_info"/> 
+		WHERE TO_DAYS(NOW())-TO_DAYS(tb_inventory_info.time) = 1 
+		ORDER BY tb_inventory_info.time DESC;
 	</select>
 	
 	<select id="selectThisWeek" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY time DESC;
+		<include refid="select_inventory_info"/> 
+		WHERE YEARWEEK(DATE_FORMAT(tb_inventory_info.time,'%Y-%m-%d')) = YEARWEEK(NOW()) 
+		ORDER BY tb_inventory_info.time DESC;
 	</select>
 	
 	<select id="selectLastWeek" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 ORDER BY time DESC;
+		<include refid="select_inventory_info"/> 
+		WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(tb_inventory_info.time,'%Y-%m-%d')) = 1 
+		ORDER BY tb_inventory_info.time DESC;
 	</select>
 	
 	<select id="selectThisMonth" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY time DESC;
+		<include refid="select_inventory_info"/> 
+		WHERE DATE_FORMAT(tb_inventory_info.time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') 
+		ORDER BY tb_inventory_info.time DESC;
 	</select>
 	
 	<select id="selectLastMonth" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY time DESC;
+		<include refid="select_inventory_info"/> 
+		WHERE DATE_FORMAT(tb_inventory_info.time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') 
+		ORDER BY tb_inventory_info.time DESC;
 	</select>
 	
 	<select id="selectThisYear" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info WHERE YEAR(time) = YEAR(NOW()) ORDER BY time DESC;
+		<include refid="select_inventory_info"/> 
+		WHERE YEAR(tb_inventory_info.time) = YEAR(NOW()) 
+		ORDER BY tb_inventory_info.time DESC;
 	</select>
 	
 	<select id="selectLastYear" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY time DESC;
+		<include refid="select_inventory_info"/> 
+		WHERE YEAR(tb_inventory_info.time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) 
+		ORDER BY tb_inventory_info.time DESC;
 	</select>
 	
 	<select id="selectAll" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info ORDER BY time DESC
+		<include refid="select_inventory_info"/>
+		ORDER BY tb_inventory_info.time DESC
 	</select>
 	
 	<select id="countToday" resultType="int">
@@ -138,23 +160,25 @@
 	</select>
 	
 	<select id="countAllByCriteria" resultType="int">
-		SELECT COUNT(*) FROM tb_inventory_info
+		SELECT COUNT(*) FROM tb_inventory_info 
+		JOIN tb_good_info ON tb_inventory_info.good_id = tb_good_info.id 
+		JOIN tb_user ON tb_inventory_info.user_id = tb_user.account
 		<where>
-			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
-			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
-			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
+			<if test="goodName != null and goodName != ''">tb_good_info.name LIKE CONCAT('%', #{goodName},'%')</if>
+			<if test="beginTime != null"><![CDATA[AND tb_inventory_info.time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND tb_inventory_info.time <= #{endTime}]]></if>
 		</where>
 	</select>
 
 	<select id="selectAllByCriteria" resultMap="inventoryInfoResultMap">
 		<include refid="select_inventory_info" />
 		<where>
-			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
-			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
-			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
+			<if test="goodName != null and goodName != ''">tb_good_info.name LIKE CONCAT('%', #{goodName},'%')</if>
+			<if test="beginTime != null"><![CDATA[AND tb_inventory_info.time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND tb_inventory_info.time <= #{endTime}]]></if>
 		</where>
 		LIMIT #{offset}, #{size}
-		ORDER BY time DESC
+		ORDER BY tb_inventory_info.time DESC
 	</select>
 	
 	<delete id="batchDelete" parameterType="java.lang.String">
@@ -165,15 +189,33 @@
 	</delete>
 	
 	<select id="selectByUser" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info 
+		SELECT 
+			tb_inventory_info.id AS id,
+		 	tb_inventory_info.good_id AS good_id, 
+		 	tb_inventory_info.user_id AS user_id, 
+		 	tb_user.username AS user_username, 
+		 	tb_inventory_info.specification AS specification, 
+		 	tb_inventory_info.unit_cost AS unit_cost, 
+		 	tb_inventory_info.amount AS amount, 
+		 	tb_inventory_info.time AS time
+		FROM tb_inventory_info 
 		JOIN tb_user ON tb_inventory_info.user_id = tb_user.account 
 		WHERE tb_user.username=#{username} ORDER BY tb_inventory_info.time DESC
 	</select>
 	
 	<select id="selectByGoodName" resultMap="inventoryInfoResultMap">
-		SELECT * FROM tb_inventory_info 
-		JOIN tb_user ON tb_inventory_info.good_id = tb_good_info.id
-		WHERE tb_good_info.name=#{goodName} ORDER BY tb_inventory_info.time DESC
+		SELECT 
+			tb_inventory_info.id AS id,
+		 	tb_inventory_info.good_id AS good_id, 
+		 	tb_good_info.name AS good_name,
+		 	tb_inventory_info.user_id AS user_id, 
+		 	tb_inventory_info.specification AS specification, 
+		 	tb_inventory_info.unit_cost AS unit_cost, 
+		 	tb_inventory_info.amount AS amount, 
+		 	tb_inventory_info.time AS time
+		FROM tb_inventory_info  
+		JOIN tb_good_info ON tb_inventory_info.good_id = tb_good_info.id
+		WHERE tb_good_info.name LIKE CONCAT('%', #{goodName},'%') ORDER BY tb_inventory_info.time DESC
 	</select>
 	
 	<!-- inventoryInfo -->
