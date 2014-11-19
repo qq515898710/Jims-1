@@ -33,7 +33,7 @@ public class InventoryInfoService {
 		return null;
 	}
 	
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean batchRemove(String[] id) {
 		if (id != null) {
 			inventoryInfoRepository.batchDelete(id);
@@ -43,18 +43,18 @@ public class InventoryInfoService {
 	}
 	
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Page<InventoryInfo> getInventoryInfoByCriteria(String name, Date beginTime, Date endTime,
+	public Page<InventoryInfo> getInventoryInfoByCriteria(String goodName, Date beginTime, Date endTime,
 			int page, int pageSize) {
 		Page<InventoryInfo> inventoryInfoPage = new Page<InventoryInfo>();
 		inventoryInfoPage.setTotalElement(inventoryInfoRepository.countAllByCriteria(
-				name, beginTime, endTime), pageSize);
+				goodName, beginTime, endTime), pageSize);
 		inventoryInfoPage.setPageSize(pageSize);
 		inventoryInfoPage.setCurrentPage(page);
 		if (inventoryInfoPage.getTotalElement() == 0) {
 			return inventoryInfoPage;
 		}
 		List<InventoryInfo> selectAllByNameOrAbbreviation = inventoryInfoRepository.selectAllByCriteria(
-				name, beginTime, endTime, (page - 1) * pageSize, pageSize);
+				goodName, beginTime, endTime, (page - 1) * pageSize, pageSize);
 		inventoryInfoPage.setContent(selectAllByNameOrAbbreviation);
 		return inventoryInfoPage;
 	}
@@ -64,7 +64,7 @@ public class InventoryInfoService {
 		return inventoryInfoRepository.selectByPK(id);
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean saveInventoryInfo(InventoryInfo entity) {
 		if (entity != null) {
 			if (entity.getTime() == null) {
@@ -76,13 +76,13 @@ public class InventoryInfoService {
 		return false;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean alterInventoryInfo(InventoryInfo entity) {
 		inventoryInfoRepository.updateByPK(entity);
 		return true;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean removeInventoryInfoByPK(String id) {
 		inventoryInfoRepository.deleteByPK(id);
 		return true;

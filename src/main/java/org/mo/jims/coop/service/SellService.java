@@ -40,7 +40,7 @@ public class SellService {
 		return sellRepository.selectByPK(id);
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean saveSell(Sell entity) {
 		if (entity != null) {
 			if (entity.getTime() == null) {
@@ -52,13 +52,13 @@ public class SellService {
 		return false;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean alterSell(Sell entity) {
 		sellRepository.updateByPK(entity);
 		return true;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean removeSellByPK(String id) {
 		sellRepository.deleteByPK(id);
 		return true;
@@ -184,7 +184,7 @@ public class SellService {
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public Float getSellPercentageofYearOnAll(){
 		int countToday = sellRepository.countThisYear();
-		int countYesterday = sellRepository.countLastWeek();
+		int countYesterday = sellRepository.countLastYear();
 		int countThisMonth = sellRepository.countAll();
 		float result = (countToday / countThisMonth) - (countYesterday / countThisMonth);
 		return result;

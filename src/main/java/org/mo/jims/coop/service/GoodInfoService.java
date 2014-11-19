@@ -35,7 +35,7 @@ public class GoodInfoService {
 		return goodInfoRepository.selectAllGoodName();
 	}
 	
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean batchRemove(String[] ids) {
 		if (ids != null) {
 			goodInfoRepository.batchDelete(ids);
@@ -77,7 +77,7 @@ public class GoodInfoService {
 		return null;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean saveGoodInfo(GoodInfo goodInfo,ProviderInfo providerInfo) {
 		if (goodInfo != null && providerInfo != null) {
 			if (goodInfo.getTime() == null) {
@@ -93,7 +93,7 @@ public class GoodInfoService {
 		return false;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean alterGoodInfo(GoodInfo entity) {
 		if (entity != null) {
 			goodInfoRepository.updateByPK(entity);
@@ -102,7 +102,7 @@ public class GoodInfoService {
 		return false;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean removeGoodInfoByPK(String id) {
 		if (!"".equals(id) && id != null) {
 			GoodInfo selectByPK = goodInfoRepository.selectByPK(id);

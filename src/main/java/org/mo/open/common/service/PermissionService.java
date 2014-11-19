@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import org.mo.open.common.entity.Permission;
 import org.mo.open.common.entity.Role;
+import org.mo.open.common.exception.MyRuntimeException;
 import org.mo.open.common.repository.PermissionRepository;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -55,22 +56,29 @@ public class PermissionService {
 		return permissionRepository.selectByPK(id);
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
-	public boolean save(Permission entity) {
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor = RuntimeException.class)
+	public boolean save(Permission entity) throws Exception{
 		permissionRepository.insert(entity);
 		return true;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor = RuntimeException.class)
 	public boolean alter(Permission entity) {
 		permissionRepository.updateByPK(entity);
 		return true;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
-	public boolean removeByPK(Long id) {
-		permissionRepository.deleteByPK(id);
-		return true;
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class, 
+			noRollbackFor = Exception.class)
+	public boolean removeByPK(Long id) throws RuntimeException {
+		try {
+			if (id != null && !"".equals(id)) {
+				permissionRepository.deleteByPK(id);
+			}
+			return true;
+		} catch (Exception e) {
+			throw new MyRuntimeException("删除失败");
+		}
 	}
 
 	public PermissionRepository getPermissionRepository() {

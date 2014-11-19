@@ -57,7 +57,7 @@ public class UserService {
 	 * 
 	 * @param user
 	 */
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	private void saveUserLoginLog(User user) {
 		UserLog entity = new UserLog();
 		entity.setUser(user);
@@ -84,7 +84,7 @@ public class UserService {
 	 * @param entity
 	 * @return
 	 */
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean save(User entity) {
 		User userByAccount = this.getByPK(entity.getAccount());
 		if (userByAccount != null) {
@@ -100,13 +100,13 @@ public class UserService {
 	 * 
 	 * @param tbUser
 	 */
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean alter(User entity) {
 		userRepository.updateByPK(entity);
 		return true;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean removeByPK(String id) {
 		userRepository.deleteByPK(id);
 		return true;

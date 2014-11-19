@@ -24,19 +24,19 @@ public class RoleService  {
 		return roleRepository.selectByPK(id);
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean save(Role entity) {
 		roleRepository.insert(entity);
 		return true;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean alter(Role entity) {
 		roleRepository.updateByPK(entity);
 		return true;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean removeByPK(Long id) {
 		roleRepository.deleteByPK(id);
 		return true;

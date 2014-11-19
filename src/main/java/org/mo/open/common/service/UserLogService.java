@@ -62,19 +62,19 @@ public class UserLogService {
 		return userLogRepository.selectByPK(id);
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean save(UserLog entity) {
 		userLogRepository.insert(entity);
 		return true;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean alter(UserLog entity) {
 		userLogRepository.updateByPK(entity);
 		return true;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean removeByPK(Long id) {
 		userLogRepository.deleteByPK(id);
 		return true;

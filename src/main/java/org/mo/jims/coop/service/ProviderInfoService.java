@@ -31,7 +31,7 @@ public class ProviderInfoService {
 		return providerInfoRepository.selectAllProviderName();
 	}
 	
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public Boolean batchRemove(String[] id){
 		if (id != null) {
 			providerInfoRepository.batchDelete(id);
@@ -74,7 +74,7 @@ public class ProviderInfoService {
 		return null;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean saveProviderInfo(ProviderInfo entity) {
 		if (entity != null) {
 			if (entity.getTime() == null) {
@@ -86,7 +86,7 @@ public class ProviderInfoService {
 		return false;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean alterProviderInfo(ProviderInfo entity) {
 		if (entity != null) {
 			providerInfoRepository.updateByPK(entity);
@@ -95,7 +95,7 @@ public class ProviderInfoService {
 		return false;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean removeProviderInfoByPK(String id) {
 		if(id!=null && !"".equals(id)){
 			ProviderInfo selectByPK = providerInfoRepository.selectByPK(id);

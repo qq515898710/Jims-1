@@ -22,7 +22,7 @@ public class CustomerInfoService {
 		return customerInfoRepository.selectAllCustomerName();
 	}
 	
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean batchRemove(String[] ids) {
 		if (ids != null) {
 			customerInfoRepository.batchDelete(ids);
@@ -70,7 +70,7 @@ public class CustomerInfoService {
 		return customerInfoPage;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean saveCustomerInfo(CustomerInfo entity) {
 		if (entity != null) {
 			if (entity.getTime() == null) {
@@ -82,7 +82,7 @@ public class CustomerInfoService {
 		return false;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean alterCustomerInfo(CustomerInfo entity) {
 		if (entity != null) {
 			customerInfoRepository.updateByPK(entity);
@@ -91,7 +91,7 @@ public class CustomerInfoService {
 		return false;
 	}
 
-	@Transactional(noRollbackFor = Exception.class)
+	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean removeCustomerInfoByPK(String id) {
 		if (id != null && !"".equals(id)) {
 			customerInfoRepository.deleteByPK(id);

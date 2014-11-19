@@ -18,6 +18,8 @@ import org.mo.jims.coop.service.CustomerInfoService;
 import org.mo.open.common.util.JsonResponse;
 import org.mo.open.common.util.Page;
 import org.mo.open.common.util.RegexValidateUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +32,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/")
 public class CustomerInfoController {
+	
+	private static Logger logger = LoggerFactory.getLogger(CustomerInfoController.class);
 	
 	private CustomerInfoService customerInfoService;
 
