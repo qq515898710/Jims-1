@@ -38,7 +38,7 @@ public class Sell implements Serializable {
 	
 	private Approval approval;
 
-	private InventoryInfo inventoryInfo;
+	private GoodInfo goodInfo;
 
 	private CustomerInfo customerInfo;
 
@@ -50,7 +50,7 @@ public class Sell implements Serializable {
 
 	public Sell(String id, float unitCost, int amount, float sum, Date time,
 			String clearingForm, String handler, Approval approval,
-			InventoryInfo inventoryInfo, CustomerInfo customerInfo, User user) {
+			GoodInfo goodInfo, CustomerInfo customerInfo, User user) {
 		super();
 		this.id = id;
 		this.unitCost = unitCost;
@@ -60,13 +60,13 @@ public class Sell implements Serializable {
 		this.clearingForm = clearingForm;
 		this.handler = handler;
 		this.approval = approval;
-		this.inventoryInfo = inventoryInfo;
+		this.goodInfo = goodInfo;
 		this.customerInfo = customerInfo;
 		this.user = user;
 	}
 
 	public Sell(float unitCost, int amount, float sum, String clearingForm,
-			String handler, Approval approval, InventoryInfo inventoryInfo,
+			String handler, Approval approval, GoodInfo goodInfo,
 			CustomerInfo customerInfo, User user) {
 		super();
 		this.id = "sell" + Sequence.nextId();
@@ -77,7 +77,7 @@ public class Sell implements Serializable {
 		this.handler = handler;
 		this.approval = approval;
 		this.user = user;
-		this.inventoryInfo = inventoryInfo;
+		this.goodInfo = goodInfo;
 		this.customerInfo = customerInfo;
 	}
 
@@ -145,12 +145,12 @@ public class Sell implements Serializable {
 		this.approval = approval;
 	}
 
-	public InventoryInfo getInventoryInfo() {
-		return inventoryInfo;
+	public GoodInfo getGoodInfo() {
+		return goodInfo;
 	}
 
-	public void setInventoryInfo(InventoryInfo inventoryInfo) {
-		this.inventoryInfo = inventoryInfo;
+	public void setGoodInfo(GoodInfo goodInfo) {
+		this.goodInfo = goodInfo;
 	}
 
 	public CustomerInfo getCustomerInfo() {
@@ -174,7 +174,7 @@ public class Sell implements Serializable {
 		return "Sell [id=" + id + ", unitCost=" + unitCost + ", amount="
 				+ amount + ", sum=" + sum + ", time=" + time
 				+ ", clearingForm=" + clearingForm + ", handler=" + handler
-				+ ", approval=" + approval.getContent() + ", inventoryInfo=" + inventoryInfo
+				+ ", approval=" + approval.getContent() + ", goodInfo=" + goodInfo
 				+ ", customerInfo=" + customerInfo.toString() + ", user=" + user.toString() + "]";
 	}
 	

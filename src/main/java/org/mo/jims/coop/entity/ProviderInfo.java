@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.mo.open.common.util.Sequence;
 
-
 /**
  * 供应商信息
  * 
@@ -43,7 +42,7 @@ public class ProviderInfo implements Serializable {
 	private java.lang.String depositBank;
 
 	private java.lang.String email;
-	
+
 	private Date time;
 
 	private List<Stock> tbStock;
@@ -55,7 +54,6 @@ public class ProviderInfo implements Serializable {
 	public ProviderInfo() {
 		super();
 	}
-
 
 	public ProviderInfo(String id, String name, String abbreviation,
 			String address, String postalCode, String phone, String fax,
@@ -75,7 +73,6 @@ public class ProviderInfo implements Serializable {
 		this.email = email;
 		this.time = time;
 	}
-
 
 	public ProviderInfo(String pname, String abbreviation, String address,
 			String postalCode, String phone, String fax, String contacts,
@@ -182,16 +179,13 @@ public class ProviderInfo implements Serializable {
 		this.email = email;
 	}
 
-	
 	public Date getTime() {
 		return time;
 	}
 
-
 	public void setTime(Date time) {
 		this.time = time;
 	}
-
 
 	public List<Stock> getTbStock() {
 		return tbStock;
@@ -215,6 +209,16 @@ public class ProviderInfo implements Serializable {
 
 	public void setGoodInfo(List<GoodInfo> goodInfo) {
 		this.goodInfo = goodInfo;
+	}
+
+	@Override
+	public String toString() {
+		return "ProviderInfo [id=" + id + ", name=" + name + ", abbreviation="
+				+ abbreviation + ", address=" + address + ", postalCode="
+				+ postalCode + ", phone=" + phone + ", fax=" + fax
+				+ ", contacts=" + contacts + ", telephone=" + telephone
+				+ ", depositBank=" + depositBank + ", email=" + email
+				+ ", time=" + time + "]";
 	}
 
 }

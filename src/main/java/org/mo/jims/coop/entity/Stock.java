@@ -39,7 +39,7 @@ public class Stock implements Serializable {
 	private java.lang.String clearingForm;
 
 	private java.lang.String handler;
-	
+
 	private Approval approval;
 
 	private ProviderInfo providerInfo;
@@ -159,7 +159,7 @@ public class Stock implements Serializable {
 	public void setHandler(java.lang.String handler) {
 		this.handler = handler;
 	}
-	
+
 	public Approval getApproval() {
 		return approval;
 	}
@@ -192,5 +192,15 @@ public class Stock implements Serializable {
 		this.goodInfo = goodInfo;
 	}
 
+	@Override
+	public String toString() {
+		return "Stock [id=" + id + ", varietyAmount=" + varietyAmount
+				+ ", unitCost=" + unitCost + ", amount=" + amount + ", sum="
+				+ sum + ", checkConclusion=" + checkConclusion + ", time="
+				+ time + ", clearingForm=" + clearingForm + ", handler="
+				+ handler + ", approval=" + approval.getContent()
+				+ ", providerInfo=" + providerInfo.toString() + ", user="
+				+ user.toString() + ", goodInfo=" + goodInfo.toString() + "]";
+	}
 
 }

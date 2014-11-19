@@ -11,12 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository("sellReturnRepository")
 public interface SellReturnRepository extends BaseRepository<SellReturn, String> {
 	
-	public int countAllByCriteria(@Param("inventoryName") String inventoryName,
+	public int countAllByCriteria(@Param("goodName") String goodName,
 			@Param("customerName") String customerName,
 			@Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
 	public List<SellReturn> selectAllByCriteria(
-			@Param("inventoryName") String inventoryName,
+			@Param("goodName") String goodName,
 			@Param("customerName") String customerName,
 			@Param("beginTime") Date beginTime, @Param("endTime") Date endTime,
 			@Param("offset") int offset, @Param("size") int size);

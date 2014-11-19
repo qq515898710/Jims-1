@@ -214,4 +214,14 @@ public class CustomerInfo implements Serializable {
 		this.sellReturn = sellReturn;
 	}
 
+	@Override
+	public String toString() {
+		return "CustomerInfo [id=" + id + ", name=" + name + ", abbreviation="
+				+ abbreviation + ", address=" + address + ", postalCode="
+				+ postalCode + ", phone=" + phone + ", fax=" + fax
+				+ ", contacts=" + contacts + ", telephone=" + telephone
+				+ ", email=" + email + ", depositBank=" + depositBank
+				+ ", accountBank=" + accountBank + ", time=" + time + "]";
+	}
+
 }
