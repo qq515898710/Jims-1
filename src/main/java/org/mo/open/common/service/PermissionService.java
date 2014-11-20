@@ -15,8 +15,6 @@ import org.mo.open.common.repository.PermissionRepository;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Maps;
 
@@ -25,19 +23,20 @@ public class PermissionService {
 
 	private PermissionRepository permissionRepository;
 
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class)
 	public HashMap<String, Collection<ConfigAttribute>> loadResourceDefine() {
 		HashMap<String, Collection<ConfigAttribute>> map = null;
 		map = Maps.newHashMap();
-		List<Permission> gettAll = this.gettAll();
+		List<Permission> gettAll = this.getPermissionAll();
 		System.out.println(gettAll.size());
 		if (gettAll != null) {
 			for (Permission permission : gettAll) {
-				Collection<ConfigAttribute> array = new ArrayList<ConfigAttribute>(gettAll.size());
+				Collection<ConfigAttribute> array = new ArrayList<ConfigAttribute>(
+						gettAll.size());
 				Iterator<Role> iterator = permission.getRoles().iterator();
-				while(iterator.hasNext()){
+				while (iterator.hasNext()) {
 					Role next = iterator.next();
-					ConfigAttribute configAttribute= new SecurityConfig(next.getName());
+					ConfigAttribute configAttribute = new SecurityConfig(
+							next.getName());
 					array.add(configAttribute);
 				}
 				map.put(permission.getName(), array);
@@ -46,31 +45,31 @@ public class PermissionService {
 		return map;
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public List<Permission> gettAll() {
+	public List<Permission> getPermissionAll() {
 		return permissionRepository.selectAll();
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Permission getByPK(Long id) {
+	public Permission getPermissionByPK(Long id) {
 		return permissionRepository.selectByPK(id);
 	}
 
-	@Transactional(propagation=Propagation.REQUIRED, rollbackFor = RuntimeException.class)
-	public boolean save(Permission entity) throws Exception{
+	public boolean savePermission(Permission entity) throws Exception {
+		if (entity == null) {
+			return false;
+		}
 		permissionRepository.insert(entity);
 		return true;
 	}
 
-	@Transactional(propagation=Propagation.REQUIRED, rollbackFor = RuntimeException.class)
-	public boolean alter(Permission entity) {
+	public boolean alterPermission(Permission entity) {
+		if (entity == null) {
+			return false;
+		}
 		permissionRepository.updateByPK(entity);
 		return true;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = RuntimeException.class, 
-			noRollbackFor = Exception.class)
-	public boolean removeByPK(Long id) throws RuntimeException {
+	public boolean removePermissionByPK(Long id) throws RuntimeException {
 		try {
 			if (id != null && !"".equals(id)) {
 				permissionRepository.deleteByPK(id);
@@ -86,8 +85,7 @@ public class PermissionService {
 	}
 
 	@Resource(name = "permissionRepository")
-	public void setPermissionRepository(
-			PermissionRepository permissionRepository) {
+	public void setPermissionRepository(PermissionRepository permissionRepository) {
 		this.permissionRepository = permissionRepository;
 	}
 }

@@ -2,6 +2,7 @@ package org.mo.open.common.security;
 
 import javax.annotation.Resource;
 
+import org.mo.open.common.util.ManageProperties;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,18 +31,23 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
+		String content = ManageProperties.getInstance().getContent("SALT");
+		if (content == null) {
+			content = SALT;
+		}
 		String account = authentication.getName();
 		String password = (String) authentication.getCredentials();
 		UserDetails user = null;
 		try {
 			user = userDetailsService.loadUserByUsername(account);
+			password = passwordEncoder.encodePassword(password, content);
+			if (!password.equals(user.getPassword())) {
+				throw new BadCredentialsException("帐号或密码不正确");
+			}
 		} catch (UsernameNotFoundException e) {
-			throw new BadCredentialsException(e.getMessage());
+			throw new BadCredentialsException("帐号或密码不正确");
 		}
-		password = passwordEncoder.encodePassword(password, SALT);
-		if (!password.equals(user.getPassword())) {
-			throw new BadCredentialsException("密码是不正确的.");
-		}
+
 		return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
 	}
 

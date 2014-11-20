@@ -26,7 +26,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	private PermissionRepository permissionRepository;
 	
-	
 	private UserRepository userRepository;
 
 	@Override
@@ -34,7 +33,8 @@ public class MyUserDetailsService implements UserDetailsService {
 		String newStr = null;
 		try {
 			newStr = new String(account.getBytes("iso8859-1"), "UTF-8");
-			System.out.println(newStr+"-------------------------------------");
+			//TODO:显示登录用户名字
+			System.out.println("显示登录用户名字"+newStr);
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}

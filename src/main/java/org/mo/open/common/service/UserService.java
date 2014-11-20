@@ -1,24 +1,24 @@
 package org.mo.open.common.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.mo.open.common.entity.User;
-import org.mo.open.common.entity.UserLog;
-import org.mo.open.common.repository.UserLogRepository;
 import org.mo.open.common.repository.UserRepository;
+import org.mo.open.common.util.ManageProperties;
 import org.mo.open.common.util.Page;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service("userService")
 public class UserService {
 
 	private UserRepository userRepository;
-	private UserLogRepository userLogRepository;
+	
+	private Md5PasswordEncoder md5PasswordEncoder;
+	
+	private final String SALT = "/%El-B9ua* vbo@N#,WU[+Mp+c-5#zgP&1w^-I*#|r]i`HdQ7eMTA$UCFXnA]2xR";
 
 	public boolean checkLogin(User user){
 		User login = null;
@@ -35,7 +35,7 @@ public class UserService {
 	 * @param pageSize
 	 * @return
 	 */
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+	
 	public Page<User> getALLUserInfo(User user, int page, int pageSize) {
 		Page<User> userPage = new Page<User>();
 		userPage.setCurrentPage(page);
@@ -52,18 +52,6 @@ public class UserService {
 		return userPage;
 	}
 
-	/**
-	 * 保存用户登录日志信息
-	 * 
-	 * @param user
-	 */
-	@Transactional(rollbackFor = Exception.class)
-	private void saveUserLoginLog(User user) {
-		UserLog entity = new UserLog();
-		entity.setUser(user);
-		entity.setLoginTime(new Date(System.currentTimeMillis()));
-		userLogRepository.insert(entity);
-	}
 
 	/**
 	 * 获取用户名
@@ -71,8 +59,8 @@ public class UserService {
 	 * @param name
 	 * @return
 	 */
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public User getByPK(String account) {
+	
+	public User getUserByPK(String account) {
 		User user = null;
 		user = userRepository.selectByPK(account);
 		return user;
@@ -84,14 +72,21 @@ public class UserService {
 	 * @param entity
 	 * @return
 	 */
-	@Transactional(rollbackFor = Exception.class)
-	public boolean save(User entity) {
-		User userByAccount = this.getByPK(entity.getAccount());
+	
+	public boolean saveUser(User entity) {
+		User userByAccount = this.getUserByPK(entity.getUsername());
 		if (userByAccount != null) {
 			return false;
 		}
+		String content = ManageProperties.getInstance().getContent("SALT");
+		if (content == null) {
+			content = SALT;
+		}
+		String encodePassword = md5PasswordEncoder.encodePassword(entity.getPassword(), content);
+		entity.setPassword(encodePassword);
+		entity.setCreateDate(userRepository.getCurrentTime());
+		entity.setLatestDate(userRepository.getCurrentTime());
 		userRepository.insert(entity);
-		this.saveUserLoginLog(entity);
 		return true;
 	}
 
@@ -100,14 +95,18 @@ public class UserService {
 	 * 
 	 * @param tbUser
 	 */
-	@Transactional(rollbackFor = Exception.class)
-	public boolean alter(User entity) {
-		userRepository.updateByPK(entity);
-		return true;
+	
+	public boolean alterUser(User entity) {
+		if (entity != null) {
+			entity.setLatestDate(userRepository.getCurrentTime());
+			userRepository.updateByPK(entity);
+			return true;
+		}
+		return false;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public boolean removeByPK(String id) {
+	
+	public boolean removeUserByPK(String id) {
 		userRepository.deleteByPK(id);
 		return true;
 	}
@@ -120,14 +119,14 @@ public class UserService {
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-
-	public UserLogRepository getUserLogRepository() {
-		return userLogRepository;
+	
+	public Md5PasswordEncoder getMd5PasswordEncoder() {
+		return md5PasswordEncoder;
 	}
-
-	@Resource(name = "userLogRepository")
-	public void setUserLogRepository(UserLogRepository userLogRepository) {
-		this.userLogRepository = userLogRepository;
+	
+	@Resource(name = "md5PasswordEncoder")
+	public void setMd5PasswordEncoder(Md5PasswordEncoder md5PasswordEncoder) {
+		this.md5PasswordEncoder = md5PasswordEncoder;
 	}
 
 }

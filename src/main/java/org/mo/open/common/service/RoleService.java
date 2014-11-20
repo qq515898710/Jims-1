@@ -7,37 +7,41 @@ import javax.annotation.Resource;
 import org.mo.open.common.entity.Role;
 import org.mo.open.common.repository.RoleRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service( "roleService")
 public class RoleService  {
 	private RoleRepository roleRepository;
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public List<Role> gettAll() {
+	
+	public List<Role> getRoleAll() {
 		return roleRepository.selectAll();
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Role getByPK(Long id) {
+	
+	public Role getRoleByPK(Long id) {
 		return roleRepository.selectByPK(id);
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public boolean save(Role entity) {
+	
+	public boolean saveRole(Role entity) {
+		if (entity == null) {
+			return false;
+		}
 		roleRepository.insert(entity);
 		return true;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public boolean alter(Role entity) {
+	
+	public boolean alterRole(Role entity) {
+		if (entity == null) {
+			return false;
+		}
 		roleRepository.updateByPK(entity);
 		return true;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public boolean removeByPK(Long id) {
+	
+	public boolean removeRoleByPK(Long id) {
 		roleRepository.deleteByPK(id);
 		return true;
 	}

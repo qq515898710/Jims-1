@@ -9,15 +9,12 @@ import org.mo.jims.coop.entity.Stock;
 import org.mo.jims.coop.repository.StockRepository;
 import org.mo.open.common.util.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service("stockService")
 public class StockService {
 
 	private StockRepository stockRepository;
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
 	public Page<Stock> getStockByCriteria(String goodName, String customerName,
 			Date beginTime, Date endTime, int page, int pageSize) {
 		Page<Stock> StockPage = new Page<Stock>();
@@ -35,12 +32,13 @@ public class StockService {
 		return StockPage;
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public Stock getStockByPK(String id) {
-		return stockRepository.selectByPK(id);
+		if (id != null && !"".equals(id)) {
+			return stockRepository.selectByPK(id);
+		}
+		return null;
 	}
 
-	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean saveStock(Stock entity) {
 		if (entity != null) {
 			if (entity.getTime() == null) {
@@ -52,141 +50,127 @@ public class StockService {
 		return false;
 	}
 
-	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean alterStock(Stock entity) {
-		stockRepository.updateByPK(entity);
-		return true;
+		if (entity != null) {
+			stockRepository.updateByPK(entity);
+			return true;
+		}
+		return false;
 	}
 
-	@Transactional(rollbackFor = RuntimeException.class)
 	public boolean removeStockByPK(String id) {
-		stockRepository.deleteByPK(id);
-		return true;
+		if (id != null && !"".equals(id)) {
+			stockRepository.deleteByPK(id);
+			return true;
+		}
+		return false;
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
 	public List<Stock> getStockInToday() {
 		return stockRepository.selectToday();
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<Stock> getStockInYesterday() {
 		return stockRepository.selectYesterday();
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<Stock> getStockInThisWeek() {
 		return stockRepository.selectThisWeek();
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<Stock> getStockInLastWeek() {
 		return stockRepository.selectLastWeek();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
 	public List<Stock> getStockInThisMonth() {
 		return stockRepository.selectThisMonth();
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<Stock> getStockInLastMonth() {
 		return stockRepository.selectLastMonth();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
 	public List<Stock> getStockInThisYear() {
 		return stockRepository.selectThisYear();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
 	public List<Stock> getStockInLastYear() {
 		return stockRepository.selectLastYear();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public List<Stock> getAllStock(){
+
+	public List<Stock> getAllStock() {
 		return stockRepository.selectAll();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public int countStockInToday(){
+
+	public int countStockInToday() {
 		return stockRepository.countToday();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public int countStockInYesterday(){
+
+	public int countStockInYesterday() {
 		return stockRepository.countYesterday();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
 	public int countStockInThisWeek() {
 		return stockRepository.countThisWeek();
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public int countStockInLastWeek() {
 		return stockRepository.countLastWeek();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
 	public int countStockInThisMonth() {
 		return stockRepository.countThisMonth();
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public int countStockInLastMonth() {
 		return stockRepository.countLastMonth();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
 	public int countStockInThisYear() {
 		return stockRepository.countThisYear();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+
 	public int countStockInLastYear() {
 		return stockRepository.countLastYear();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public int countAllStock(){
+
+	public int countAllStock() {
 		return stockRepository.countAll();
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Float getStockPercentageofDayOnThisMonth(){
+
+	public Float getStockPercentageofDayOnThisMonth() {
 		int countToday = stockRepository.countToday();
 		int countYesterday = stockRepository.countYesterday();
 		int countThisMonth = stockRepository.countThisMonth();
-		float result = (countToday / countThisMonth) - (countYesterday / countThisMonth);
+		float result = (countToday / countThisMonth)
+				- (countYesterday / countThisMonth);
 		return result;
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Float getStockPercentageofWeekOnThisMonth(){
+
+	public Float getStockPercentageofWeekOnThisMonth() {
 		int countToday = stockRepository.countThisWeek();
 		int countYesterday = stockRepository.countLastWeek();
 		int countThisMonth = stockRepository.countThisMonth();
-		float result = (countToday / countThisMonth) - (countYesterday / countThisMonth);
+		float result = (countToday / countThisMonth)
+				- (countYesterday / countThisMonth);
 		return result;
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Float getStockPercentageofMonthOnThisYear(){
+
+	public Float getStockPercentageofMonthOnThisYear() {
 		int countToday = stockRepository.countThisMonth();
 		int countYesterday = stockRepository.countLastMonth();
 		int countThisMonth = stockRepository.countThisYear();
-		float result = (countToday / countThisMonth) - (countYesterday / countThisMonth);
+		float result = (countToday / countThisMonth)
+				- (countYesterday / countThisMonth);
 		return result;
 	}
-	
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
-	public Float getStockPercentageofYearOnAll(){
+
+	public Float getStockPercentageofYearOnAll() {
 		int countToday = stockRepository.countThisYear();
 		int countYesterday = stockRepository.countLastYear();
 		int countThisMonth = stockRepository.countAll();
-		float result = (countToday / countThisMonth) - (countYesterday / countThisMonth);
+		float result = (countToday / countThisMonth)
+				- (countYesterday / countThisMonth);
 		return result;
 	}
 

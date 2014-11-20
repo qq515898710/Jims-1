@@ -26,7 +26,7 @@ public class BarcodeUtil {
 					EAN8TextPainter.getInstance());
 			String str = "4554754";
 			BufferedImage localBufferedImage = localJBarcode.createBarcode(str);
-			// TODO
+			// TODO 二维码问题
 			// saveToGIF(localBufferedImage, "EAN8.jpg");
 			saveToJPEG(localBufferedImage, "moziq2i.jpeg");
 		} catch (Exception localException) {

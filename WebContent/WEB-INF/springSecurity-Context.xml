@@ -20,14 +20,15 @@
 		
 		<!--指定登录页面  -->
 		<security:form-login login-page="/login.html" 
-			authentication-failure-url="/login.html" 
+			authentication-failure-url="/login.html?error=true" 
 			default-target-url="/home.html"
 			/>
 			
 		<!-- 指定退出 -->
 		<security:logout invalidate-session="true" 
 			logout-success-url="/login.html"
-			logout-url="/loginout.html"/>
+			logout-url="/loginout.html"
+			delete-cookies="JSESSIONID"/>
 		
 		<!-- 实现免登陆验证 -->
 		<security:remember-me />
@@ -45,5 +46,9 @@
 	</security:authentication-manager>
 
 	<bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"></bean>
-	
+	<bean id="loginSuccessHandler" class="org.mo.open.common.security.LoginSuccessHandler">
+		<property name="defaultTargetUrl">
+			<value>/home.html</value>
+		</property>
+	</bean>
 </beans>

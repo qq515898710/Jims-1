@@ -72,7 +72,7 @@
 	</delete>
 
 	<select id="selectByPK" resultMap="stockReturnResultMap">
-		<include refid="select_stock_return_info" />
+		<include refid="select_stock_return_info_join" />
 		WHERE id = #{id}
 	</select>
 	

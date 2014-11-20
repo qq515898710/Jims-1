@@ -19,8 +19,8 @@
 		<property name="location" value="classpath:configs/dev.properties" />
 	</bean>
 
-	<tx:annotation-driven transaction-manager="mysqltransactionManager" />
-
+<!-- 	<tx:annotation-driven transaction-manager="mysqltransactionManager" /> -->
+	
 	<!-- myBatis SqlSessionFactory -->
 	<bean id="mysqlSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="druid" />
@@ -38,7 +38,6 @@
 		<property name="typeAliasesPackage" value="org.mo.jims.coop.entity;org.mo.open.common.entity;" />
 	</bean>
 
-
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 	    <property name="sqlSessionFactoryBeanName" value="mysqlSqlSessionFactory"></property>
 	    <!-- repository类 -->
@@ -48,6 +47,21 @@
 	<bean id="mysqltransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="druid" />
 	</bean>
-
+	
+	<tx:advice id="myAdvice" transaction-manager="mysqltransactionManager">
+		<tx:attributes>
+			<tx:method name="save*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="RuntimeException"/>
+			<tx:method name="remove*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="RuntimeException"/>
+			<tx:method name="get*" isolation="DEFAULT" propagation="REQUIRED" read-only="true"/>
+			<tx:method name="alter*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="RuntimeException"/>
+			<tx:method name="batch*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="RuntimeException" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* org.mo.jims.coop.service.*.*(..)) and execution(* org.mo.open.common.service.*.*(..))" id="myServiceMethod"/>
+		<aop:advisor advice-ref="myAdvice" pointcut-ref="myServiceMethod"/>
+	</aop:config>
+	
 	<import resource="dataSource-Context.xml" />
 </beans>
