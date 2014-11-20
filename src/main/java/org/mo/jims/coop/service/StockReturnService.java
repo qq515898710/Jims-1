@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 public class StockReturnService {
 
 	private StockReturnRepository stockReturnRepository;
-	
-	
+
 	public Page<StockReturn> getStockReturnByCriteria(String goodName,
 			String customerName, Date beginTime, Date endTime, int page,
 			int pageSize) {
 		Page<StockReturn> StockReturnPage = new Page<StockReturn>();
-		StockReturnPage.setTotalElement(stockReturnRepository.countAllByCriteria(
-				goodName, customerName, null, beginTime, endTime), pageSize);
+		StockReturnPage.setTotalElement(stockReturnRepository
+				.countAllByCriteria(goodName, customerName, null, beginTime,
+						endTime), pageSize);
 		StockReturnPage.setPageSize(pageSize);
 		StockReturnPage.setCurrentPage(page);
 		if (StockReturnPage.getTotalElement() == 0) {
@@ -34,15 +34,13 @@ public class StockReturnService {
 		return StockReturnPage;
 	}
 
-	
 	public StockReturn getStockReturnByPK(String id) {
-		if(id!=null && !"".equals(id)){
+		if (id != null && !"".equals(id)) {
 			return stockReturnRepository.selectByPK(id);
 		}
 		return null;
 	}
 
-	
 	public boolean saveStockReturn(StockReturn entity) {
 		if (entity != null) {
 			if (entity.getTime() == null) {
@@ -54,147 +52,127 @@ public class StockReturnService {
 		return false;
 	}
 
-	
 	public boolean alterStockReturn(StockReturn entity) {
-		if(entity!=null){
+		if (entity != null) {
 			stockReturnRepository.updateByPK(entity);
 			return true;
 		}
 		return false;
 	}
 
-	
 	public boolean removeStockReturnByPK(String id) {
-		if(id!=null && !"".equals(id)){
+		if (id != null && !"".equals(id)) {
 			stockReturnRepository.deleteByPK(id);
 			return true;
 		}
 		return false;
 	}
-	
-	
+
 	public List<StockReturn> getStockReturnInToday() {
 		return stockReturnRepository.selectToday();
 	}
 
-	
 	public List<StockReturn> getStockReturnInYesterday() {
 		return stockReturnRepository.selectYesterday();
 	}
 
-	
 	public List<StockReturn> getStockReturnInThisWeek() {
 		return stockReturnRepository.selectThisWeek();
 	}
 
-	
 	public List<StockReturn> getStockReturnInLastWeek() {
 		return stockReturnRepository.selectLastWeek();
 	}
-	
-	
+
 	public List<StockReturn> getStockReturnInThisMonth() {
 		return stockReturnRepository.selectThisMonth();
 	}
 
-	
 	public List<StockReturn> getStockReturnInLastMonth() {
 		return stockReturnRepository.selectLastMonth();
 	}
-	
-	
+
 	public List<StockReturn> getStockReturnInThisYear() {
 		return stockReturnRepository.selectThisYear();
 	}
-	
-	
+
 	public List<StockReturn> getStockReturnInLastYear() {
 		return stockReturnRepository.selectLastYear();
 	}
-	
-	
-	public List<StockReturn> getAllStockReturn(){
+
+	public List<StockReturn> getAllStockReturn() {
 		return stockReturnRepository.selectAll();
 	}
-	
-	
-	public int countStockReturnInToday(){
+
+	public int countStockReturnInToday() {
 		return stockReturnRepository.countToday();
 	}
-	
-	
-	public int countStockReturnInYesterday(){
+
+	public int countStockReturnInYesterday() {
 		return stockReturnRepository.countYesterday();
 	}
-	
-	
+
 	public int countStockReturnInThisWeek() {
 		return stockReturnRepository.countThisWeek();
 	}
 
-	
 	public int countStockReturnInLastWeek() {
 		return stockReturnRepository.countLastWeek();
 	}
-	
-	
+
 	public int countStockReturnInThisMonth() {
 		return stockReturnRepository.countThisMonth();
 	}
 
-	
 	public int countStockReturnInLastMonth() {
 		return stockReturnRepository.countLastMonth();
 	}
-	
-	
+
 	public int countStockReturnInThisYear() {
 		return stockReturnRepository.countThisYear();
 	}
-	
-	
+
 	public int countStockReturnInLastYear() {
 		return stockReturnRepository.countLastYear();
 	}
-	
-	
-	public int countAllStockReturn(){
+
+	public int countAllStockReturn() {
 		return stockReturnRepository.countAll();
 	}
-	
-	
-	public Float getStockReturnPercentageofDayOnThisMonth(){
+
+	public Float getStockReturnPercentageofDayOnThisMonth() {
 		int countToday = stockReturnRepository.countToday();
 		int countYesterday = stockReturnRepository.countYesterday();
 		int countThisMonth = stockReturnRepository.countThisMonth();
-		float result = (countToday / countThisMonth) - (countYesterday / countThisMonth);
+		float result = (countToday / countThisMonth)
+				- (countYesterday / countThisMonth);
 		return result;
 	}
-	
-	
-	public Float getStockReturnPercentageofWeekOnThisMonth(){
+
+	public Float getStockReturnPercentageofWeekOnThisMonth() {
 		int countToday = stockReturnRepository.countThisWeek();
 		int countYesterday = stockReturnRepository.countLastWeek();
 		int countThisMonth = stockReturnRepository.countThisMonth();
-		float result = (countToday / countThisMonth) - (countYesterday / countThisMonth);
+		float result = (countToday / countThisMonth)
+				- (countYesterday / countThisMonth);
 		return result;
 	}
-	
-	
-	public Float getStockReturnPercentageofMonthOnThisYear(){
+
+	public Float getStockReturnPercentageofMonthOnThisYear() {
 		int countToday = stockReturnRepository.countThisMonth();
 		int countYesterday = stockReturnRepository.countLastMonth();
 		int countThisMonth = stockReturnRepository.countThisYear();
-		float result = (countToday / countThisMonth) - (countYesterday / countThisMonth);
+		float result = (countToday / countThisMonth)
+				- (countYesterday / countThisMonth);
 		return result;
 	}
-	
-	
-	public Float getStockReturnPercentageofYearOnAll(){
+
+	public Float getStockReturnPercentageofYearOnAll() {
 		int countToday = stockReturnRepository.countThisYear();
 		int countYesterday = stockReturnRepository.countLastYear();
 		int countThisMonth = stockReturnRepository.countAll();
-		float result = (countToday / countThisMonth) - (countYesterday / countThisMonth);
+		float result = (countToday / countThisMonth)
+				- (countYesterday / countThisMonth);
 		return result;
 	}
 
@@ -203,7 +181,8 @@ public class StockReturnService {
 	}
 
 	@Resource(name = "stockReturnRepository")
-	public void setStockReturnRepository(StockReturnRepository stockReturnRepository) {
+	public void setStockReturnRepository(
+			StockReturnRepository stockReturnRepository) {
 		this.stockReturnRepository = stockReturnRepository;
 	}
 

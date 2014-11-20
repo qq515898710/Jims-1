@@ -35,8 +35,9 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		String username = userDetails.getUsername();
 		User user = userService.getUserByPK(username);
 		UserLog userLog = new UserLog(user);
-		System.out.println("-------------------------------------------LoginSuccessHandler");
+		System.out.println(user.toString()+"-------------------------------------------LoginSuccessHandler");
 		userLogService.saveUserLog(userLog);
+		userService.alterUser(user);
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 
