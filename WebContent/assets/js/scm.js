@@ -62,7 +62,7 @@ function gotoPage(pageIndex, cond) {
 			            		  +'<td >'+(++i)+'</td> '
 			            		  +'<td >'+item.name+'</td> '
 			            		  +'<td >'+item.address+'</td> '
-			            		  +'<td >'+getFormatDateByLong(item.time,'yyyy-MM-dd')+'</td> '
+			            		  +'<td >'+getFormatDateByLong(item.time,"yyyy-MM-dd")+'</td> '
 			            		  +'<td >'+item.phone+'</td> '
 			            		  +'<td >'+'<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" id="buttontools">'
 			            		  				+'<a class="blue" href="javascript:showCustomer(\''+item.id+'\')"> <i class="icon-zoom-in bigger-130"></i>'
@@ -71,6 +71,9 @@ function gotoPage(pageIndex, cond) {
 			            });
 						var begin = Math.max(1, msg.currentPage - pagerRange/2 );
 						var end = Math.min(begin + (pagerRange - 1), msg.totalPage);
+						//TODO 待修改部分
+						//这部分可能解析的时候js脑子会进水,还是eclipse会进水,下次在写的时候要改为外面双引号 ,里面才单引号,不如真的进水
+						//要用注解他们,再取消注解又没事了,我也好奇怪
 						if(msg.currentPage !=1){
 							loc+='<li class="prev "><a href="javascript:gotoPage(1,\''+cond+'\')"><i class=" icon-double-angle-left "></i></a></li><li class="prev "><a href="javascript:gotoPage('+(msg.currentPage - 1)+',\''+cond+'\')"><i class=" icon-angle-left "></i></a></li>';
 						}else{
