@@ -1,5 +1,9 @@
 package org.mo.jims.coop.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,15 +35,21 @@ public class CustomerInfoServiceTest extends BaseTest {
 	}
 
 	@Test
-	public void testGetCustomerInfoByNameOrAbbreviation() {
-//		Page<CustomerInfo> customerInfoByNameOrAbbreviation = customerInfoService.getCustomerInfoByNameOrAbbreviation("城", 1, 10);
-//		Assert.assertNotNull("customerInfoByNameOrAbbreviation is null", customerInfoByNameOrAbbreviation);
-//		List<CustomerInfo> content = customerInfoByNameOrAbbreviation.getContent();
-//		Assert.assertNotNull("content is null", customerInfoByNameOrAbbreviation);
-//		for(int i=0;i<content.size();i++){
-//			CustomerInfo tbCustomerInfo = content.get(i);
-//			System.out.println(tbCustomerInfo.getName());
-//		}
+	public void testGetCustomerInfoByNameOrAbbreviation() throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = dateFormat.parse("2014-11-1");
+		Page<CustomerInfo> customerInfoByNameOrAbbreviation = customerInfoService
+				.getCustomerInfoByCriteria("城院", date, new Date(), 1, 50);
+		Assert.assertNotNull("customerInfoByNameOrAbbreviation is null",
+				customerInfoByNameOrAbbreviation);
+		List<CustomerInfo> content = customerInfoByNameOrAbbreviation
+				.getContent();
+		Assert.assertNotNull("content is null",
+				customerInfoByNameOrAbbreviation);
+		for (int i = 0; i < content.size(); i++) {
+			CustomerInfo tbCustomerInfo = content.get(i);
+			System.out.println(tbCustomerInfo.getName());
+		}
 	}
 
 	@Test
