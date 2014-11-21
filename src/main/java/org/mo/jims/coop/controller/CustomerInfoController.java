@@ -1,7 +1,6 @@
 package org.mo.jims.coop.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -15,6 +14,7 @@ import org.mo.jims.coop.dto.AddCustomerInfoDTO;
 import org.mo.jims.coop.dto.EditCustomerInfoDTO;
 import org.mo.jims.coop.entity.CustomerInfo;
 import org.mo.jims.coop.service.CustomerInfoService;
+import org.mo.open.common.exception.MyRuntimeException;
 import org.mo.open.common.util.JsonResponse;
 import org.mo.open.common.util.Page;
 import org.mo.open.common.util.RegexValidateUtil;
@@ -41,6 +41,7 @@ public class CustomerInfoController {
 	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "baseManage");
 		model.put("active", "KeHuGuanLi");
+		logger.info("进入客户管理界面");
 		return new ModelAndView("coop/baseManage/KeHuGuanLi");
 	}
 	
@@ -54,6 +55,8 @@ public class CustomerInfoController {
 		} else {
 			customerInfo = customerInfoService.getCustomerInfoByPK(ids[0]);
 		}
+		//TODO:测试用
+		System.out.println("search-----"+customerInfo.toString());
 		return customerInfo;
 	}
 
@@ -63,19 +66,21 @@ public class CustomerInfoController {
 			@RequestParam(required = true, defaultValue = "1") int page,
 			@RequestParam(required = true, defaultValue = "10") int size,
 			@RequestParam final String name,
-			@RequestParam final Date beginTime,
-			@RequestParam final Date endTime) {
+			@RequestParam final String beginTime,
+			@RequestParam final String endTime) {
 		String newStr = "";
 		try {
 			// 编码有问题,get传过来的参数
 			newStr = new String(name.getBytes("iso8859-1"), "UTF-8");
+			//TODO:测试用
 			System.out.println(beginTime + "---" + endTime);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+		
 		Page<CustomerInfo> customerInfoByNameOrAbbreviation = 
 				customerInfoService.getCustomerInfoByCriteria(
-						newStr, beginTime,endTime, page, size);
+						newStr,null,null, page, size);
 		return customerInfoByNameOrAbbreviation;
 	}
 	
@@ -92,7 +97,9 @@ public class CustomerInfoController {
 	@ResponseBody
 	public Map<String, String> edit(@RequestBody final EditCustomerInfoDTO customerInfoDTO,
 			HttpServletResponse response, HttpSession session){
-		Map<String, String> modelMap = validateEditCutomerInfoDTO(customerInfoDTO);//校验表单
+		//TODO:测试用
+		System.out.println("edit-----"+customerInfoDTO.toString());
+		final Map<String, String> modelMap = validateEditCutomerInfoDTO(customerInfoDTO);//校验表单
 		String formtoken = customerInfoDTO.getFormtoken();
 		String token = (String) session.getAttribute("CustomerEidtToken");
 		if (formtoken.equals(token)) {//防止重复提及表单
@@ -108,7 +115,7 @@ public class CustomerInfoController {
 							CustomerInfo entity = customerInfoDTO.toObject();
 							customerInfoService.alterCustomerInfo(entity);
 						} catch (InterruptedException e) {
-							e.printStackTrace();
+							modelMap.put("tip", "修改失败");
 						}
 					}
 				});
@@ -140,7 +147,7 @@ public class CustomerInfoController {
 	public Map<String, String> add(
 			@RequestBody final AddCustomerInfoDTO addCustomerInfoDTO,
 			HttpServletResponse response, HttpSession session) {
-		Map<String, String> modelMap = validateAddCutomerInfoDTO(addCustomerInfoDTO);//校验表单
+		final Map<String, String> modelMap = validateAddCutomerInfoDTO(addCustomerInfoDTO);//校验表单
 		String formtoken = addCustomerInfoDTO.getFormtoken();
 		String token = (String) session.getAttribute("token");
 		if (formtoken.equals(token)) {//防止重复提及表单
@@ -156,7 +163,9 @@ public class CustomerInfoController {
 							CustomerInfo entity = addCustomerInfoDTO.toObject();
 							customerInfoService.saveCustomerInfo(entity);
 						} catch (InterruptedException e) {
-							e.printStackTrace();
+							modelMap.put("tip", "保存失败");
+							throw new MyRuntimeException(
+									"保存失败");
 						}
 					}
 				});

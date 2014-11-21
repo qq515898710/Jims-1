@@ -43,6 +43,7 @@ function gotoPage(pageIndex, cond) {
 	var pageSize =  $("#p_pageSizeSelect").val(); //获取每一页显示多少记录
 	var loc='<div class="col-sm-6"><div class="dataTables_paginate paging_bootstrap"><ul class="pagination">';
 	$('#tb').html("");
+	//TODO 测试用
 	//alert("page=" + pageIndex + "&size=" + pageSize+"&"+cond);
 	$.ajax({
 				url : action,
@@ -50,6 +51,7 @@ function gotoPage(pageIndex, cond) {
 				data : "page=" + pageIndex + "&size=" + pageSize+"&"+cond,
 				aysnc : false,
 				beforeSend:function(XMLHttpRequest){
+					  //TODO 测试用
 		              //alert('远程调用开始...');
 		              $("#table-result").showLoading();
 		         },
@@ -60,7 +62,7 @@ function gotoPage(pageIndex, cond) {
 			            		  +'<td >'+(++i)+'</td> '
 			            		  +'<td >'+item.name+'</td> '
 			            		  +'<td >'+item.address+'</td> '
-			            		  +'<td >'+item.email+'</td> '
+			            		  +'<td >'+getFormatDateByLong(item.time,'yyyy-MM-dd')+'</td> '
 			            		  +'<td >'+item.phone+'</td> '
 			            		  +'<td >'+'<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" id="buttontools">'
 			            		  				+'<a class="blue" href="javascript:showCustomer(\''+item.id+'\')"> <i class="icon-zoom-in bigger-130"></i>'
@@ -88,10 +90,11 @@ function gotoPage(pageIndex, cond) {
 						}
 						loc+='</ul></div></div>';
 						$('#pages').html(loc);
-						$("#other").html('<a href="javascript:gotoPage(1,\'name=\')" ><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
+						$("#other").html('<a href="javascript:gotoPage(1,\'name=&beginTime=&endTime=\')" ><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
 						$("#table-result").hideLoading();
 				},
 				complete:function(XMLHttpRequest,textStatus){
+					  //TODO 测试用
 		              // alert('远程调用成功，状态文本值：'+textStatus);
 					$("#table-result").hideLoading();
 		         },
@@ -108,7 +111,12 @@ function showCustomer(id){
 	    type: "POST", 
 	    url: "coop/searchCustomerById", 
 	    data: "searchId=" + searchId, 
-	    dataType: "json", 
+	    dataType: "json",
+		beforeSend:function(XMLHttpRequest){
+			  //TODO 测试用
+            //alert('远程调用开始...');
+            $("#table-result").showLoading();
+        },
 	    success: function (data){
 	    	if(data.name != null && data.name != ''){
 	    		$("#detailed-name").html(data.name);
@@ -165,19 +173,31 @@ function showCustomer(id){
 	    	}else{
 	    		$("#detailed-accountBank").html('未知');
 	    	}
-	    }
+	    	$("#table-result").hideLoading();
+	    },
+		complete:function(XMLHttpRequest,textStatus){
+			  //TODO 测试用
+            // alert('远程调用成功，状态文本值：'+textStatus);
+			$("#table-result").hideLoading();
+       },
+       error:function(XMLHttpRequest,textStatus,errorThrown){
+            alert('error...状态文本值：'+textStatus+" 异常信息："+errorThrown);
+            $("#table-result").hideLoading();
+        }
 	});
 	$('#detailed-dialog-message').modal('show');
 }
 
 function deleteCustomer(id){
 	deleteIds = id;
+	$("#delete-content").html("确定删除选中的记录?");
 	$("#alert").html("");
 	$('#delete-dialog-message').modal('show');
 }
 
 function editCustomer(id) {
 	var searchId=id;
+	$("#alert").html("");
 	$.ajax({
 	    type: "POST", 
 	    url: "coop/searchCustomerById", 
@@ -196,6 +216,7 @@ function editCustomer(id) {
 			 $("#edit-email").attr("value",data.email);
 			 $("#edit-depositBank").attr("value",data.depositBank);
 			 $("#edit-accountBank").attr("value",data.accountBank);
+			 $("#edit-time").attr("value",data.time);
 		}
 	 });
 	$("#alert").html("");

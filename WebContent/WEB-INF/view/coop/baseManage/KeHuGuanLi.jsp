@@ -63,7 +63,7 @@
        <div class="col-xs-12">
         <h3 class="header smaller lighter blue">
           <jsp:include page="KeHuGuanLi_detailed.jsp"></jsp:include>
-          <button id="bt-add-dialog" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#search-dialog-message"><i class="icon-search align-top bigger-125"  ></i>查询 </button>
+          <button id="bt-search-dialog" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#search-dialog-message"><i class="icon-search align-top bigger-125"  ></i>查询 </button>
           <jsp:include page="KeHuGuanLi_search.jsp"></jsp:include>
           <button id="bt-add-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#add-dialog-message"><i class="icon-plus-sign align-top bigger-125"></i>添加 </button> 
           <jsp:include page="KeHuGuanLi_add.jsp"></jsp:include>
@@ -71,9 +71,9 @@
           <jsp:include page="KeHuGuanLi_edit.jsp"></jsp:include> 
           <button id="bt-delete-dialog" class="btn btn-primary btn-sm" ><i class="icon-trash align-top bigger-125"></i>删除 </button> 
          <jsp:include page="KeHuGuanLi_delete.jsp"></jsp:include>
-         <button id="bt-add-dialog" class="btn btn-primary btn-sm" onclick="document.getElementById('file').click();" ><i class="icon-upload align-top bigger-125"></i>导入 </button>
+         <button id="bt-upload-dialog" class="btn btn-primary btn-sm" onclick="document.getElementById('file').click();" ><i class="icon-upload align-top bigger-125"></i>导入 </button>
          <input type="file" name="file" id="file" style="display:none" />
-         <button id="bt-add-dialog" class="btn btn-primary btn-sm"  type="flle" ><i class="icon-download align-top bigger-125"></i>导出 </button>
+         <button id="bt-download-dialog" class="btn btn-primary btn-sm"  type="flle" ><i class="icon-download align-top bigger-125"></i>导出 </button>
          <div class="btn-group"> 
             <button data-toggle="dropdown" class="btn btn-primary  btn-sm2 dropdown-toggle"><i class="icon-stackexchange"></i> 更多<i class="icon-angle-down icon-on-right"></i></button> 
             <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"> 
@@ -90,7 +90,7 @@
           <div class="table-responsive"> 
            <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
               <div class="row" >
-              <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1,'name=')" id="p_pageSizeSelect">
+              <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1,'name=&beginTime=&endTime=')" id="p_pageSizeSelect">
                 <option value="10" selected="selected" >10</option>
                 <option value="25" >25</option>
                 <option value="50" >50</option>
@@ -107,7 +107,7 @@
                  <th  role="columnheader"  rowspan="1" colspan="1" style="width: 50px;" >序号</th>
                  <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >名称</th> 
                  <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >地址</th> 
-                 <th role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" > <i class="icon-time bigger-110 hidden-480"></i> 邮箱地址 </th> 
+                 <th role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" > <i class="icon-time bigger-110 hidden-480"></i>录入时间</th> 
                  <th  role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" >联系电话 </th> 
                  <th  role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label="">操作</th> 
                 </tr> 
@@ -132,7 +132,7 @@
 	jQuery(function($) {
 		
 		/* 获取数据 */
-		gotoPage(1,'name=');
+		gotoPage(1,'name=&beginTime=&endTime=');
 		
 		/* 复选框操作 */
 		$('table th input:checkbox').on('click' , function(){

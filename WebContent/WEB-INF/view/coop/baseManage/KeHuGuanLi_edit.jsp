@@ -80,7 +80,8 @@
         </div> 
        </div>
        <input type="hidden" name="formtoken"  value="<%=token%>"  id="edit-formtoken">
-       <input type="hidden" name="id"   id="edit-id">
+       <input type="hidden" name="id"  id="edit-id">
+       <input type="hidden" name="time" id="edit-time">
        <!-- 警告框 -->
        <div id="edit-alert"></div>
 <!--        <div class="form-group">  -->
@@ -135,6 +136,7 @@ $(document).ready(function() {
 					 $("#edit-email").attr("value",data.email);
 					 $("#edit-depositBank").attr("value",data.depositBank);
 					 $("#edit-accountBank").attr("value",data.accountBank);
+					 $("#edit-time").attr("value",data.time);
 				}
 			 });
 			$("#alert").html("");
@@ -143,7 +145,7 @@ $(document).ready(function() {
 	});
 	
 	$("#edit-ok").on('click',function() { //提交事件
-		  var $btn = $(this).button('loading');
+		 var $btn = $(this).button('loading');
 		 $.ajax({
 	            type: "POST",
 	            url: "admin/editCustomer",
@@ -164,6 +166,7 @@ $(document).ready(function() {
 	                'email': $("#edit-email").val(),
 	                'depositBank': $("#edit-depositBank").val(),
 	                'accountBank': $("#edit-accountBank").val(),
+	                'time': $("#edit-time").val(),
 	                'formtoken': $("#edit-formtoken").val()
 	            }),
 	            success: function(data) {
@@ -176,7 +179,7 @@ $(document).ready(function() {
 		            	if(data.success != null){
 				            $("#edit-alert").html('<div class="alert alert-block alert-success">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				                    '<div class="success bold-center">修改信息成功,'+'<a href="coop/kehuguanli.html" class="green">'+
+				                    '<div class="success bold-center">修改成功,'+'<a href="coop/kehuguanli.html" class="green">'+
 				                    '<span id="mysecond" class="green">'+5+
 				                    '</span>秒自动跳转</a><div></div>');
 			            	 countDown(5, "coop/kehuguanli.html");
@@ -217,7 +220,7 @@ $(document).ready(function() {
 						    }
 				            $("#edit-alert").html('<div class="alert alert-block alert-danger">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				                    '<div class="danger bold-center">修改信息失败</div></div>');
+				                    '<div class="danger bold-center">修改失败</div></div>');
 					    }
 			        }
 	            },
@@ -230,60 +233,11 @@ $(document).ready(function() {
 	   });//提交事件
 	   
 	   $("#edit-cancel").on("click",function(){//取消事件
-		  $.get("coop/kehuguanli.html", function (data, textStatus){
-			 $("#edit-warning-block").addClass("hide");
-			 $("#edit-id").attr("value",'');
-			 $("#edit-name").attr("value",'');
-			 $("#edit-abbreviation").attr("value",'');
-			 $("#edit-address").attr("value",'');
-			 $("#edit-postalCode").attr("value",'');
-			 $("#edit-phone").attr("value",'');
-			 $("#edit-fax").attr("value",'');
-			 $("#edit-contacts").attr("value",'');
-			 $("#edit-telephone").attr("value",'');
-			 $("#edit-email").attr("value",'');
-			 $("#edit-depositBank").attr("value",'');
-			 $("#edit-accountBank").attr("value",'');
-			 $("#edit-name-tip").html("");
-			 $("#edit-abbreviation-tip").html("");
-			 $("#edit-address-tip").html("");
-			 $("#edit-postalCode-tip").html("");
-			 $("#edit-phone-tip").html("");
-			 $("#edit-fax-tip").html("");
-			 $("#edit-contacts-tip").html("");
-			 $("#edit-telephone-tip").html("");
-			 $("#edit-email-tip").html("");
-			 $("#edit-depositBank-tip").html("");
-			 $("#edit-accountBank-tip").html("");
-			});
+		   location.reload();
 	 	});
 	 	
 	   $("#edit-close").on("click",function(){//x事件
-		  $.get("coop/kehuguanli.html", function (data, textStatus){
-			 $("#edit-id").attr("value",'');
-			 $("#edit-name").attr("value",'');
-			 $("#edit-abbreviation").attr("value",'');
-			 $("#edit-address").attr("value",'');
-			 $("#edit-postalCode").attr("value",'');
-			 $("#edit-phone").attr("value",'');
-			 $("#edit-fax").attr("value",'');
-			 $("#edit-contacts").attr("value",'');
-			 $("#edit-telephone").attr("value",'');
-			 $("#edit-email").attr("value",'');
-			 $("#edit-depositBank").attr("value",'');
-			 $("#edit-accountBank").attr("value",'');
-			 $("#edit-name-tip").html("");
-			 $("#edit-abbreviation-tip").html("");
-			 $("#edit-address-tip").html("");
-			 $("#edit-postalCode-tip").html("");
-			 $("#edit-phone-tip").html("");
-			 $("#edit-fax-tip").html("");
-			 $("#edit-contacts-tip").html("");
-			$("#edit-telephone-tip").html("");
-			 $("#edit-email-tip").html("");
-			 $("#edit-depositBank-tip").html("");
-			 $("#edit-accountBank-tip").html("");
-			});
+		   location.reload();
 	 	});
 });
 </script>

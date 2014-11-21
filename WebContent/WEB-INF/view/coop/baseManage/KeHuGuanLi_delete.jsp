@@ -9,8 +9,8 @@
      </div>
      <!--.modal-header  --> 
      <div class="modal-body">
-      <div class="alert alert-block alert-danger"><div class="danger bold-center">确定删除?</div></div>
-      <div id="delete-tip" class="bold-center success"></div>
+      <div class="alert alert-block alert-danger"><div id="delete-content" class="danger bold-center"></div></div>
+      <div id="delete-tip"></div>
      </div>
      <!--.modal-body  --> 
      <div class="modal-footer"> 
@@ -25,25 +25,33 @@
   <!-- .delete-dialog-message -->
   <script type="text/javascript">
   var deleteIds="";
+  var len;
   
   jQuery(function($) {
-	  $('#delete-cancel').on('click',function(){
-		  $("#delete-tip").html("");
-		  gotoPage(1);
-	  });
+	  
+  $('#delete-cancel').on('click',function(){
+     location.reload();
+  });
 	  
   $("#bt-delete-dialog").on('click',function(){//删除按钮
 		var selectedItems2 = new Array();
 		$("input[name='checkbox']:checked").each(function() {
 			selectedItems2.push($(this).val());
 		});
+		
 		if (selectedItems2 .length == 0) {
 			$("#alert").html('<div class="alert alert-block alert-danger">'+
 					'<button type="button" class="close" data-dismiss="alert" id="close"> <i class="icon-remove"></i> </button>'+
 					'<div class="danger bold-center">没勾选任何记录</div> </div>');
 		}else{
 			deleteIds=selectedItems2.join(',');
+			len=selectedItems2.length;
 			$("#alert").html("");
+			if(len > 0){
+				$("#delete-content").html("确定删除选中的"+len+"行记录?");
+			}else{
+				$("#delete-content").html("确定删除选中的记录?");
+			}
 			$("#delete-dialog-message").modal('show');
 		}
 	});
@@ -57,12 +65,16 @@
 		    dataType: "json", 
 		    success: function (data) {
 			    if(data.success){
-			    	$("#delete-tip").html('<hr>'+data.message+', '+'<a href="coop/kehuguanli.html" class="green"><span id="mysecond">'+5+'</span>秒自动跳转</a>');
-			    	$("#delete-tip").css('color','green');
+		            $("#delete-tip").html('<div class="alert alert-block alert-success">'+
+		                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+		                    '<div class="success bold-center">'+data.message+','+'<a href="coop/kehuguanli.html" class="green">'+
+		                    '<span id="mysecond" class="green">'+5+
+		                    '</span>秒自动跳转</a><div></div>');
 			        countDown(5, "coop/kehuguanli.html");
 				 }else{
-				    $("#delete-tip").html('<hr>'+data.message);
-				    $("#delete-tip").css('color','red');
+				    $("#delete-tip").html('<div class="alert alert-block alert-danger">'+
+		                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+		                    '<div class="danger bold-center">'+data.message+'</div></div>');
 				}
 		      },
 		    error: function(request,error){ 

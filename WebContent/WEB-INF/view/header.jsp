@@ -20,6 +20,8 @@
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
 <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.full.min.css" />
+<link rel="stylesheet" href="assets/css/datepicker.css" />
+<link rel="stylesheet" href="assets/css/daterangepicker.css" /> 
 <link rel="stylesheet" href="assets/css/ace.min.css" />
 <link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
 <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
@@ -37,10 +39,14 @@
 <script src="assets/js/jquery.lazyload.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/jquery.showLoading.min.js"></script>
+<script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="assets/js/date-time/daterangepicker.min.js"></script>
+<script src="assets/js/date-time/moment.min.js"></script>
 <!-- 二维码js -->
 <script type="text/javascript" src="assets/js/jquery.qrcode.js"></script>
 <!-- 自定义js -->
 <script type="text/javascript" src="assets/js/scm.js"></script>
+<script type="text/javascript" src="assets/js/deal-time.js"></script>
 </head>
 <body>
   <div class="navbar navbar-default" id="navbar"> 

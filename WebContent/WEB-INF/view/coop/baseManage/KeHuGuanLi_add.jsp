@@ -80,10 +80,7 @@
        </div>
        <input type="hidden" name="formtoken"  value="<%=token%>"  id="formtoken">
        <!-- 警告框 -->
-       <div class="hide alert alert-block alert-danger" id="warning-block" >
-        <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i> </button>
-          <div id="content"  class="danger bold-center"></div>
-       </div>
+       <div id="warning-block"></div>
       </form> 
      </div> 
      <div class="modal-footer"> 
@@ -174,14 +171,18 @@
 	            async: true,
 	            success: function(data) {
 		            if(data.tip != null){
-					    $("#content").html(data.tip);
-		                $("#warning-block").css('color','alert-warning').removeClass("hide");
+					    $("#warning-block").html('<div class="alert alert-block alert-danger">'+
+			                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+			                    '<div class="danger bold-center">'+data.tip+'</div></div>');
 			        }
 		            else{
 		            	if(data.success != null){
-			            	 $("#content").html('添加信息成功<hr><div style="background-color:#fcf8e3;color: green;"><a href="coop/kehuguanli.html" style="color:green;"><span id="mysecond">'+5+'</span>秒自动跳转</a><div>');
+				            $("#warning-block").html('<div class="alert alert-block alert-success">'+
+				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+				                    '<div class="success bold-center">添加成功,'+'<a href="coop/kehuguanli.html" class="green">'+
+				                    '<span id="mysecond" class="green">'+5+
+				                    '</span>秒自动跳转</a><div></div>');
 			            	 countDown(5, "coop/kehuguanli.html");
-			            	$("#warning-block").css('color','alert-success').removeClass("hide");
 				        }
 				        else{
 				            if(data.name != null){
@@ -217,8 +218,9 @@
 					        if(data.accountBank != null){
 					        	$("#accountBank-tip").html('<span class="formtips onError" style="font-size:30%">' + data.accountBank + '</span>');
 						    }
-						    $("#content").html("添加信息失败");
-			                $("#warning-block").css('color','alert-warning').removeClass("hide");
+						    $("#delete-tip").html('<div class="alert alert-block alert-danger">'+
+				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+				                    '<div class="danger bold-center">添加失败</div></div>');
 					    }
 			        }
 	            },
@@ -231,37 +233,16 @@
  	   });//提交事件
  	   
  	   $("#cancel").on("click",function(){//取消事件
- 		  $.get("coop/kehuguanli.html", function (data, textStatus){
- 			 $("#warning-block").addClass("hide");
- 			 $("#name-tip").html("");
- 			 $("#address-tip").html("");
- 			 $("#postalCode-tip").html("");
- 			 $("#phone-tip").html("");
- 			 $("#fax-tip").html("");
- 			 $("#contacts-tip").html("");
- 			 $("#telephone-tip").html("");
- 			 $("#email-tip").html("");
- 			 $("#depositBank-tip").html("");
- 			 $("#accountBank-tip").html("");
- 			});
+ 	 	   location.reload();
  	 	});
 	 	
  	   $("#close").on("click",function(){//x事件
-  		  $.get("coop/kehuguanli.html", function (data, textStatus){
-  			 $("#warning-block").addClass("hide");
- 			 $("#name-tip").html("");
- 			 $("#address-tip").html("");
- 			 $("#postalCode-tip").html("");
- 			 $("#phone-tip").html("");
- 			 $("#fax-tip").html("");
- 			 $("#contacts-tip").html("");
- 			$("#telephone-tip").html("");
- 			 $("#email-tip").html("");
- 			 $("#depositBank-tip").html("");
- 			 $("#accountBank-tip").html("");
-  			});
+ 		  location.reload();
   	 	});
- 	 	
+
+	 	$("#bt-add-dialog").on("click",function(){//x事件
+	 		$("#alert").html("");
+  	 	});
 	  });
   </script>
 <!-- #add-dialog-message --> 

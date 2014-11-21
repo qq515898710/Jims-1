@@ -159,8 +159,8 @@
 			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
 			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
+		ORDER BY tb_customer_info.time DESC 
 		LIMIT #{offset}, #{size} 
-		ORDER BY time DESC
 	</select>
 	
 	<select id="selectAllByPage" resultMap="customerInfoResultMap">

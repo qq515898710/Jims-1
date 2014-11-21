@@ -11,10 +11,22 @@
      <div class="modal-body">
        <form class="form-horizontal" role="form">
           <div class="form-group"> 
-             <label class="col-sm-3 control-label no-padding-right font " for="name"> 客户名称或简称： </label> 
+             <label class="col-sm-3 control-label no-padding-right font " for="search-name"> 客户名称或简称： </label> 
              <div class="col-sm-9">
                 <input type="text" id="search-name" class="col-xs-8" /><div id="search-name-tip"></div>
-             </div> 
+             </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right font " for="id-date-picker-1"> 录入时间(起)： </label> 
+            <div class="col-sm-9">
+              <input class="col-xs-8 date-picker" data-date-format="yyyy-mm-dd" id="id-date-picker-1" type="text" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right font " for="id-date-picker-2"> 录入时间(末)： </label> 
+            <div class="col-sm-9">
+              <input class="col-xs-8 date-picker" data-date-format="yyyy-mm-dd" id="id-date-picker-2" type="text" />
+            </div>
           </div>
        </form>
      </div><!--.modal-body  --> 
@@ -26,16 +38,32 @@
    </div><!--.modal-dialog  --> 
   </div><!-- .search-dialog-message -->
   <script type="text/javascript">
+
+   $("#bt-search-dialog").on("click",function(){//x事件
+      $("#alert").html("");
+   });
+ 	
+   $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){   
+      $(this).prev().focus();
+   });
+   //2个的适合才有用,暂时影响我界面交互,不用
+   $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+      $(this).next().focus();
+   });
+   
    var searchName="";
    jQuery(function($) {
 	   
 	  $("#search-ok").on("click",function(){
 		  searchName=$("#search-name").val();
-		  gotoPage(1,'name='+searchName);
+		  var beginTime=$("#id-date-picker-1").val();
+		  var endTime=$("#id-date-picker-1").val();
+		  alert(beginTime+"--"+endTime);
+		  gotoPage(1,'name='+searchName+'&beginTime=&endTime=');
 	  });
 	  
 	  $("#search-cancel").on("click",function(){
-		  gotoPage(1,'name=');
+		  gotoPage(1,'name=&beginTime=&endTime=');
 	  });
 	  
    });
