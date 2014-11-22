@@ -57,13 +57,13 @@
 	  $("#search-ok").on("click",function(){
 		  searchName=$("#search-name").val();
 		  var beginTime=$("#id-date-picker-1").val();
-		  var endTime=$("#id-date-picker-1").val();
+		  var endTime=$("#id-date-picker-2").val();
 		  //alert(beginTime+"--"+endTime);
-		  gotoPage(1,'name='+searchName+'&beginTime='+beginTime+'&endTime='+endTime);
+		  gotoPage(1,"name="+searchName+"&beginTime="+beginTime+"&endTime="+endTime);
 	  });
 	  
 	  $("#search-cancel").on("click",function(){
-		  gotoPage(1,'name=&beginTime=&endTime=');
+		  gotoPage(1,"name=&beginTime=&endTime=");
 	  });
 	  
    });

@@ -14,6 +14,7 @@ import org.mo.jims.coop.dto.AddCustomerInfoDTO;
 import org.mo.jims.coop.dto.EditCustomerInfoDTO;
 import org.mo.jims.coop.entity.CustomerInfo;
 import org.mo.jims.coop.service.CustomerInfoService;
+import org.mo.open.common.converter.SpringDateConverter;
 import org.mo.open.common.exception.MyRuntimeException;
 import org.mo.open.common.util.JsonResponse;
 import org.mo.open.common.util.Page;
@@ -77,10 +78,11 @@ public class CustomerInfoController {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
-		Page<CustomerInfo> customerInfoByNameOrAbbreviation = 
-				customerInfoService.getCustomerInfoByCriteria(
-						newStr,null,null, page, size);
+		SpringDateConverter springDateConverter = new SpringDateConverter();
+		Page<CustomerInfo> customerInfoByNameOrAbbreviation = customerInfoService
+				.getCustomerInfoByCriteria(newStr,
+						springDateConverter.convert(beginTime),
+						springDateConverter.convert(endTime), page, size);
 		return customerInfoByNameOrAbbreviation;
 	}
 	

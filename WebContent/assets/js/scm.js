@@ -41,7 +41,7 @@ function gotoPage(pageIndex, cond) {
 	var action = 'coop/pageOfCustomersByName';
 	var pagerRange = 6;//
 	var pageSize =  $("#p_pageSizeSelect").val(); //获取每一页显示多少记录
-	var loc='<div class="col-sm-6"><div class="dataTables_paginate paging_bootstrap"><ul class="pagination">';
+	var loc="<div class='col-sm-6'><div class='dataTables_paginate paging_bootstrap'><ul class='pagination'>";
 	$('#tb').html("");
 	//TODO 测试用
 	//alert("page=" + pageIndex + "&size=" + pageSize+"&"+cond);
@@ -57,17 +57,18 @@ function gotoPage(pageIndex, cond) {
 		         },
 				success : function(msg) {
 					$.each(msg.content, function(i, item) {
-			              $('#tb').append( '<tr>'
-			            		  +'<td><label> <input type="checkbox" class="ace" name="checkbox" value="'+item.id+'" /><span class="lbl"></span> </label></td>'
-			            		  +'<td >'+(++i)+'</td> '
-			            		  +'<td >'+item.name+'</td> '
-			            		  +'<td >'+item.address+'</td> '
-			            		  +'<td >'+getFormatDateByLong(item.time,"yyyy-MM-dd")+'</td> '
-			            		  +'<td >'+item.phone+'</td> '
-			            		  +'<td >'+'<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" id="buttontools">'
-			            		  				+'<a class="blue" href="javascript:showCustomer(\''+item.id+'\')"> <i class="icon-zoom-in bigger-130"></i>'
-			            		  				+'<a class="green" href="javascript:editCustomer(\''+item.id+'\')" > <i class="icon-pencil bigger-130"></i> </a>'
-			            		  				+'<a class="red" href="javascript:deleteCustomer(\''+item.id+'\')" > <i class="icon-trash bigger-130"></i> </a>'+'</td> '+'</tr>');
+			              $('#tb').append( "<tr>"
+			            		  +"<td><label> <input type='checkbox' class='ace' name='checkbox' value='"+item.id+"' /><span class='lbl'></span> </label></td>"
+			            		  +"<td >"+(++i)+"</td> "
+			            		  +"<td >"+item.name+"</td> "
+			            		  +"<td >"+item.address+"</td> "
+			            		  +"<td >"+getFormatDateByLong(item.time,"yyyy-MM-dd")+"</td> "
+			            		  +"<td >"+item.phone+"</td> "
+			            		  +"<td >"+"<div class='visible-md visible-lg hidden-sm hidden-xs action-buttons' id='buttontools'>"
+			            		  				+"<a class='blue' href='javascript:showCustomer('"+item.id+"')'> <i class='icon-zoom-in bigger-130'></i>"
+			            		  				+"<a class='green' href='javascript:editCustomer('"+item.id+"')' > <i class='icon-pencil bigger-130'></i> </a>"
+			            		  				+"<a class='red' href='javascript:deleteCustomer('"+item.id+"')' > <i class='icon-trash bigger-130'></i> </a>"
+			            		  				+"</td> "+"</tr>");
 			            });
 						var begin = Math.max(1, msg.currentPage - pagerRange/2 );
 						var end = Math.min(begin + (pagerRange - 1), msg.totalPage);
@@ -75,23 +76,23 @@ function gotoPage(pageIndex, cond) {
 						//这部分可能解析的时候js脑子会进水,还是eclipse会进水,下次在写的时候要改为外面双引号 ,里面才单引号,不如真的进水
 						//要用注解他们,再取消注解又没事了,我也好奇怪
 						if(msg.currentPage !=1){
-							loc+='<li class="prev "><a href="javascript:gotoPage(1,\''+cond+'\')"><i class=" icon-double-angle-left "></i></a></li><li class="prev "><a href="javascript:gotoPage('+(msg.currentPage - 1)+',\''+cond+'\')"><i class=" icon-angle-left "></i></a></li>';
+							loc+="<li class='prev '><a href='javascript:gotoPage(1,\""+cond+"\")'><i class=' icon-double-angle-left '></i></a></li><li class='prev '><a href='javascript:gotoPage("+(msg.currentPage - 1)+",\""+cond+"\")'><i class=' icon-angle-left '></i></a></li>";
 						}else{
-							loc+='<li class="prev disabled"><a href="javascript:void(0)"><i class=" icon-double-angle-left "></i></a></li><li class="prev disabled"><a href="javascript:void(0)"><i class=" icon-angle-left "></i></a></li>';
+							loc+="<li class='prev disabled'><a href='javascript:void(0)'><i class=' icon-double-angle-left '></i></a></li><li class='prev disabled'><a href='javascript:void(0)'><i class=' icon-angle-left '></i></a></li>";
 						}
 						for(var i = begin; i <= end; i++){
 							if(msg.currentPage == i){
-								loc+='<li class="active"><a href="javascript:void(0)">'+i+'</a></li>'
+								loc+="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>"
 							}else{
-								loc+='<li><a href="javascript:gotoPage('+i +',\''+cond+'\')" >'+i+'</a></li>'
+								loc+="<li><a href='javascript:gotoPage("+i +",\""+cond+"\")' >"+i+"</a></li>"
 							}
 						}
 						if(msg.currentPage!=msg.totalPage){
-							loc+='<li class="next"><a href="javascript:gotoPage('+(msg.currentPage + 1)+',\''+cond+'\')"><i class="icon-angle-right "></i></a></li><li class="next "><a href="javascript:gotoPage('+msg.totalPage+',\''+cond+'\')"><i class="icon-double-angle-right "></i></a></li>';
+							loc+="<li class='next'><a href='javascript:gotoPage("+(msg.currentPage + 1)+",\""+cond+"\")'><i class='icon-angle-right '></i></a></li><li class='next '><a href='javascript:gotoPage("+msg.totalPage+",\""+cond+"\")'><i class='icon-double-angle-right '></i></a></li>";
 						}else{
-							loc+='<li class="next disabled"><a href="javascript:void(0)"><i class="icon-angle-right "></i></a></li><li class="next disabled"><a href="javascript:void(0)"><i class="icon-double-angle-right "></i></a></li>';
+							loc+="<li class='next disabled'><a href='javascript:void(0)'><i class='icon-angle-right '></i></a></li><li class='next disabled'><a href='javascript:void(0)'><i class='icon-double-angle-right '></i></a></li>";
 						}
-						loc+='</ul></div></div>';
+						loc+="</ul></div></div>";
 						$('#pages').html(loc);
 						$("#other").html('<a href="javascript:gotoPage(1,\'name=&beginTime=&endTime=\')" ><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
 						$("#table-result").hideLoading();

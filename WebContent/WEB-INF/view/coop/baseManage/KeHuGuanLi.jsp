@@ -132,7 +132,7 @@
 	jQuery(function($) {
 		
 		/* 获取数据 */
-		gotoPage(1,'name=&beginTime=&endTime=');
+		gotoPage(1,"name=&beginTime=&endTime=");
 		
 		/* 复选框操作 */
 		$('table th input:checkbox').on('click' , function(){
