@@ -37,9 +37,9 @@ public class CustomerInfoServiceTest extends BaseTest {
 	@Test
 	public void testGetCustomerInfoByNameOrAbbreviation() throws ParseException {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = dateFormat.parse("2014-11-1");
+		Date date = dateFormat.parse("2014-11-10");
 		Page<CustomerInfo> customerInfoByNameOrAbbreviation = customerInfoService
-				.getCustomerInfoByCriteria("城院", date, new Date(), 1, 50);
+				.getCustomerInfoByCriteria("城院", date, null, 1, 50);
 		Assert.assertNotNull("customerInfoByNameOrAbbreviation is null",
 				customerInfoByNameOrAbbreviation);
 		List<CustomerInfo> content = customerInfoByNameOrAbbreviation
@@ -48,7 +48,7 @@ public class CustomerInfoServiceTest extends BaseTest {
 				customerInfoByNameOrAbbreviation);
 		for (int i = 0; i < content.size(); i++) {
 			CustomerInfo tbCustomerInfo = content.get(i);
-			System.out.println(tbCustomerInfo.getName());
+			System.out.println(tbCustomerInfo.getName() +"--"+i);
 		}
 	}
 

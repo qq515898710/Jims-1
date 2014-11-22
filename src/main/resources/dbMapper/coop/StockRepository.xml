@@ -206,8 +206,8 @@
 	<select id="countAllByCriteria" resultType="int">
 		<include refid="count_stock_info"/>
 		<where>
-			<if test="startTime != null"><![CDATA[ tb_stock.time >= #{startTime} ]]> </if>
-			<if test="endTime != null"><![CDATA[ AND tb_stock.time <= #{endTime} ]]> </if>
+			<if test="beginTime != null"><![CDATA[ DATE_FORMAT(tb_stock.time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
+			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(tb_stock.time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
 			<if test="ProviderName != null and ProviderName != ''"> AND tb_provider_info.name LIKE CONCAT('%', #{ProviderName},'%') </if>
 			<if test="GoodName != null and GoodName != ''"> AND tb_good_info.name LIKE CONCAT('%', #{GoodName},'%') </if>
 			<if test="UserName != null and UserName != ''"> AND tb_user.username LIKE CONCAT('%', #{UserName},'%') </if>
@@ -217,8 +217,8 @@
 	<select id="selectAllByCriteria" resultMap="stockResultMap">
 		<include refid="select_stock_info_join"/>
 		<where>
-			<if test="startTime != null"><![CDATA[ tb_stock.time >= #{startTime} ]]> </if>
-			<if test="endTime != null"><![CDATA[ AND tb_stock.time <= #{endTime} ]]> </if>
+			<if test="beginTime != null"><![CDATA[ DATE_FORMAT(tb_stock.time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
+			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(tb_stock.time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
 			<if test="ProviderName != null and ProviderName != ''"> AND tb_provider_info.name LIKE CONCAT('%', #{ProviderName},'%') </if>
 			<if test="GoodName != null and GoodName != ''"> AND tb_good_info.name LIKE CONCAT('%', #{GoodName},'%') </if>
 			<if test="UserName != null and UserName != ''"> AND tb_user.username LIKE CONCAT('%', #{UserName},'%') </if>
