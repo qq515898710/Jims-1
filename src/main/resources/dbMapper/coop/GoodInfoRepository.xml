@@ -137,7 +137,7 @@
 		WHERE name = #{name} ORDER BY time DESC
 	</select>
 	
-	<select id="countAllByNameOrAbbreviationAndTime" resultType="int">
+	<select id="countAllByCriteria" resultType="int">
 		SELECT COUNT(*) FROM tb_good_info
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
@@ -146,15 +146,15 @@
 		</where>
 	</select>
 
-	<select id="selectAllByNameOrAbbreviationAndTime" resultMap="goodInfoResultMap">
+	<select id="selectAllByCriteria" resultMap="goodInfoResultMap">
 		<include refid="select_good_info" />
 		<where>
 			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
 			<if test="beginTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
 			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
 		</where>
-		LIMIT #{offset}, #{size} 
 		ORDER BY time DESC
+		LIMIT #{offset}, #{size} 
 	</select>
 	
 	<delete id="batchDelete" parameterType="java.lang.String">

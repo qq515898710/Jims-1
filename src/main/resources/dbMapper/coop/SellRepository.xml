@@ -201,8 +201,8 @@
 			<if test="beginTime != null"><![CDATA[AND DATE_FORMAT(tb_sell.time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
 			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(tb_sell.time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
 		</where>
-		LIMIT #{offset}, #{size} 
 		ORDER BY tb_sell.time DESC
+		LIMIT #{offset}, #{size} 
 	</select>
 	
 	<!-- sell -->

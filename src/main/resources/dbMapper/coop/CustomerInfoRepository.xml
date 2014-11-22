@@ -165,8 +165,8 @@
 	
 	<select id="selectAllByPage" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
-		LIMIT #{offset}, #{size} 
 		ORDER BY time DESC
+		LIMIT #{offset}, #{size} 
 	</select>
 	
 	<delete id="batchDelete" parameterType="java.lang.String">

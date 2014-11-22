@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author moziqi
  *
  */
-@Component("dateConverter")
+@Component("springDateConverter")
 public class SpringDateConverter implements Converter<String, Date> {
 
 	private static final List<String> formarts = new ArrayList<String>(4);
