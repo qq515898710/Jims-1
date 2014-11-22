@@ -1,16 +1,17 @@
 package org.mo.jims.coop.dto;
 
-import org.mo.jims.coop.entity.CustomerInfo;
+import org.mo.jims.coop.entity.ProviderInfo;
 import org.mo.open.common.converter.JavaDateConverter;
 import org.mo.open.common.exception.MyRuntimeException;
 
-public class EditCustomerInfoDTO implements java.io.Serializable {
+public class ProviderInfoDTO implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	private java.lang.String id;
 
 	private java.lang.String name;
@@ -29,26 +30,35 @@ public class EditCustomerInfoDTO implements java.io.Serializable {
 
 	private java.lang.String telephone;
 
-	private java.lang.String email;
-
 	private java.lang.String depositBank;
 
-	private java.lang.String accountBank;
+	private java.lang.String email;
 
 	private String time;
-	
+
 	private String formtoken;
 
-	public CustomerInfo toObject() throws MyRuntimeException {
+	public ProviderInfoDTO() {
+		super();
+	}
+
+	public ProviderInfo toEditObject() throws MyRuntimeException {
 		try {
-			CustomerInfo customerInfo = new CustomerInfo(id, name,
-					abbreviation, address, postalCode, phone, fax, contacts,
-					telephone, email, depositBank, accountBank,
-					JavaDateConverter.StringConverterDate(time));
-			return customerInfo;
+			return new ProviderInfo(id, name, abbreviation, address,
+					postalCode, phone, fax, contacts, telephone, depositBank,
+					email, JavaDateConverter.StringConverterDate(time));
 		} catch (Exception e) {
 			throw new MyRuntimeException(
-					"EditCustomerInfoDTO convert CustomerInfo failed");
+					"toEditObject-ProviderInfoDTO convert fail");
+		}
+	}
+
+	public ProviderInfo toAddObject() throws MyRuntimeException {
+		try {
+			return new ProviderInfo(name, abbreviation, address, postalCode,
+					phone, fax, contacts, telephone, depositBank, email);
+		} catch (Exception e) {
+			throw new MyRuntimeException("toAddObject-ProviderInfoDTO convert fail");
 		}
 	}
 
@@ -124,14 +134,6 @@ public class EditCustomerInfoDTO implements java.io.Serializable {
 		this.telephone = telephone;
 	}
 
-	public java.lang.String getEmail() {
-		return email;
-	}
-
-	public void setEmail(java.lang.String email) {
-		this.email = email;
-	}
-
 	public java.lang.String getDepositBank() {
 		return depositBank;
 	}
@@ -140,12 +142,12 @@ public class EditCustomerInfoDTO implements java.io.Serializable {
 		this.depositBank = depositBank;
 	}
 
-	public java.lang.String getAccountBank() {
-		return accountBank;
+	public java.lang.String getEmail() {
+		return email;
 	}
 
-	public void setAccountBank(java.lang.String accountBank) {
-		this.accountBank = accountBank;
+	public void setEmail(java.lang.String email) {
+		this.email = email;
 	}
 
 	public String getTime() {
@@ -164,16 +166,4 @@ public class EditCustomerInfoDTO implements java.io.Serializable {
 		this.formtoken = formtoken;
 	}
 
-	@Override
-	public String toString() {
-		return "EditCustomerInfoDTO [id=" + id + ", name=" + name
-				+ ", abbreviation=" + abbreviation + ", address=" + address
-				+ ", postalCode=" + postalCode + ", phone=" + phone + ", fax="
-				+ fax + ", contacts=" + contacts + ", telephone=" + telephone
-				+ ", email=" + email + ", depositBank=" + depositBank
-				+ ", accountBank=" + accountBank + ", time="
-				+ time + ", formtoken=" + formtoken
-				+ "]";
-	}
-	
 }

@@ -19,6 +19,7 @@
 		 	tb_stock_return.time AS time, 
 		 	tb_stock_return.clearing_form AS clearing_form, 
 		 	tb_stock_return.handler AS handler
+		 	tb_stock_return.state AS state 
 		FROM tb_stock_return 
 		JOIN tb_provider_info ON tb_provider_info.id = tb_stock_return.provider_id 
 		JOIN tb_user ON tb_user.account = tb_stock_return.user_id 
@@ -45,9 +46,10 @@
 		 	check_conclusion, 
 		 	time, 
 		 	clearing_form, 
-		 	handler)
+		 	handler,
+		 	state)
 		VALUE(#{id}, #{providerInfo.id},#{user.id},#{goodInfo.id}, #{varietyAmount},#{unitCost},
-			#{amount},#{sum}, #{checkConclusion},#{time},#{clearingForm}, #{handler})
+			#{amount},#{sum}, #{checkConclusion},#{time},#{clearingForm}, #{handler},#{approval, typeHandler=org.mo.jims.coop.typehandler.ApprovalHadler})
 	</insert>
 
 	<update id="updateByPK" parameterType="StockReturn">
@@ -63,6 +65,7 @@
 		 	time=#{time}, 
 		 	clearing_form=#{clearingForm}, 
 		 	handler=#{handler}
+		 	state=#{approval, typeHandler=org.mo.jims.coop.typehandler.ApprovalHadler}
 		WHERE
 			id=#{id}
 	</update>
@@ -206,8 +209,8 @@
 			<if test="GoodName != null and GoodName != ''"> AND tb_good_info.name LIKE CONCAT('%', #{GoodName},'%') </if>
 			<if test="UserName != null and UserName != ''"> AND tb_user.username LIKE CONCAT('%', #{UserName},'%') </if>
 		</where>
-		LIMIT #{offset}, #{size} 
 		ORDER BY tb_stock_return.time DESC
+		LIMIT #{offset}, #{size} 
 	</select>
 
 	<!-- stock_return -->
@@ -221,6 +224,7 @@
 		<result property="time" column="time" />
 		<result property="clearingForm" column="clearing_form" />
 		<result property="handler" column="handler" />
+		<result property="approval" column="state" typeHandler="org.mo.jims.coop.typehandler.ApprovalHadler"/>
 		<association property="providerInfo" javaType="ProviderInfo">
 			<id property="id" column="provider_id"/>
 			<result property="name" column="provider_name" />

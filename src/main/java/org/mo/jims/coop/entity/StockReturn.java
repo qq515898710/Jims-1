@@ -52,7 +52,7 @@ public class StockReturn implements Serializable {
 
 	public StockReturn(String id, int varietyAmount, float unitCost,
 			int amount, float sum, String check_conclusion, Date time,
-			String clearingForm, String handler, ProviderInfo providerInfo,
+			String clearingForm, String handler,Approval approval, ProviderInfo providerInfo,
 			User user, GoodInfo goodInfo) {
 		super();
 		this.id = id;
@@ -64,6 +64,7 @@ public class StockReturn implements Serializable {
 		this.time = time;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
+		this.approval = approval;
 		this.providerInfo = providerInfo;
 		this.user = user;
 		this.goodInfo = goodInfo;
@@ -71,7 +72,7 @@ public class StockReturn implements Serializable {
 
 	public StockReturn(int varietyAmount, float unitCost, int amount,
 			float sum, String check_conclusion, String clearingForm,
-			String handler, ProviderInfo providerInfo, User user,
+			String handler,Approval approval, ProviderInfo providerInfo, User user,
 			GoodInfo goodInfo) {
 		super();
 		this.id = "stockr" + Sequence.nextId();
@@ -82,6 +83,7 @@ public class StockReturn implements Serializable {
 		this.check_conclusion = check_conclusion;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
+		this.approval = approval;
 		this.providerInfo = providerInfo;
 		this.goodInfo = goodInfo;
 		this.user = user;

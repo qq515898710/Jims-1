@@ -50,7 +50,7 @@ public class InventoryInfo implements Serializable {
 	}
 
 	public InventoryInfo(String specification, float unitCost, int amount,
-			GoodInfo goodInfo, User user, Date time) {
+			GoodInfo goodInfo, User user) {
 		super();
 		this.id = "i" + Sequence.nextId();
 		this.specification = specification;
@@ -58,7 +58,6 @@ public class InventoryInfo implements Serializable {
 		this.amount = amount;
 		this.user = user;
 		this.goodInfo = goodInfo;
-		this.time = time;
 	}
 
 	public java.lang.String getId() {
