@@ -5,27 +5,27 @@
     <div class="modal-content"> 
      <div class="modal-header"> 
       <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true">&times;</span><span class="sr-only">x</span> </button> 
-      <h6 class="modal-title" id="mySmallModalLabel"><i class="icon-search align-top bigger-125"></i>&nbsp;查询客户信息 </h6> 
+      <h6 class="modal-title" id="mySmallModalLabel"><i class="icon-search align-top bigger-125"></i>&nbsp;查询供应商信息 </h6> 
      </div>
      <!--.modal-header  --> 
      <div class="modal-body">
        <form class="form-horizontal" role="form">
           <div class="form-group"> 
-             <label class="col-sm-3 control-label no-padding-right font " for="search-name"> 客户名称或简称： </label> 
-             <div class="col-sm-9">
-                <input type="text" id="search-name" class="col-xs-8" /><div id="search-name-tip"></div>
+             <label class="col-sm-5 control-label no-padding-right font " for="search-name"> 供应商名称或简称： </label> 
+             <div class="col-sm-6">
+                <input type="text" id="search-name" class="col-xs-6" /><div id="search-name-tip"></div>
              </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right font " for="id-date-picker-1"> 录入时间(起)： </label> 
-            <div class="col-sm-9">
-              <input class="col-xs-8 date-picker" data-date-format="yyyy-mm-dd" id="id-date-picker-1" type="text" />
+            <label class="col-sm-5 control-label no-padding-right font " for="id-date-picker-1"> 录入时间(起)： </label> 
+            <div class="col-sm-6">
+              <input class="col-xs-6 date-picker" data-date-format="yyyy-mm-dd" id="id-date-picker-1" type="text" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right font " for="id-date-picker-2"> 录入时间(末)： </label> 
-            <div class="col-sm-9">
-              <input class="col-xs-8 date-picker" data-date-format="yyyy-mm-dd" id="id-date-picker-2" type="text" />
+            <label class="col-sm-5 control-label no-padding-right font " for="id-date-picker-2"> 录入时间(末)： </label> 
+            <div class="col-sm-6">
+              <input class="col-xs-6 date-picker" data-date-format="yyyy-mm-dd" id="id-date-picker-2" type="text" />
             </div>
           </div>
        </form>
@@ -59,7 +59,7 @@
 		  var beginTime=$("#id-date-picker-1").val();
 		  var endTime=$("#id-date-picker-2").val();
 		  //alert(beginTime+"--"+endTime);
-		  gotoPage(1,"name="+searchName+"&beginTime="+beginTime+"&endTime="+endTime);
+		  gotoGongYingShangPage(1,"name="+searchName+"&beginTime="+beginTime+"&endTime="+endTime);
 	  });
 	  
 	  $("#search-cancel").on("click",function(){

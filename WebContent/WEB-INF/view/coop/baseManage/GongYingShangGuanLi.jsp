@@ -54,7 +54,7 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="coop/shangpinguanli.html">商品信息管理</a></li> 
+       <li><a href="coop/gongyingshangguanli.html">供应商信息管理</a></li> 
       </ul> 
       <!-- .breadcrumb -->
      </div> 
@@ -62,15 +62,15 @@
       <div class="row"> 
        <div class="col-xs-12">
         <h3 class="header smaller lighter blue">
-          <jsp:include page="ShangPinGuanLi_detailed.jsp"></jsp:include>
+          <jsp:include page="GongYingShangGuanLi_detailed.jsp"></jsp:include>
           <button id="bt-search-dialog" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#search-dialog-message"><i class="icon-search align-top bigger-125"  ></i>查询 </button>
-          <jsp:include page="ShangPinGuanLi_search.jsp"></jsp:include>
+          <jsp:include page="GongYingShangGuanLi_search.jsp"></jsp:include>
           <button id="bt-add-dialog" class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#add-dialog-message"><i class="icon-plus-sign align-top bigger-125"></i>添加 </button> 
-          <jsp:include page="ShangPinGuanLi_add.jsp"></jsp:include>
+          <jsp:include page="GongYingShangGuanLi_add.jsp"></jsp:include>
           <button id="bt-edit-dialog" class="btn btn-primary btn-sm" ><i class="icon-edit align-top bigger-125"></i>修改</button>
-          <jsp:include page="ShangPinGuanLi_edit.jsp"></jsp:include> 
+          <jsp:include page="GongYingShangGuanLi_edit.jsp"></jsp:include> 
           <button id="bt-delete-dialog" class="btn btn-primary btn-sm" ><i class="icon-trash align-top bigger-125"></i>删除 </button> 
-         <jsp:include page="ShangPinGuanLi_delete.jsp"></jsp:include>
+         <jsp:include page="GongYingShangGuanLi_delete.jsp"></jsp:include>
          <button id="bt-upload-dialog" class="btn btn-primary btn-sm" onclick="document.getElementById('file').click();" ><i class="icon-upload align-top bigger-125"></i>导入 </button>
          <input type="file" name="file" id="file" style="display:none" />
          <button id="bt-download-dialog" class="btn btn-primary btn-sm"  type="flle" ><i class="icon-download align-top bigger-125"></i>导出 </button>
@@ -90,7 +90,7 @@
           <div class="table-responsive"> 
            <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
               <div class="row" >
-              <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoShangPinPage(1,'name=&beginTime=&endTime=')" id="p_pageSizeSelect">
+              <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1,'name=&beginTime=&endTime=')" id="p_pageSizeSelect">
                 <option value="10" selected="selected" >10</option>
                 <option value="25" >25</option>
                 <option value="50" >50</option>
@@ -106,9 +106,9 @@
                  <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace"  id="checkall"/> <span class="lbl"></span> </label> </th> 
                  <th  role="columnheader"  rowspan="1" colspan="1" style="width: 50px;" >序号</th>
                  <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >名称</th> 
-                 <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >产地</th> 
+                 <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >地址</th> 
                  <th role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" > <i class="icon-time bigger-110 hidden-480"></i>录入时间</th> 
-                 <th  role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" >包装 </th> 
+                 <th  role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" >联系电话 </th> 
                  <th  role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label="">操作</th> 
                 </tr> 
                </thead> 
@@ -120,7 +120,7 @@
            </div>
           </div> 
          </div>
-       </div> 
+       </div> <!-- .col-xs-12 -->
        <!-- /.col --> 
       </div> 
       <!-- /.row --> 
@@ -132,7 +132,7 @@
 	jQuery(function($) {
 		
 		/* 获取数据 */
-		gotoShangPinPage(1,"name=&beginTime=&endTime=");
+		gotoGongYingShangPage(1,"name=&beginTime=&endTime=");
 		
 		/* 复选框操作 */
 		$('table th input:checkbox').on('click' , function(){
@@ -143,6 +143,7 @@
 				$(this).closest('tr').toggleClass('selected');
 			});
 		});
+		
 	});
 </script> 
     <!-- 工具导入 --> 

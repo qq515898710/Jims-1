@@ -156,4 +156,14 @@ public class SellDTO implements java.io.Serializable {
 		this.formtoken = formtoken;
 	}
 
+	@Override
+	public String toString() {
+		return "SellDTO [id=" + id + ", unitCost=" + unitCost + ", amount="
+				+ amount + ", sum=" + sum + ", time=" + time
+				+ ", clearingForm=" + clearingForm + ", handler=" + handler
+				+ ", approval=" + approval + ", goodName=" + goodName
+				+ ", customerName=" + customerName + ", username=" + username
+				+ ", formtoken=" + formtoken + "]";
+	}
+
 }

@@ -8,12 +8,12 @@
     <div class="modal-content"> 
      <div class="modal-header"> 
       <button type="button" class="close" data-dismiss="modal" id="close"> <span aria-hidden="true">&times;</span><span class="sr-only">x</span></button> 
-      <h6 class="modal-title" id="myModalLabel"> <i class="icon-plus-sign"></i>&nbsp;添加客户信息 </h6> 
+      <h6 class="modal-title" id="myModalLabel"> <i class="icon-plus-sign"></i>&nbsp;添加供应商信息 </h6> 
      </div>
      <div class="modal-body">
       <form id="add-form-dialog" class="form-horizontal" role="form">
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font " for="name"> 客户名称： </label> 
+        <label class="col-sm-3 control-label no-padding-right font " for="name"> 供应商名称： </label> 
         <div class="col-sm-9">
          <input type="text" id="name" class="col-xs-8" /><div id="name-tip"></div>
         </div> 
@@ -72,12 +72,6 @@
          <input type="text" id="depositBank" class="col-xs-8" /><div id="depositBank-tip"></div>
         </div> 
        </div> 
-       <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="accountBank"> 开户帐号： </label> 
-        <div class="col-sm-9"> 
-         <input type="text" id="accountBank" class="col-xs-8" /><div id="accountBank-tip"></div>
-        </div> 
-       </div>
        <input type="hidden" name="formtoken"  value="<%=token%>"  id="formtoken">
        <!-- 警告框 -->
        <div id="warning-block"></div>
@@ -97,8 +91,14 @@
 	        $parent.find(".formtips").remove();
 	        if ($(this).is('#name')) {
 	            if (this.value == "") {
-	                var errorMsg = '客户名称不能为空';
+	                var errorMsg = '供应商名称不能为空';
 	                $("#name-tip").html('<span class="formtips onError" style="font-size:50%">' + errorMsg + '</span>');
+	            }
+	        }
+	        if ($(this).is('#abbreviation')) {
+	            if (this.value == "") {
+	                var errorMsg = '简称不能为空';
+	                $("#abbreviation-tip").html('<span class="formtips onError" style="font-size:50%">' + errorMsg + '</span>');
 	            }
 	        }
 	        if ($(this).is('#postalCode')) {
@@ -149,7 +149,7 @@
  		  var $btn = $(this).button('loading');
 	        $.ajax({
 	            type: "POST",
-	            url: "admin/addCustomer",
+	            url: "admin/addProvider",
 	            contentType: "application/json",
 	            // 必须有
 	            dataType: "json",
@@ -165,7 +165,6 @@
 	                'telephone': $("#telephone").val(),
 	                'email': $("#email").val(),
 	                'depositBank': $("#depositBank").val(),
-	                'accountBank': $("#accountBank").val(),
 	                'formtoken': $("#formtoken").val()
 	            }),
 	            async: true,
@@ -179,10 +178,10 @@
 		            	if(data.success != null){
 				            $("#warning-block").html('<div class="alert alert-block alert-success">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				                    '<div class="success bold-center">添加成功,'+'<a href="coop/kehuguanli.html" class="green">'+
+				                    '<div class="success bold-center">添加成功,'+'<a href="coop/gongyingshangguanli.html" class="green">'+
 				                    '<span id="mysecond" class="green">'+5+
 				                    '</span>秒自动跳转</a><div></div>');
-			            	 countDown(5, "coop/kehuguanli.html");
+			            	 countDown(5, "coop/gongyingshangguanli.html");
 				        }
 				        else{
 				            if(data.name != null){
@@ -214,9 +213,6 @@
 						    }
 					        if(data.depositBank != null){
 					        	$("#depositBank-tip").html('<span class="formtips onError" style="font-size:50%">' + data.depositBank + '</span>');
-						    }
-					        if(data.accountBank != null){
-					        	$("#accountBank-tip").html('<span class="formtips onError" style="font-size:50%">' + data.accountBank + '</span>');
 						    }
 						    $("#delete-tip").html('<div class="alert alert-block alert-danger">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+

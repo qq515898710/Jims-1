@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.UUID"%>
 <%
 	String token = UUID.randomUUID().toString().replaceAll("-", "");
-	session.setAttribute("CustomerEidtToken", token);
+	session.setAttribute("ProviderEidtToken", token);
 %>
 <div id="edit-dialog-message" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
    <div class="modal-dialog"> 
     <div class="modal-content"> 
      <div class="modal-header"> 
       <button type="button" class="close" data-dismiss="modal" id="edit-close"> <span aria-hidden="true">&times;</span><span class="sr-only">x</span> </button> 
-      <h6 class="modal-title" id="myModalLabel"> <i class="icon-edit align-top bigger-125"></i>&nbsp;修改客户信息 </h6> 
+      <h6 class="modal-title" id="myModalLabel"> <i class="icon-edit align-top bigger-125"></i>&nbsp;修改供应商信息 </h6> 
      </div> 
      <!--.modal-header  --> 
      <div class="modal-body"> 
       <form id="add-form-dialog" class="form-horizontal" role="form"> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-name"> 客户名称： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-name"> 供应商名称： </label> 
         <div class="col-sm-9"> 
          <input type="text" id="edit-name" class="col-xs-8" /><div id="edit-name-tip"></div> 
         </div> 
@@ -72,12 +72,6 @@
         <div class="col-sm-9"> 
          <input type="text" id="edit-depositBank" class="col-xs-8 " /> <div id="edit-depositBank-tip"></div>
         </div> 
-       </div> 
-       <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-accountBank">开户帐号： </label> 
-        <div class="col-sm-9"> 
-         <input type="text" id="edit-accountBank" class="col-xs-8 " /> <div id="edit-accountBank-tip"></div>
-        </div> 
        </div>
        <input type="hidden" name="formtoken"  value="<%=token%>"  id="edit-formtoken">
        <input type="hidden" name="id"  id="edit-id">
@@ -85,7 +79,7 @@
        <!-- 警告框 -->
        <div id="edit-alert"></div>
 <!--        <div class="form-group">  -->
-<!--         <label class="col-sm-3 control-label no-padding-right font" for="form-field-1">选择客户： </label>  -->
+<!--         <label class="col-sm-3 control-label no-padding-right font" for="form-field-1">选择供应商： </label>  -->
 <!--         <div class="col-sm-9">  -->
 <!--          <select id="form-field-1" class="col-xs-8"> <option value="">&nbsp;</option> <option value="">&nbsp;</option> </select>  -->
 <!--         </div>  -->
@@ -120,7 +114,7 @@ $(document).ready(function() {
 		}else{
 			$.ajax({
 			    type: "POST", 
-			    url: "coop/searchCustomerById", 
+			    url: "coop/searchProviderById", 
 			    data: "searchId=" + selectedItems2.join(','), 
 			    dataType: "json", 
 			    success: function (data){
@@ -135,7 +129,6 @@ $(document).ready(function() {
 					 $("#edit-telephone").attr("value",data.telephone);
 					 $("#edit-email").attr("value",data.email);
 					 $("#edit-depositBank").attr("value",data.depositBank);
-					 $("#edit-accountBank").attr("value",data.accountBank);
 					 $("#edit-time").attr("value",data.time);
 				}
 			 });
@@ -148,7 +141,7 @@ $(document).ready(function() {
 		 var $btn = $(this).button('loading');
 		 $.ajax({
 	            type: "POST",
-	            url: "admin/editCustomer",
+	            url: "admin/editProvider",
 	            contentType: "application/json",
 	            // 必须有
 	            dataType: "json",
@@ -165,7 +158,6 @@ $(document).ready(function() {
 	                'telephone': $("#edit-telephone").val(),
 	                'email': $("#edit-email").val(),
 	                'depositBank': $("#edit-depositBank").val(),
-	                'accountBank': $("#edit-accountBank").val(),
 	                'time': $("#edit-time").val(),
 	                'formtoken': $("#edit-formtoken").val()
 	            }),
@@ -179,10 +171,10 @@ $(document).ready(function() {
 		            	if(data.success != null){
 				            $("#edit-alert").html('<div class="alert alert-block alert-success">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				                    '<div class="success bold-center">修改成功,'+'<a href="coop/kehuguanli.html" class="green">'+
+				                    '<div class="success bold-center">修改成功,'+'<a href="coop/gongyingshangguanli.html" class="green">'+
 				                    '<span id="mysecond" class="green">'+5+
 				                    '</span>秒自动跳转</a><div></div>');
-			            	 countDown(5, "coop/kehuguanli.html");
+			            	 countDown(5, "coop/gongyingshangguanli.html");
 				        }
 				        else{
 				            if(data.name != null){
@@ -214,9 +206,6 @@ $(document).ready(function() {
 						    }
 					        if(data.depositBank != null){
 					        	$("#edit-depositBank-tip").html('<span class="formtips onError" style="font-size:50%">' + data.depositBank + '</span>');
-						    }
-					        if(data.accountBank != null){
-					        	$("#edit-accountBank-tip").html('<span class="formtips onError" style="font-size:50%">' + data.accountBank + '</span>');
 						    }
 				            $("#edit-alert").html('<div class="alert alert-block alert-danger">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+

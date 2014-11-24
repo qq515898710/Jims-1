@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
  * @author moziqi
  */
 public class ApplicationContextProvider implements ApplicationContextAware {
+	
 	private static ApplicationContext applicationContext = null;
 
 	public static ApplicationContext getApplicationContext() {

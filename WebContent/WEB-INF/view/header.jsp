@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.PropertyResourceBundle"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>  
 <!DOCTYPE HTML >
 <html lang="zh-cn">
 <head>
@@ -42,6 +43,12 @@
 <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
 <script src="assets/js/date-time/daterangepicker.min.js"></script>
 <script src="assets/js/date-time/moment.min.js"></script>
+<script src="assets/js/jquery.easy-pie-chart.min.js"></script>
+<script src="assets/js/flot/jquery.flot.min.js"></script>
+<script src="assets/js/flot/jquery.flot.pie.min.js"></script>
+<script src="assets/js/flot/jquery.flot.resize.min.js"></script>
+<script src="assets/js/jquery.slimscroll.min.js"></script>
+<script src="assets/js/jquery.sparkline.min.js"></script>
 <!-- 二维码js -->
 <script type="text/javascript" src="assets/js/jquery.qrcode.js"></script>
 <!-- 自定义js -->
@@ -64,7 +71,14 @@
     <!-- /.navbar-header --> 
     <div class="navbar-header pull-right" role="navigation"> 
      <ul class="nav ace-nav">
-      <li class="light-blue"><a data-toggle="dropdown" href="#" class="dropdown-toggle"> <img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" /> <span class="user-info"> <small><%=configBundle.getString("weclome") %><%=configBundle.getString("presence") %>,</small> moziqi </span> <i class="icon-caret-down"></i> </a> 
+      <li class="light-blue">
+       <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+         <img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />
+         <span class="user-info"> 
+           <small><%=configBundle.getString("weclome") %><%=configBundle.getString("presence") %>,</small>
+           <sec:authentication property="name"/>
+         </span> <i class="icon-caret-down"></i>
+       </a> 
        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"> 
         <li><a href="#"> <i class="icon-cog"></i> <%=configBundle.getString("setting") %> </a></li> 
         <li><a href="#"> <i class="icon-user"></i><%=configBundle.getString("profile") %></a></li> 

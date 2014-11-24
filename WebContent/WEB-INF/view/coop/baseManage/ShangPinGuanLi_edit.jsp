@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.UUID"%>
 <%
 	String token = UUID.randomUUID().toString().replaceAll("-", "");
-	session.setAttribute("CustomerEidtToken", token);
+	session.setAttribute("GoodEidtToken", token);
 %>
 <div id="edit-dialog-message" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
    <div class="modal-dialog"> 
     <div class="modal-content"> 
      <div class="modal-header"> 
       <button type="button" class="close" data-dismiss="modal" id="edit-close"> <span aria-hidden="true">&times;</span><span class="sr-only">x</span> </button> 
-      <h6 class="modal-title" id="myModalLabel"> <i class="icon-edit align-top bigger-125"></i>&nbsp;修改客户信息 </h6> 
+      <h6 class="modal-title" id="myModalLabel"> <i class="icon-edit align-top bigger-125"></i>&nbsp;修改商品信息 </h6> 
      </div> 
      <!--.modal-header  --> 
      <div class="modal-body"> 
       <form id="add-form-dialog" class="form-horizontal" role="form"> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-name"> 客户名称： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-name"> 商品名称： </label> 
         <div class="col-sm-9"> 
          <input type="text" id="edit-name" class="col-xs-8" /><div id="edit-name-tip"></div> 
         </div> 
@@ -26,66 +26,48 @@
         </div> 
        </div> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-address"> 地址： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-origin"> 产地： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="edit-address" class="col-xs-8" /> <div id="edit-address-tip"></div>
+         <input type="text" id="edit-origin" class="col-xs-8" /> <div id="edit-origin-tip"></div>
         </div> 
        </div> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-postalCode">邮政编码： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-units"> 单位： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="edit-postalCode" class="col-xs-8" /> <div id="edit-postalCode-tip"></div>
+         <input type="text" id="edit-units" class="col-xs-8" /> <div id="edit-units-tip"></div>
         </div> 
        </div> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-phone"> 电话： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-pack"> 包装： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="edit-phone" class="col-xs-8" /> <div id="edit-phone-tip"></div>
+         <input type="text" id="edit-pack" class="col-xs-8" /> <div id="edit-pack-tip"></div>
         </div> 
        </div> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-fax"> 传真： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-approvalNum"> 批准文号： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="edit-fax" class="col-xs-8" /> <div id="edit-fax-tip"></div>
+         <input type="text" id="edit-approvalNum" class="col-xs-8" /> <div id="edit-approvalNum-tip"></div>
         </div> 
        </div> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-contacts"> 联系人： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-batchNum"> 批号： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="edit-contacts" class="col-xs-8" /> <div id="edit-contacts-tip"></div>
+         <input type="text" id="edit-batchNum" class="col-xs-8" /> <div id="edit-batchNum-tip"></div>
         </div> 
        </div> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-telephone">联系人电话： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-memo"> 备忘录(简介)： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="edit-telephone" class="col-xs-8" /> <div id="edit-telephone-tip"></div>
+         <input type="text" id="edit-memo" class="col-xs-8" /> <div id="edit-memo-tip"></div>
         </div> 
        </div> 
-       <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-email"> 电子邮箱： </label> 
-        <div class="col-sm-9"> 
-         <input type="text" id="edit-email" class="col-xs-8" /> <div id="edit-email-tip"></div>
-        </div> 
-       </div> 
-       <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-depositBank">开户行： </label> 
-        <div class="col-sm-9"> 
-         <input type="text" id="edit-depositBank" class="col-xs-8 " /> <div id="edit-depositBank-tip"></div>
-        </div> 
-       </div> 
-       <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-accountBank">开户帐号： </label> 
-        <div class="col-sm-9"> 
-         <input type="text" id="edit-accountBank" class="col-xs-8 " /> <div id="edit-accountBank-tip"></div>
-        </div> 
-       </div>
        <input type="hidden" name="formtoken"  value="<%=token%>"  id="edit-formtoken">
        <input type="hidden" name="id"  id="edit-id">
        <input type="hidden" name="time" id="edit-time">
        <!-- 警告框 -->
        <div id="edit-alert"></div>
 <!--        <div class="form-group">  -->
-<!--         <label class="col-sm-3 control-label no-padding-right font" for="form-field-1">选择客户： </label>  -->
+<!--         <label class="col-sm-3 control-label no-padding-right font" for="form-field-1">选择商品： </label>  -->
 <!--         <div class="col-sm-9">  -->
 <!--          <select id="form-field-1" class="col-xs-8"> <option value="">&nbsp;</option> <option value="">&nbsp;</option> </select>  -->
 <!--         </div>  -->
@@ -120,22 +102,19 @@ $(document).ready(function() {
 		}else{
 			$.ajax({
 			    type: "POST", 
-			    url: "coop/searchCustomerById", 
+			    url: "coop/searchGoodById", 
 			    data: "searchId=" + selectedItems2.join(','), 
 			    dataType: "json", 
 			    success: function (data){
 					 $("#edit-id").attr("value",data.id);
 					 $("#edit-name").attr("value",data.name);
 					 $("#edit-abbreviation").attr("value",data.abbreviation);
-					 $("#edit-address").attr("value",data.address);
-					 $("#edit-postalCode").attr("value",data.postalCode);
-					 $("#edit-phone").attr("value",data.phone);
-					 $("#edit-fax").attr("value",data.fax);
-					 $("#edit-contacts").attr("value",data.contacts);
-					 $("#edit-telephone").attr("value",data.telephone);
-					 $("#edit-email").attr("value",data.email);
-					 $("#edit-depositBank").attr("value",data.depositBank);
-					 $("#edit-accountBank").attr("value",data.accountBank);
+					 $("#edit-origin").attr("value",data.origin);
+					 $("#edit-units").attr("value",data.units);
+					 $("#edit-pack").attr("value",data.pack);
+					 $("#edit-approvalNum").attr("value",data.approvalNum);
+					 $("#edit-batchNum").attr("value",data.batchNum);
+					 $("#edit-memo").attr("value",data.memo);
 					 $("#edit-time").attr("value",data.time);
 				}
 			 });
@@ -148,7 +127,7 @@ $(document).ready(function() {
 		 var $btn = $(this).button('loading');
 		 $.ajax({
 	            type: "POST",
-	            url: "admin/editCustomer",
+	            url: "admin/editGood",
 	            contentType: "application/json",
 	            // 必须有
 	            dataType: "json",
@@ -157,15 +136,12 @@ $(document).ready(function() {
 		            'id':$("#edit-id").val(),
 	                'name': $("#edit-name").val(),
 	                'abbreviation': $("#edit-abbreviation").val(),
-	                'address': $("#edit-address").val(),
-	                'postalCode': $("#edit-postalCode").val(),
-	                'phone': $("#edit-phone").val(),
-	                'fax': $("#edit-fax").val(),
-	                'contacts': $("#edit-contacts").val(),
-	                'telephone': $("#edit-telephone").val(),
-	                'email': $("#edit-email").val(),
-	                'depositBank': $("#edit-depositBank").val(),
-	                'accountBank': $("#edit-accountBank").val(),
+	                'origin': $("#edit-origin").val(),
+	                'units': $("#edit-units").val(),
+	                'pack': $("#edit-pack").val(),
+	                'approvalNum': $("#edit-approvalNum").val(),
+	                'batchNum': $("#edit-batchNum").val(),
+	                'memo': $("#edit-memo").val(),
 	                'time': $("#edit-time").val(),
 	                'formtoken': $("#edit-formtoken").val()
 	            }),
@@ -179,10 +155,10 @@ $(document).ready(function() {
 		            	if(data.success != null){
 				            $("#edit-alert").html('<div class="alert alert-block alert-success">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				                    '<div class="success bold-center">修改成功,'+'<a href="coop/kehuguanli.html" class="green">'+
+				                    '<div class="success bold-center">修改成功,'+'<a href="coop/shangpinguanli.html" class="green">'+
 				                    '<span id="mysecond" class="green">'+5+
 				                    '</span>秒自动跳转</a><div></div>');
-			            	 countDown(5, "coop/kehuguanli.html");
+			            	 countDown(5, "coop/shangpinguanli.html");
 				        }
 				        else{
 				            if(data.name != null){
@@ -191,32 +167,23 @@ $(document).ready(function() {
 					        if(data.abbreviation != null){
 					        	$("#edit-abbreviation-tip").html('<span class="formtips onError" style="font-size:50%">' + data.abbreviation + '</span>');
 						    }
-					        if(data.address != null){
-					        	$("#edit-address-tip").html('<span class="formtips onError" style="font-size:50%">' + data.address + '</span>');
+					        if(data.origin != null){
+					        	$("#edit-origin-tip").html('<span class="formtips onError" style="font-size:50%">' + data.origin + '</span>');
 						    }
-					        if(data.postalCode != null){
-					        	$("#edit-postalCode-tip").html('<span class="formtips onError" style="font-size:50%">' + data.postalCode + '</span>');
+					        if(data.units != null){
+					        	$("#edit-units-tip").html('<span class="formtips onError" style="font-size:50%">' + data.units + '</span>');
 						    }
-					        if(data.phone != null){
-					        	$("#edit-phone-tip").html('<span class="formtips onError" style="font-size:50%">' + data.phone + '</span>');
+					        if(data.pack != null){
+					        	$("#edit-pack-tip").html('<span class="formtips onError" style="font-size:50%">' + data.pack + '</span>');
 						    }
-					        if(data.fax != null){
-					        	$("#edit-fax-tip").html('<span class="formtips onError" style="font-size:50%">' + data.fax + '</span>');
+					        if(data.approvalNum != null){
+					        	$("#edit-approvalNum-tip").html('<span class="formtips onError" style="font-size:50%">' + data.approvalNum + '</span>');
 						    }
-					        if(data.contacts != null){
-					        	$("#edit-contacts-tip").html('<span class="formtips onError" style="font-size:50%">' + data.contacts + '</span>');
+					        if(data.batchNum != null){
+					        	$("#edit-batchNum-tip").html('<span class="formtips onError" style="font-size:50%">' + data.batchNum + '</span>');
 						    }
-					        if(data.telephone != null){
-					        	$("#edit-telephone-tip").html('<span class="formtips onError" style="font-size:50%">' + data.telephone + '</span>');
-						    }
-					        if(data.email != null){
-					        	$("#edit-email-tip").html('<span class="formtips onError" style="font-size:50%">' + data.email + '</span>');
-						    }
-					        if(data.depositBank != null){
-					        	$("#edit-depositBank-tip").html('<span class="formtips onError" style="font-size:50%">' + data.depositBank + '</span>');
-						    }
-					        if(data.accountBank != null){
-					        	$("#edit-accountBank-tip").html('<span class="formtips onError" style="font-size:50%">' + data.accountBank + '</span>');
+					        if(data.memo != null){
+					        	$("#edit-memo-tip").html('<span class="formtips onError" style="font-size:50%">' + data.memo + '</span>');
 						    }
 				            $("#edit-alert").html('<div class="alert alert-block alert-danger">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+

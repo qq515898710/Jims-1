@@ -178,4 +178,15 @@ public class StockReturnDTO implements java.io.Serializable {
 		this.formtoken = formtoken;
 	}
 
+	@Override
+	public String toString() {
+		return "StockReturnDTO [id=" + id + ", varietyAmount=" + varietyAmount
+				+ ", unitCost=" + unitCost + ", amount=" + amount + ", sum="
+				+ sum + ", checkConclusion=" + checkConclusion + ", time="
+				+ time + ", clearingForm=" + clearingForm + ", handler="
+				+ handler + ", approval=" + approval + ", goodName=" + goodName
+				+ ", providerName=" + providerName + ", username=" + username
+				+ ", formtoken=" + formtoken + "]";
+	}
+
 }

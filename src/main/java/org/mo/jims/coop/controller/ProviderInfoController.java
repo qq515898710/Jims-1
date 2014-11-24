@@ -2,6 +2,7 @@ package org.mo.jims.coop.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -10,10 +11,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.mo.jims.coop.dto.GoodInfoDTO;
-import org.mo.jims.coop.entity.GoodInfo;
+import org.mo.jims.coop.dto.ProviderInfoDTO;
 import org.mo.jims.coop.entity.ProviderInfo;
-import org.mo.jims.coop.service.GoodInfoService;
 import org.mo.jims.coop.service.ProviderInfoService;
 import org.mo.open.common.converter.SpringDateConverter;
 import org.mo.open.common.exception.MyRuntimeException;
@@ -32,40 +31,45 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/")
-public class GoodInfoController {
+public class ProviderInfoController {
 	
-	private static Logger logger = LoggerFactory.getLogger(GoodInfoController.class);
-	
-	private GoodInfoService goodInfoService;
+	private static Logger logger = LoggerFactory.getLogger(ProviderInfoController.class);
 	
 	private ProviderInfoService providerInfoService;
-
-	@RequestMapping(value = "coop/shangpinguanli.html", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "coop/gongyingshangguanli.html", method = RequestMethod.GET)
 	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "baseManage");
-		model.put("active", "ShangPinGuanLi");
-		logger.info("进入商品管理界面");
-		return new ModelAndView("coop/baseManage/ShangPinGuanLi");
+		model.put("active", "GongYingShangGuanLi");
+		logger.info("进入供应商管理界面");
+		return new ModelAndView("coop/baseManage/GongYingShangGuanLi");
 	}
 	
-	@RequestMapping(value="coop/searchGoodById",method=RequestMethod.POST)
+	@RequestMapping(value="coop/listProviderByName",method=RequestMethod.GET)
 	@ResponseBody
-	public GoodInfo searchById(@RequestParam(required=true)  final String searchId){
+	public List<String> listByName(){
+		List<String> allProviderName = providerInfoService.getAllProviderName();
+		return allProviderName;
+	}
+	
+	@RequestMapping(value="coop/searchProviderById",method=RequestMethod.POST)
+	@ResponseBody
+	public ProviderInfo searchById(@RequestParam(required=true)  final String searchId){
 		String[] ids = searchId.split(",");
-		GoodInfo goodInfo = null;
+		ProviderInfo providerInfo = null;
 		if (ids.length < 1) {
-			goodInfo = goodInfoService.getGoodInfoByPK(searchId);
+			providerInfo = providerInfoService.getProviderInfoByPK(searchId);
 		} else {
-			goodInfo = goodInfoService.getGoodInfoByPK(ids[0]);
+			providerInfo = providerInfoService.getProviderInfoByPK(ids[0]);
 		}
 		//TODO:测试用
-		System.out.println("search-----"+goodInfo.toString());
-		return goodInfo;
+		System.out.println("search-----"+providerInfo.toString());
+		return providerInfo;
 	}
 
-	@RequestMapping(value = "coop/pageOfGoodsByCriteria", method = RequestMethod.GET)
+	@RequestMapping(value = "coop/pageOfProvidersByCriteria", method = RequestMethod.GET)
 	@ResponseBody
-	public Page<GoodInfo> listByCriteria(
+	public Page<ProviderInfo> listByCriteria(
 			@RequestParam(required = true, defaultValue = "1") int page,
 			@RequestParam(required = true, defaultValue = "10") int size,
 			@RequestParam final String name,
@@ -81,22 +85,22 @@ public class GoodInfoController {
 			e.printStackTrace();
 		}
 		SpringDateConverter springDateConverter = new SpringDateConverter();
-		Page<GoodInfo> goodInfoByNameOrAbbreviation = goodInfoService
-				.getGoodInfoByCriteria(newStr,
+		Page<ProviderInfo> providerInfoByNameOrAbbreviation = providerInfoService
+				.getProviderInfoByCriteria(newStr,
 						springDateConverter.convert(beginTime),
 						springDateConverter.convert(endTime), page, size);
-		return goodInfoByNameOrAbbreviation;
+		return providerInfoByNameOrAbbreviation;
 	}
 	
-	@RequestMapping(value = "admin/editGood", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "admin/editProvider", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public Map<String, String> edit(@RequestBody final GoodInfoDTO goodInfoDTO,
+	public Map<String, String> edit(@RequestBody final ProviderInfoDTO providerInfoDTO,
 			HttpServletResponse response, HttpSession session){
 		//TODO:测试用
-		System.out.println("edit-----"+goodInfoDTO.toString());
-		final Map<String, String> modelMap = validateCutomerInfoDTO(goodInfoDTO);//校验表单
-		String formtoken = goodInfoDTO.getFormtoken();
-		String token = (String) session.getAttribute("GoodEidtToken");
+		System.out.println("edit-----"+providerInfoDTO.toString());
+		final Map<String, String> modelMap = validateCutomerInfoDTO(providerInfoDTO);//校验表单
+		String formtoken = providerInfoDTO.getFormtoken();
+		String token = (String) session.getAttribute("ProviderEidtToken");
 		if (formtoken.equals(token)) {//防止重复提及表单
 			if (modelMap.isEmpty()) {//对表单校验,空继续执行
 				modelMap.put("success", "ok");
@@ -107,14 +111,14 @@ public class GoodInfoController {
 					public void run() {
 						try {
 							Thread.sleep(3000);
-							GoodInfo entity = goodInfoDTO.toEditObject();
-							goodInfoService.alterGoodInfo(entity);
+							ProviderInfo entity = providerInfoDTO.toEditObject();
+							providerInfoService.alterProviderInfo(entity);
 						} catch (InterruptedException e) {
 							modelMap.put("tip", "修改失败");
 						}
 					}
 				});
-				session.removeAttribute("GoodEidtToken");
+				session.removeAttribute("ProviderEidtToken");
 			}
 		}else {
 			modelMap.put("tip", "请不要重复提交");
@@ -123,27 +127,27 @@ public class GoodInfoController {
 	}
 	
 
-	@RequestMapping(value = "admin/deleteGood", method = RequestMethod.POST)
+	@RequestMapping(value = "admin/deleteProvider", method = RequestMethod.POST)
 	@ResponseBody
 	public JsonResponse delete(@RequestParam(required=true) String deleteId) {
 		JsonResponse jsonResponse =null;
 		String[] ids = deleteId.split(",");
 		if (ids.length > 1) {
-			boolean batchRemove = goodInfoService.batchRemove(ids);
+			boolean batchRemove = providerInfoService.batchRemove(ids);
 			 jsonResponse = deleteTip(batchRemove);
 		}
-		boolean removeByPK = goodInfoService.removeGoodInfoByPK(deleteId);
+		boolean removeByPK = providerInfoService.removeProviderInfoByPK(deleteId);
 		jsonResponse = deleteTip(removeByPK);
 		return jsonResponse;
 	}
 
-	@RequestMapping(value = "admin/addGood", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "admin/addProvider", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
 	public Map<String, String> add(
-			@RequestBody final GoodInfoDTO addGoodInfoDTO,
+			@RequestBody final ProviderInfoDTO addProviderInfoDTO,
 			HttpServletResponse response, HttpSession session) {
-		final Map<String, String> modelMap = validateCutomerInfoDTO(addGoodInfoDTO);//校验表单
-		String formtoken = addGoodInfoDTO.getFormtoken();
+		final Map<String, String> modelMap = validateCutomerInfoDTO(addProviderInfoDTO);//校验表单
+		String formtoken = addProviderInfoDTO.getFormtoken();
 		String token = (String) session.getAttribute("token");
 		if (formtoken.equals(token)) {//防止重复提及表单
 			if (modelMap.isEmpty()) {//对表单校验,空继续执行
@@ -155,15 +159,9 @@ public class GoodInfoController {
 					public void run() {
 						try {
 							Thread.sleep(3000);
-							GoodInfo entity = addGoodInfoDTO.toAddObject();
+							ProviderInfo entity = addProviderInfoDTO.toAddObject();
 							//TODO 商品添加好没做啊,记得来修改啊,关于多对多的问题啊
-							ProviderInfo providerInfoByName = providerInfoService.getProviderInfoByName(addGoodInfoDTO.getProviderName());
-							if (providerInfoByName != null) {
-								goodInfoService.saveGoodInfo(entity,
-										providerInfoByName);
-							}else{
-								modelMap.put("tip", "供应商不存在哦");
-							}
+							providerInfoService.saveProviderInfo(entity);
 						} catch (InterruptedException e) {
 							modelMap.put("tip", "保存失败");
 							throw new MyRuntimeException(
@@ -179,31 +177,37 @@ public class GoodInfoController {
 		return modelMap;
 	}
 
-	private Map<String, String> validateCutomerInfoDTO(GoodInfoDTO goodInfoDTO) {
+	private Map<String, String> validateCutomerInfoDTO(ProviderInfoDTO providerInfoDTO) {
 		Map<String, String> modelMap = new HashMap<String, String>();
-		if ("".equals(goodInfoDTO.getName())) {
-			modelMap.put("name", "商品名称不能为空");
+		if ("".equals(providerInfoDTO.getName())) {
+			modelMap.put("name", "供应商名称不能为空");
 		}
-		if ("".equals(goodInfoDTO.getAbbreviation())) {
+		if ("".equals(providerInfoDTO.getAbbreviation())) {
 			modelMap.put("abbreviation", "简称不能为空");
 		}
-		if ("".equals(goodInfoDTO.getApprovalNum())) {
-			modelMap.put("address", "批准文号不能为空");
+		if ("".equals(providerInfoDTO.getAddress())) {
+			modelMap.put("address", "地址不能为空");
 		}
-		if ("".equals(goodInfoDTO.getOrigin())) {
-			modelMap.put("origin", "产地不能为空");
+		if ("".equals(providerInfoDTO.getPostalCode())) {
+			modelMap.put("postalCode", "邮政编码不能为空");
 		}
-		if ("".equals(goodInfoDTO.getUnits())) {
-			modelMap.put("units", "单位不能为空");
+		if ("".equals(providerInfoDTO.getPhone())) {
+			modelMap.put("phone", "电话不能为空");
 		}
-		if ("".equals(goodInfoDTO.getPack())) {
-			modelMap.put("pack", "包装不能为空");
+		if ("".equals(providerInfoDTO.getFax())) {
+			modelMap.put("fax", "传真不能为空");
 		}
-		if ("".equals(goodInfoDTO.getApprovalNum())) {
-			modelMap.put("approvalNum", "批准文号不能为空");
+		if ("".equals(providerInfoDTO.getContacts())) {
+			modelMap.put("contacts", "联系人不能为空");
 		}
-		if ("".equals(goodInfoDTO.getBatchNum())) {
-			modelMap.put("batchNum", "批号不能为空");
+		if ("".equals(providerInfoDTO.getTelephone())) {
+			modelMap.put("telephone", "联系人电话不能为空");
+		}
+		if ("".equals(providerInfoDTO.getDepositBank())) {
+			modelMap.put("depositBank", "开户行不能为空");
+		}
+		if ("".equals(providerInfoDTO.getEmail())) {
+			modelMap.put("email", "电子邮箱不能为空");
 		}
 		return modelMap;
 	}
@@ -220,19 +224,10 @@ public class GoodInfoController {
 		return jsonResponse;
 	}
 	
-	public GoodInfoService getGoodInfoService() {
-		return goodInfoService;
-	}
-
-	@Resource(name = "goodInfoService")
-	public void setGoodInfoService(GoodInfoService goodInfoService) {
-		this.goodInfoService = goodInfoService;
-	}
-
 	public ProviderInfoService getProviderInfoService() {
 		return providerInfoService;
 	}
-	
+
 	@Resource(name = "providerInfoService")
 	public void setProviderInfoService(ProviderInfoService providerInfoService) {
 		this.providerInfoService = providerInfoService;

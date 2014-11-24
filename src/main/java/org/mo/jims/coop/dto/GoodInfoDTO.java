@@ -32,26 +32,12 @@ public class GoodInfoDTO implements java.io.Serializable{
 	
 	private String time;
 	
+	private String providerName;
+	
 	private String formtoken;
 	
 	public GoodInfoDTO() {
 		super();
-	}
-
-	public GoodInfoDTO(String id, String name, String abbreviation,
-			String origin, String units, String pack, String approvalNum,
-			String batchNum, String memo, String time) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.abbreviation = abbreviation;
-		this.origin = origin;
-		this.units = units;
-		this.pack = pack;
-		this.approvalNum = approvalNum;
-		this.batchNum = batchNum;
-		this.memo = memo;
-		this.time = time;
 	}
 
 	public GoodInfo toEditObject() throws MyRuntimeException {
@@ -161,13 +147,24 @@ public class GoodInfoDTO implements java.io.Serializable{
 		this.formtoken = formtoken;
 	}
 
+
+	public String getProviderName() {
+		return providerName;
+	}
+
+
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
+	}
+
 	@Override
 	public String toString() {
 		return "GoodInfoDTO [id=" + id + ", name=" + name + ", abbreviation="
 				+ abbreviation + ", origin=" + origin + ", units=" + units
 				+ ", pack=" + pack + ", approvalNum=" + approvalNum
 				+ ", batchNum=" + batchNum + ", memo=" + memo + ", time="
-				+ time + "]";
+				+ time + ", providerName=" + providerName + ", formtoken="
+				+ formtoken + "]";
 	}
 	
 }
