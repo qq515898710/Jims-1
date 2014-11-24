@@ -21,6 +21,7 @@
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
 <link rel="stylesheet" href="assets/css/jquery-ui-1.10.3.full.min.css" />
+<link rel="stylesheet" href="assets/css/chosen.css" />
 <link rel="stylesheet" href="assets/css/datepicker.css" />
 <link rel="stylesheet" href="assets/css/daterangepicker.css" /> 
 <link rel="stylesheet" href="assets/css/ace.min.css" />
@@ -29,16 +30,18 @@
 <link rel="stylesheet" href="assets/css/showLoading.css" />
 <!-- 自定义css -->
 <link rel="stylesheet" href="assets/css/scm.css" />
+
 <script src="assets/js/jquery-2.0.3.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/ace-extra.min.js"></script>
 <script src="assets/js/typeahead-bs2.min.js"></script>
 <script src="assets/js/jquery-ui-1.10.3.full.min.js"></script>
 <script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="assets/js/chosen.jquery.min.js"></script>
 <script src="assets/js/ace-elements.min.js"></script>
 <script src="assets/js/ace.min.js"></script>
 <script src="assets/js/bootbox.min.js"></script>
 <script src="assets/js/jquery.lazyload.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/jquery.showLoading.min.js"></script>
 <script src="assets/js/date-time/bootstrap-datepicker.min.js"></script>
 <script src="assets/js/date-time/daterangepicker.min.js"></script>
