@@ -61,9 +61,9 @@
         </div> 
        </div>
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="form-field-1">选择供应商： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="providerName">选择供应商： </label> 
         <div class="col-sm-9"> 
-         <select id="providerName" class="col-xs-8" style="font-size: 14px;"></select> 
+         <select id="providerName" class="col-xs-8 chosen-select" data-placeholder="请选择一个供应商"></select>
         </div> 
        </div><!--.form-group-->
        <input type="hidden" name="formtoken"  value="<%=token%>"  id="formtoken">
@@ -80,15 +80,18 @@
   </div>
   <script>
   	 $(document).ready(function() {
-  	  	 
 		$.get("coop/listProviderByName", function(msg){
-			var result="<option value='0' >请选择</option>";
+			var result="<option value='0' select >&nbsp;</option>";
 			for(var i = 0; i < msg.length;i++){
 				result+="<option value=\""+msg[i]+"\">"+msg[i]+"</option>";
 			}
 			$("#providerName").html(result);
-			
+			//TODO
+			// 好感人的界面
+			$(".chosen-select").chosen();
+			$("#providerName_chosen").css("width","260px");
 	    });
+
  	    $('form :input').blur(function() {//表单验证
 	        var $parent = $(this).parent();
 	        $parent.find(".formtips").remove();
@@ -208,7 +211,7 @@
 	            $btn.button('reset');
 	        }); //ajax
  	   });//提交事件
- 	   
+
  	   $("#cancel").on("click",function(){//取消事件
  	 	   location.reload();
  	 	});
