@@ -5,7 +5,7 @@
     <div class="modal-content"> 
      <div class="modal-header"> 
       <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true">&times;</span><span class="sr-only">x</span> </button> 
-      <h6 class="modal-title" id="mySmallModalLabel"> <i class="icon-trash align-top bigger-125"></i>&nbsp;删除客户信息 </h6> 
+      <h6 class="modal-title" id="mySmallModalLabel"> <i class="icon-trash align-top bigger-125"></i>&nbsp;删除商品信息 </h6> 
      </div>
      <!--.modal-header  --> 
      <div class="modal-body">
@@ -30,7 +30,7 @@
   jQuery(function($) {
 	  
   $('#delete-cancel').on('click',function(){
-	  location.reload();
+  	 location.reload();
   });
 	  
   $("#bt-delete-dialog").on('click',function(){//删除按钮
@@ -60,17 +60,17 @@
 		var $btn = $(this).button('loading');
 		$.ajax({ 
 		    type: "post", 
-		    url: "admin/deleteCustomer", 
+		    url: "admin/deleteGood", 
 		    data: "deleteId=" + deleteIds,
 		    dataType: "json", 
 		    success: function (data) {
 			    if(data.success){
 		            $("#delete-tip").html('<div class="alert alert-block alert-success">'+
 		                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-		                    '<div class="success bold-center">'+data.message+','+'<a href="coop/kehuguanli.html" class="green">'+
+		                    '<div class="success bold-center">'+data.message+','+'<a href="coop/shangpinguanli.html" class="green">'+
 		                    '<span id="mysecond" class="green">'+5+
 		                    '</span>秒自动跳转</a><div></div>');
-			        countDown(5, "coop/kehuguanli.html");
+			        countDown(5, "coop/shangpinguanli.html");
 				 }else{
 				    $("#delete-tip").html('<div class="alert alert-block alert-danger">'+
 		                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+

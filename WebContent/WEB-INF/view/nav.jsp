@@ -2,15 +2,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%PropertyResourceBundle configBundle = (PropertyResourceBundle)PropertyResourceBundle.getBundle("configs/scm"); %>
    <ul class="nav nav-list"> 
-      <li id="baseManage"><a href="#" class="dropdown-toggle"> <i class="icon-dashboard"></i> <span class="menu-text"> <%=configBundle.getString("baseManage") %></span><b class="arrow icon-angle-down"></b> </a> 
+      <li id="baseManage"><a href="javascript:void()" class="dropdown-toggle"> <i class="icon-dashboard"></i> <span class="menu-text"> <%=configBundle.getString("baseManage") %></span><b class="arrow icon-angle-down"></b> </a> 
        <ul class="submenu"> 
         <li id="KeHuGuanLi"><a href="coop/kehuguanli.html"> <i class="icon-double-angle-right"></i><%=configBundle.getString("KeHuGuanLi") %> </a></li> 
-        <li id="ShangPinGuanLi"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("ShangPinGuanLi") %> </a></li> 
-        <li id="GongYingShangGuanLi"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("GongYingShangGuanLi") %> </a></li> 
+        <li id="ShangPinGuanLi"><a href="coop/shangpinguanli.html"> <i class="icon-double-angle-right"></i><%=configBundle.getString("ShangPinGuanLi") %> </a></li> 
+        <li id="GongYingShangGuanLi"><a href="coop/gongyingshangguanli.html"> <i class="icon-double-angle-right"></i><%=configBundle.getString("GongYingShangGuanLi") %> </a></li> 
        </ul></li> 
       <li id="stockManage"><a href="javascript:void()" class="dropdown-toggle"> <i class="icon-text-width"></i> <span class="menu-text"> <%=configBundle.getString("stockManage") %> </span><b class="arrow icon-angle-down"></b> </a> 
        <ul class="submenu"> 
-        <li id="JinHuoDan"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("JinHuoDan") %> </a></li> 
+        <li id="JinHuoDan"><a href="coop/jinhuodan.html"> <i class="icon-double-angle-right"></i><%=configBundle.getString("JinHuoDan") %> </a></li> 
         <li id="JinHuoTuiHuo"><a href="javascript:void()"> <i class="icon-double-angle-right"></i><%=configBundle.getString("JinHuoTuiHuo") %> </a></li> 
        </ul></li> 
       <li id="sellManage"><a href="#" class="dropdown-toggle"> <i class="icon-desktop"></i> <span class="menu-text"> <%=configBundle.getString("sellManage") %> </span> <b class="arrow icon-angle-down"></b> </a> 
@@ -31,7 +31,7 @@
        </ul></li> 
       <li id="depotManage"><a href="#" class="dropdown-toggle"> <i class="icon-edit"></i> <span class="menu-text"> <%=configBundle.getString("depotManage") %> </span> <b class="arrow icon-angle-down"></b> </a> 
        <ul class="submenu"> 
-        <li id="KuCunPanDian"><a href="javascript:void()"> <i class="icon-double-angle-right"></i> <%=configBundle.getString("KuCunPanDian") %> </a></li> 
+        <li id="KuCunPanDian"><a href="coop/kucunpandian.html"> <i class="icon-double-angle-right"></i> <%=configBundle.getString("KuCunPanDian") %> </a></li> 
         <li id="JiaGeTiaoZheng"><a href="javascript:void()"> <i class="icon-double-angle-right"></i> <%=configBundle.getString("JiaGeTiaoZheng") %> </a></li> 
        </ul></li> 
       <li id="sysManage"><a href="#" class="dropdown-toggle"> <i class="icon-tag"></i> <span class="menu-text"> <%=configBundle.getString("sysManage") %> </span> <b class="arrow icon-angle-down"></b> </a> 

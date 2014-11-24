@@ -166,4 +166,16 @@ public class ProviderInfoDTO implements java.io.Serializable {
 		this.formtoken = formtoken;
 	}
 
+	@Override
+	public String toString() {
+		return "ProviderInfoDTO [id=" + id + ", name=" + name
+				+ ", abbreviation=" + abbreviation + ", address=" + address
+				+ ", postalCode=" + postalCode + ", phone=" + phone + ", fax="
+				+ fax + ", contacts=" + contacts + ", telephone=" + telephone
+				+ ", depositBank=" + depositBank + ", email=" + email
+				+ ", time=" + time + ", formtoken=" + formtoken + "]";
+	}
+	
+	
+
 }

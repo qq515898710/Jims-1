@@ -115,4 +115,12 @@ public class InventoryInfoDTO implements java.io.Serializable {
 		this.formtoken = formtoken;
 	}
 
+	@Override
+	public String toString() {
+		return "InventoryInfoDTO [id=" + id + ", specification="
+				+ specification + ", unitCost=" + unitCost + ", amount="
+				+ amount + ", goodName=" + goodName + ", username=" + username
+				+ ", time=" + time + ", formtoken=" + formtoken + "]";
+	}
+
 }
