@@ -118,7 +118,7 @@
                        <li>
                          <i class="icon-caret-right green"></i>
                          <label name="goodName">商品：</label>
-                         <select id="goodName" class="chosen-select" data-placeholder="请选择一个商品"></select>
+                         <span id="goodName-div"></span>
                        </li>
                        <li>
                          <i class="icon-caret-right green"></i>
@@ -172,23 +172,31 @@
 			    $("#address").html(msg.address);
 			    $("#contacts").html(msg.contacts);
 			    $("#telephone").html(msg.telephone);
-				$.get("coop/searchByProviderName",{name:$("#providerName").val()},function(msg){
-					if(msg != null && msg != ""){
-						var result="<option value='0' select >&nbsp;</option>";
-						for(var i = 0; i < msg.length;i++){
-							result+="<option value=\""+msg[i].name+"\">"+msg[i].name+"</option>";
-						}
-						$("#goodName").html(result);
-						//TODO
-						// 好感人的界面
-						$("#goodName").chosen();
-						$("#goodName_chosen").css("width","160px");
-					}else{
-						$("#goodName").html("<option value='0' select >&nbsp;</option>");
-					}
-				});
 			});
+		    $.ajax({
+			    type: "get", 
+			    url: "coop/searchByProviderName", 
+			    data: "name="+$("#providerName").val(), 
+			    aysnc : false,
+			    success: function (data){
+				    $("#goodName-div").html("<select id='goodName' class='chosen-select' data-placeholder='请选择一个商品'></select>");
+			    	var result="";
+			    	if(data != null && data != ""){
+						result="<option value='0' select >&nbsp;</option>";
+						for(var i = 0; i < data.length;i++){
+							result+="<option value=\""+data[i].name+"\">"+data[i].name+"</option>";
+						}
+					}else{
+						result="<option value='0' select >&nbsp;</option>";
+					}
+			    	$("#goodName").html(result);
+					//TODO // 好感人的界面
+					$("#goodName").chosen();
+					$("#goodName_chosen").css("width","160px");
+			    }
+		    });
 		});
+
 		
 	});
 
