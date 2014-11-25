@@ -146,7 +146,8 @@
  	    });
  	    
  	   $("#ok").on('click',function() { //提交事件
- 		  var $btn = $(this).button('loading');
+ 	 	   //TODO
+ 		  //var $btn = $(this).button('loading');
 	        $.ajax({
 	            type: "POST",
 	            url: "admin/addProvider",
@@ -223,9 +224,11 @@
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
 	                alert(XMLHttpRequest.status + "-" + XMLHttpRequest.readyState + "-" + textStatus);
 	            }
-	        }).always(function() {
-	            $btn.button('reset');
-	        }); //ajax
+	        });//ajax
+	        //TODO
+// 	        .always(function() {
+// 	            $btn.button('reset');
+// 	        }); //ajax
  	   });//提交事件
  	   
  	   $("#cancel").on("click",function(){//取消事件

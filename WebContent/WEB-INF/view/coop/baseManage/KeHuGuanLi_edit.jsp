@@ -145,7 +145,8 @@ $(document).ready(function() {
 	});
 	
 	$("#edit-ok").on('click',function() { //提交事件
-		 var $btn = $(this).button('loading');
+		//TODO
+// 		 var $btn = $(this).button('loading');
 		 $.ajax({
 	            type: "POST",
 	            url: "admin/editCustomer",
@@ -227,9 +228,11 @@ $(document).ready(function() {
 	            error: function(XMLHttpRequest, textStatus, errorThrown) {
 	                alert(XMLHttpRequest.status + "-" + XMLHttpRequest.readyState + "-" + textStatus);
 	            }
-	        }).always(function() {
-	            $btn.button('reset');
-	        }); //ajax
+	        });
+	        //TODO
+// 	        .always(function() {
+// 	            $btn.button('reset');
+// 	        }); //ajax
 	   });//提交事件
 	   
 	   $("#edit-cancel").on("click",function(){//取消事件
