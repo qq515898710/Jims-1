@@ -163,6 +163,33 @@
 	    });
 	    
 		systemTime();
+		
+		//selcet事件
+	    $("#providerName").change(function(){
+		    //TODO
+			//alert($("#providerName").val());
+		    $.get("coop/searchProviderByName",{name:$("#providerName").val()},function(msg){
+			    $("#address").html(msg.address);
+			    $("#contacts").html(msg.contacts);
+			    $("#telephone").html(msg.telephone);
+				$.get("coop/searchByProviderName",{name:$("#providerName").val()},function(msg){
+					if(msg != null && msg != ""){
+						var result="<option value='0' select >&nbsp;</option>";
+						for(var i = 0; i < msg.length;i++){
+							result+="<option value=\""+msg[i].name+"\">"+msg[i].name+"</option>";
+						}
+						$("#goodName").html(result);
+						//TODO
+						// 好感人的界面
+						$("#goodName").chosen();
+						$("#goodName_chosen").css("width","160px");
+					}else{
+						$("#goodName").html("<option value='0' select >&nbsp;</option>");
+					}
+				});
+			});
+		});
+		
 	});
 
 	//获取系统时间，将时间以指定格式显示到页面。  
