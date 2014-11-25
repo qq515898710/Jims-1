@@ -29,4 +29,5 @@ public interface ProviderInfoRepository extends BaseRepository<ProviderInfo, Str
 	public void deleteRelativity(ProviderGood providerGood);
 	
 	public List<String> selectAllProviderName();
+	
 }

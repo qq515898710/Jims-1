@@ -45,6 +45,21 @@ public class ProviderInfoController {
 		return new ModelAndView("coop/baseManage/GongYingShangGuanLi");
 	}
 	
+	@RequestMapping(value="coop/searchProviderByName",method=RequestMethod.GET)
+	@ResponseBody
+	public ProviderInfo searchByName(@RequestParam(required=true)String name){
+		String newStr = "";
+		try {
+			// 编码有问题,get传过来的参数
+			newStr = new String(name.getBytes("iso8859-1"), "UTF-8");
+			//TODO:测试用
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		ProviderInfo providerInfoByName = providerInfoService.getProviderInfoByName(newStr);
+		return providerInfoByName;
+	}
+	
 	@RequestMapping(value="coop/listProviderByName",method=RequestMethod.GET)
 	@ResponseBody
 	public List<String> listByName(){

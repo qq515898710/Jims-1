@@ -186,7 +186,7 @@
 		JOIN tb_good_info ON tb_good_info.id = tb_provider_good.good_id
 		WHERE tb_good_info.name = #{name} ORDER BY tb_provider_info.time DESC
 	</select>
-
+	
 	<delete  id="deleteRelativity" parameterType="ProviderGood">
 		DELETE from tb_provider_good
 		<where>
