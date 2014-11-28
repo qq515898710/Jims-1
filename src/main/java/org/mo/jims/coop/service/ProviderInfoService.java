@@ -71,8 +71,12 @@ public class ProviderInfoService {
 			if (entity.getTime() == null) {
 				entity.setTime(providerInfoRepository.getCurrentTime());
 			}
-			providerInfoRepository.insert(entity);
-			return true;
+			String name = entity.getName();
+			ProviderInfo selectByName = providerInfoRepository.selectByName(name);
+			if(selectByName == null){
+				providerInfoRepository.insert(entity);
+				return true;
+			}
 		}
 		return false;
 	}

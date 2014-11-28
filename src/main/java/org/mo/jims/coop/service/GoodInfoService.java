@@ -76,12 +76,16 @@ public class GoodInfoService {
 			if (goodInfo.getTime() == null) {
 				goodInfo.setTime(goodInfoRepository.getCurrentTime());
 			}
-			goodInfoRepository.insert(goodInfo);
-			ProviderGood providerGood = new ProviderGood();
-			providerGood.setGoodInfo(goodInfo);
-			providerGood.setProviderInfo(providerInfo);
-			goodInfoRepository.saveRelativity(providerGood);
-			return true;
+			String name = goodInfo.getName();
+			GoodInfo selcetByName = goodInfoRepository.selcetByName(name);
+			if(selcetByName == null){
+				goodInfoRepository.insert(goodInfo);
+				ProviderGood providerGood = new ProviderGood();
+				providerGood.setGoodInfo(goodInfo);
+				providerGood.setProviderInfo(providerInfo);
+				goodInfoRepository.saveRelativity(providerGood);
+				return true;
+			}
 		}
 		return false;
 	}

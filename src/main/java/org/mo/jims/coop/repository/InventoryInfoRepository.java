@@ -20,14 +20,6 @@ public interface InventoryInfoRepository extends BaseRepository<InventoryInfo, S
 
 	public void batchDelete(String[] id);
 
-	/**
-	 * 根据用户名
-	 * 
-	 * @param username
-	 * @return
-	 */
-	public List<InventoryInfo> selectByUser(String username);
-	
 	public List<InventoryInfo> selectByGoodName(String goodName);
 
 }

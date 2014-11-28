@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.mo.jims.coop.entity.Stock;
+import org.mo.jims.coop.enumtype.Approval;
 import org.mo.jims.coop.repository.StockRepository;
 import org.mo.open.common.util.Page;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,7 @@ public class StockService {
 			if (entity.getTime() == null) {
 				entity.setTime(stockRepository.getCurrentTime());
 			}
+			entity.setApproval(Approval.NOPASS);
 			stockRepository.insert(entity);
 			return true;
 		}

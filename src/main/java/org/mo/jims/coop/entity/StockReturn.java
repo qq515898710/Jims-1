@@ -22,8 +22,6 @@ public class StockReturn implements Serializable {
 
 	private java.lang.String id;
 
-	private int varietyAmount;
-
 	private float unitCost;
 
 	private int amount;
@@ -50,13 +48,12 @@ public class StockReturn implements Serializable {
 		super();
 	}
 
-	public StockReturn(String id, int varietyAmount, float unitCost,
+	public StockReturn(String id, float unitCost,
 			int amount, float sum, String check_conclusion, Date time,
 			String clearingForm, String handler,Approval approval, ProviderInfo providerInfo,
 			User user, GoodInfo goodInfo) {
 		super();
 		this.id = id;
-		this.varietyAmount = varietyAmount;
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
@@ -70,13 +67,12 @@ public class StockReturn implements Serializable {
 		this.goodInfo = goodInfo;
 	}
 
-	public StockReturn(int varietyAmount, float unitCost, int amount,
+	public StockReturn(float unitCost, int amount,
 			float sum, String check_conclusion, String clearingForm,
 			String handler,Approval approval, ProviderInfo providerInfo, User user,
 			GoodInfo goodInfo) {
 		super();
 		this.id = "stockr" + Sequence.nextId();
-		this.varietyAmount = varietyAmount;
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
@@ -95,14 +91,6 @@ public class StockReturn implements Serializable {
 
 	public void setId(java.lang.String id) {
 		this.id = id;
-	}
-
-	public int getVarietyAmount() {
-		return varietyAmount;
-	}
-
-	public void setVarietyAmount(int varietyAmount) {
-		this.varietyAmount = varietyAmount;
 	}
 
 	public float getUnitCost() {
@@ -195,7 +183,7 @@ public class StockReturn implements Serializable {
 
 	@Override
 	public String toString() {
-		return "StockReturn [id=" + id + ", varietyAmount=" + varietyAmount
+		return "StockReturn [id=" + id
 				+ ", unitCost=" + unitCost + ", amount=" + amount + ", sum="
 				+ sum + ", check_conclusion=" + check_conclusion + ", time="
 				+ time + ", clearingForm=" + clearingForm + ", handler="

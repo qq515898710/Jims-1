@@ -104,7 +104,7 @@
                        <li>
                          <i class="icon-caret-right blue"></i>
                          <label name="telephone">联系电话：</label>
-                         <span name="telephone" id="telephone">http://127.0.0.1:8020/bootstrap%E5%90%8E%E5%8F%B0%E6%A8%A1%E7%89%88/invoice.html#</span>
+                         <span name="telephone" id="telephone">-</span>
                        </li>
                      </ul>
                    </div><!--.row  -->
@@ -139,6 +139,64 @@
                    </div><!--.row  -->
                  </div><!--.col-sm-6  -->
                </div><!--.row  -->
+               <div class="space"></div>
+               <div>
+                 <table class="table table-striped table-bordered" id="stack-table">
+                   <thead>
+                     <tr>
+                       <th class="center">&nbsp;</th>
+                       <th class="center">供应商</th>
+                       <th class="center">商品</th>
+                       <th class="center">单价(元)</th>
+                       <th class="center">数量</th>
+                       <th class="center">总价(元)</th>
+                       <th class="center">经手人</th>
+                       <th class="center">结算方式</th>
+                       <th class="center">进货理由</th>
+                     </tr>
+                   </thead>
+                 </table>
+               </div>
+               <div class="row">
+                 <div class="col-sm-5 pull-right"><h4 class="pull-right" id="all-sum"></h4></div>
+                 <div class="col-sm-7 pull-left"> &nbsp;&nbsp; &nbsp; &nbsp;  </div>
+               </div>
+               <div class="space-6"></div>
+               <div class="row">
+                 <form class="form-inline">
+                  <input type="hidden" id="form-provider-id">
+                  <input type="hidden" id="form-provider-name">
+                  <input type="hidden" id="form-good-id">
+                  <input type="hidden" id="form-good-name">
+<!--                   <div class="form-group"> -->
+<!--                     <label>品种数量：</label><input type="text" placeholder="请输入品种数量" />&nbsp; -->
+<!--                   </div> -->
+                  <div class="form-group">
+                    <label>单价(元)：</label><input type="text" placeholder="请输入单价" id="form-unitCost" onkeyup="checkDecimal(this)"/>&nbsp;
+                  </div>
+                  <div class="form-group">
+                    <label>数量：</label><input type="text" placeholder="请输入数量" id="form-amount" onkeyup="checkNum(this)"/>&nbsp;
+                  </div>
+                  <div class="form-group">
+                    <label>经手人：</label><input type="text" placeholder="请输入经手人" id="form-handler"/>&nbsp;
+                  </div>
+                  <div class="space-6"></div>
+                  <div class="form-group">
+                    <label>结算方式：</label><input type="text" placeholder="请输入结算方式" id="form-clearingForm"/>&nbsp;
+                  </div>
+                  <div class="form-group">
+                    <label>进货理由：</label><input type="text" placeholder="请输入进货理由" id="form-checkConclusion" class="input-xlarge"/>&nbsp;
+                  </div>
+                  <div class="space-6"></div>
+                  <div class="hr hr8 hr-double hr-dotted"></div>
+                  <div id="alert-tip"></div>
+                  <div class="space-6"></div>
+                  <button class="btn btn-sm btn-success" type="button" onclick="addStockTable()"><i class="icon-edit bigger-110"></i>添加</button>
+                  <button class="btn btn-sm btn-danger" type="button" onclick="delTr2()"><i class="icon-trash bigger-110"></i>取消</button>
+                  <button class="btn btn-sm btn-info" type="button" id="save"><i class="icon-ok bigger-110"></i>保存</button>
+                  <button class="btn btn-sm " type="reset"><i class="icon-undo bigger-110"></i>重置</button>
+                 </form>
+               </div><!--.row  -->
                </div><!--.widget-main padding-24  -->
              </div><!--.widget-body  -->
            </div><!--.widget-box transparent invoice-box  -->
@@ -149,7 +207,12 @@
      </div> <!-- /.page-content --> 
     </div> <!-- /.main-content --> 
     <script type="text/javascript">
+    var sum = 0;
+    
+    var tArray = new Array();//先声明一维
+    
 	jQuery(function($) {
+		
 		$.get("coop/listProviderByName", function(msg){
 			var result="<option value='0' select >&nbsp;</option>";
 			for(var i = 0; i < msg.length;i++){
@@ -163,7 +226,7 @@
 	    });
 	    
 		systemTime();
-		
+
 		//selcet事件
 	    $("#providerName").change(function(){
 		    //TODO
@@ -172,9 +235,12 @@
 			    $("#address").html(msg.address);
 			    $("#contacts").html(msg.contacts);
 			    $("#telephone").html(msg.telephone);
+			    $("#form-provider-id").attr("value",msg.id);
+			    $("#form-provider-name").attr("value",msg.name);
 			});
+		    $("#goodName-div").html();
 		    $.ajax({
-			    type: "get", 
+			    type: "get",
 			    url: "coop/searchByProviderName", 
 			    data: "name="+$("#providerName").val(), 
 			    aysnc : false,
@@ -197,9 +263,196 @@
 		    });
 		});
 
+		$("#goodName-div").on("change","#goodName",function(){
+		    $.get("coop/searchGoodsByName",{name:$("#goodName").val()},function(msg){
+			    $("#origin").html(msg.origin);
+			    $("#pack").html(msg.pack);
+			    $("#approvalNum").html(msg.approvalNum);
+			    $("#form-good-id").attr("value",msg.id);
+			    $("#form-good-name").attr("value",msg.name);
+			});
+		});
+
+		$("#save").click(function(){
+			var saveJson = tableToJSONString();
+			if(saveJson != null && saveJson != "[]"){
+			     $.ajax({
+ 					 dataType:"json",
+				     url:"coop/addStock",
+					 headers : {
+			                'Accept' : 'application/json',
+			                'Content-Type' : 'application/json;charset=utf-8'
+			         },
+				     type:"POST",
+					 data:saveJson,
+					 success: function(data){
+						 if(data.success == true){
+					          $("#alert-tip").html('<div class="alert alert-block alert-success">'+
+					                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+					                    '<div class="success bold-center">保存成功,等待管理员审批</div></div>');
+						 }else{
+					            $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
+					                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+					                    '<div class="danger bold-center">保存失败</div></div>');
+						 }
+
+					 },
+					 error: function(XMLHttpRequest, textStatus, errorThrown) {
+			                alert(XMLHttpRequest.status + "-" + XMLHttpRequest.readyState + "-" + textStatus);
+			            }
+			     });
+			}else if(saveJson == "[]"){
+	            $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
+	                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+	                    '<div class="danger bold-center">请添加进货信息</div></div>');
+			}
+		});
 		
 	});
 
+	function addStockTable(){
+		var providername = $("#form-provider-name").val();
+		var goodname = $("#form-good-name").val();
+		if(providername == null || providername == "" || goodname == "" || providername == null){
+            $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
+                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+                    '<div class="danger bold-center">请选择供应商和商品再添加</div></div>');
+		}else{
+			$("#alert-tip").html();
+			var unitCost =$("#form-unitCost").val();
+			var amount = $("#form-amount").val();
+			var handler = $("#form-handler").val();
+			var clearingForm = $("#form-clearingForm").val();
+			var checkConclusion = $("#form-checkConclusion").val();
+			if(unitCost == "" || amount == "" || handler == "" || clearingForm == ""){
+	            $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
+	                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+	                    '<div class="danger bold-center">请输入商品相应的信息</div></div>');
+			}else{
+				$("#stack-table");
+				var str="<tr>"+
+				        "<td class='center' ><input type='checkbox' id='ckb'/></td>"+
+				        "<td class='center' >"+providername+"</td>"+
+				        "<td class='center' >"+goodname+"</td>"+
+				        "<td class='center' >"+unitCost+"</td>"+
+				        "<td class='center' >"+amount+"</td>"+
+				        "<td class='center' >"+changeTwoDecimal_f(unitCost * amount)+"</td>"+
+				        "<td class='center' >"+handler+"</td>"+
+				        "<td class='center' >"+clearingForm+"</td>"+
+				        "<td class='center' >"+checkConclusion+"</td>"+
+				        "</tr>";
+				
+				if($("#stack-table").find("tr").length >= 6){
+		            $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
+		                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+		                    '<div class="danger bold-center">只能添加5行数据</div></div>');
+				}else{
+					$("#alert-tip").html("");
+					addTr("stack-table", -1, str);
+					sum+=parseFloat(changeTwoDecimal_f(unitCost * amount));
+					$("#all-sum").html("总计:<span class='red'>"+changeTwoDecimal_f(sum)+"</span>元");
+				}
+			}
+		}
+	}
+	
+	function tableToJSONString() {
+		var tabLen = document.getElementById("stack-table");
+		var jsonT = "[";
+		for(var i = 1; i < tabLen.rows.length; i++){
+			if(i == 1 ){
+				jsonT+="{\"providerName\":\""+tabLen.rows[i].cells[1].innerHTML+"\",\"goodName\":\""+tabLen.rows[i].cells[2].innerHTML+"\",\"unitCost\":\""+tabLen.rows[i].cells[3].innerHTML+"\",\"amount\":\""+tabLen.rows[i].cells[4].innerHTML+"\",\"sum\":\""+tabLen.rows[i].cells[5].innerHTML+"\",\"handler\":\""+tabLen.rows[i].cells[6].innerHTML+"\",\"clearingForm\":\""+tabLen.rows[i].cells[7].innerHTML+"\",\"checkConclusion\":\""+tabLen.rows[i].cells[8].innerHTML+"\"}";
+			}else{
+				jsonT+=",{\"providerName\":\""+tabLen.rows[i].cells[1].innerHTML+"\",\"goodName\":\""+tabLen.rows[i].cells[2].innerHTML+"\",\"unitCost\":\""+tabLen.rows[i].cells[3].innerHTML+"\",\"amount\":\""+tabLen.rows[i].cells[4].innerHTML+"\",\"sum\":\""+tabLen.rows[i].cells[5].innerHTML+"\",\"handler\":\""+tabLen.rows[i].cells[6].innerHTML+"\",\"clearingForm\":\""+tabLen.rows[i].cells[7].innerHTML+"\",\"checkConclusion\":\""+tabLen.rows[i].cells[8].innerHTML+"\"}";
+			}
+			for(var j = 0; j < tabLen.rows[i].cells.length; j++){
+			    //temp +=tabLen.rows[i].cells[j].innerHTML;
+			}
+		}
+		jsonT+="]";
+		console.log(jsonT);
+		return jsonT;
+	}
+	
+	function addTr(tab, row, trHtml){
+	     //获取table最后一行 $("#tab tr:last")
+	     //获取table第一行 $("#tab tr").eq(0)
+	     //获取table倒数第二行 $("#tab tr").eq(-2)
+	     var $tr=$("#"+tab+" tr").eq(row);
+	     if($tr.size() == 0){
+	         $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
+	                 '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+	                 '<div class="danger bold-center">指定的table id或行数不存在！</div></div>');
+	        return;
+	     }
+	     $("#alert-tip").html("");
+	     $tr.after(trHtml);
+	}
+	
+	function delTr(ckb){
+	  //获取选中的复选框，然后循环遍历删除
+	  var ckbs=$("input[id="+ckb+"]:checked");
+	  if(ckbs.size()==0){
+         $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
+                 '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
+                 '<div class="danger bold-center">要删除指定行，需选中要删除的行！</div></div>');
+	      return;
+	  }
+      $("#alert-tip").html("");
+	  ckbs.each(function(){
+	      $(this).parent().parent().remove();
+	  });
+	}
+	
+	function delTr2(){
+	   delTr('ckb');
+	}
+	
+	//检测输入的价格
+	var record={num:""}
+    var checkDecimal = function(n){
+        var decimalReg = /^[1-9]\d{0,8}\.{0,1}(\d{1,2})?$/;
+        if(n.value!=""&&decimalReg.test(n.value)){ 
+           record.num = n.value; 
+        }else{ 
+           if(n.value != ""){ 
+             n.value=record.num; 
+		}
+	  } 
+    }
+    
+    //检测输入的数量
+    var checkNum = function(n){
+        var decimalReg = /^[1-9]\d{0,8}?$/;
+        if(n.value!=""&&decimalReg.test(n.value)){ 
+           record.num = n.value; 
+        }else{ 
+           if(n.value != ""){ 
+             n.value=record.num; 
+		}
+	  } 
+    }
+
+    //格式输入总数
+    function changeTwoDecimal_f(x) {
+        var f_x = parseFloat(x);
+        if (isNaN(f_x)) {
+            alert('function:changeTwoDecimal->parameter error');
+            return false;
+        }
+        var f_x = Math.round(x * 100) / 100;
+        var s_x = f_x.toString();
+        var pos_decimal = s_x.indexOf('.');
+        if (pos_decimal < 0) {
+            pos_decimal = s_x.length;
+            s_x += '.';
+        }
+        while (s_x.length <= pos_decimal + 2) {
+            s_x += '0';
+        }
+        return s_x;
+    }
+    
 	//获取系统时间，将时间以指定格式显示到页面。  
     function systemTime()  
     {  
@@ -216,12 +469,13 @@
         //每隔1000ms执行方法systemTime()。  
         setTimeout("systemTime()",1000);  
     }  
+    
     //补位函数。  
     function extra(x)  
     {  
         //如果传入数字小于10，数字前补一位0。  
         if(x < 10)  
-        {  
+        {   
             return "0" + x;  
         }  
         else  

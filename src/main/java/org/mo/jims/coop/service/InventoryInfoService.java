@@ -22,13 +22,6 @@ public class InventoryInfoService {
 		return null;
 	}
 
-	public List<InventoryInfo> getInventoryInfoByUser(String username) {
-		if (username != null && !"".equals(username)) {
-			return inventoryInfoRepository.selectByUser(username);
-		}
-		return null;
-	}
-
 	public boolean batchRemove(String[] id) {
 		if (id != null) {
 			inventoryInfoRepository.batchDelete(id);

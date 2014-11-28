@@ -17,8 +17,6 @@ public class StockReturnDTO implements java.io.Serializable {
 
 	private java.lang.String id;
 
-	private int varietyAmount;
-
 	private float unitCost;
 
 	private int amount;
@@ -46,23 +44,24 @@ public class StockReturnDTO implements java.io.Serializable {
 	public StockReturn toEditObject(Approval approval, GoodInfo goodInfo,
 			ProviderInfo providerInfo, User user) throws MyRuntimeException {
 		try {
-			return new StockReturn(id, varietyAmount, unitCost, amount, sum,
-					checkConclusion,
+			return new StockReturn(id, unitCost, amount, sum, checkConclusion,
 					JavaDateConverter.StringConverterDate(time), clearingForm,
 					handler, approval, providerInfo, user, goodInfo);
 		} catch (Exception e) {
-			throw new MyRuntimeException("toEditObject--"+getClass().getName()+" convert fail");
+			throw new MyRuntimeException("toEditObject--"
+					+ getClass().getName() + " convert fail");
 		}
 	}
 
 	public StockReturn toAddObject(Approval approval, GoodInfo goodInfo,
 			ProviderInfo providerInfo, User user) throws MyRuntimeException {
 		try {
-			return new StockReturn(varietyAmount, unitCost, amount, sum,
-					checkConclusion, clearingForm, handler, approval,
-					providerInfo, user, goodInfo);
+			return new StockReturn(unitCost, amount, sum, checkConclusion,
+					clearingForm, handler, approval, providerInfo, user,
+					goodInfo);
 		} catch (Exception e) {
-			throw new MyRuntimeException("toAddObject--"+getClass().getName()+" convert fail");
+			throw new MyRuntimeException("toAddObject--" + getClass().getName()
+					+ " convert fail");
 		}
 	}
 
@@ -154,14 +153,6 @@ public class StockReturnDTO implements java.io.Serializable {
 		this.username = username;
 	}
 
-	public int getVarietyAmount() {
-		return varietyAmount;
-	}
-
-	public void setVarietyAmount(int varietyAmount) {
-		this.varietyAmount = varietyAmount;
-	}
-
 	public java.lang.String getCheckConclusion() {
 		return checkConclusion;
 	}
@@ -180,7 +171,7 @@ public class StockReturnDTO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "StockReturnDTO [id=" + id + ", varietyAmount=" + varietyAmount
+		return "StockReturnDTO [id=" + id 
 				+ ", unitCost=" + unitCost + ", amount=" + amount + ", sum="
 				+ sum + ", checkConclusion=" + checkConclusion + ", time="
 				+ time + ", clearingForm=" + clearingForm + ", handler="

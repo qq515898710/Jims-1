@@ -3,14 +3,14 @@ package org.mo.jims.coop.controller;
 
 import javax.annotation.Resource;
 
-import org.mo.jims.coop.dto.StockDTO;
+import org.mo.jims.coop.dto.StockReturnDTO;
 import org.mo.jims.coop.entity.GoodInfo;
 import org.mo.jims.coop.entity.ProviderInfo;
-import org.mo.jims.coop.entity.Stock;
+import org.mo.jims.coop.entity.StockReturn;
 import org.mo.jims.coop.enumtype.Approval;
 import org.mo.jims.coop.service.GoodInfoService;
 import org.mo.jims.coop.service.ProviderInfoService;
-import org.mo.jims.coop.service.StockService;
+import org.mo.jims.coop.service.StockReturnService;
 import org.mo.open.common.entity.User;
 import org.mo.open.common.exception.MyRuntimeException;
 import org.mo.open.common.service.UserService;
@@ -29,9 +29,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/")
-public class StockController {
+public class StockReturnController {
 	
-	private static Logger logger = LoggerFactory.getLogger(StockController.class);
+	private static Logger logger = LoggerFactory.getLogger(StockReturnController.class);
 	
 	private ProviderInfoService providerInfoService;
 	
@@ -39,38 +39,38 @@ public class StockController {
 	
 	private UserService userService;
 	
-	private StockService stockService;
+	private StockReturnService stockReturnService;
 
-	@RequestMapping(value = "coop/jinhuodan.html", method = RequestMethod.GET)
+	@RequestMapping(value = "coop/jinhuotuihuo.html", method = RequestMethod.GET)
 	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "stockManage");
-		model.put("active", "JinHuoDan");
-		logger.info("进入进货单界面");
-		return new ModelAndView("coop/stockManage/JinHuoDan");
+		model.put("active", "JinHuoTuiHuo");
+		logger.info("进入进货退货界面");
+		return new ModelAndView("coop/stockManage/JinHuoTuiHuo");
 	}
 	
-	@RequestMapping(value = "coop/addStock", method = RequestMethod.POST, consumes="application/json")
+	@RequestMapping(value = "coop/addStockReturn", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
-	public JsonResponse addStock(@RequestBody final StockDTO[] stockDTO){
+	public JsonResponse addStock(@RequestBody final StockReturnDTO[] stockReturnDTOs){
 		JsonResponse jsonResponse = new JsonResponse();
 		UserDetails userDetails = (UserDetails) SecurityContextHolder
 				.getContext().getAuthentication().getPrincipal();
 		String username = userDetails.getUsername();
 		User userByPK = userService.getUserByPK(username);
 		try{
-			for(StockDTO dto :stockDTO) {
+			for(StockReturnDTO dto :stockReturnDTOs) {
 				String goodName = dto.getGoodName();
 				GoodInfo goodInfoByName = goodInfoService.getGoodInfoByName(goodName);
 				String providerName = dto.getProviderName();
 				ProviderInfo providerInfoByName = providerInfoService.getProviderInfoByName(providerName);
-				Stock addObject = dto.toAddObject(Approval.NOPASS, goodInfoByName, providerInfoByName, userByPK);
-				stockService.saveStock(addObject);
+				StockReturn addObject = dto.toAddObject(Approval.NOPASS, goodInfoByName, providerInfoByName, userByPK);
+				stockReturnService.saveStockReturn(addObject);
 			}
 			jsonResponse.setMessage("插入成功");
 			jsonResponse.setSuccess(true);
 			return  jsonResponse;
 		} catch (MyRuntimeException e) {
-			throw new MyRuntimeException("添加入库信息失败");
+			throw new MyRuntimeException("添加进货退货信息失败");
 		}
 	}
 	
@@ -101,13 +101,13 @@ public class StockController {
 		this.userService = userService;
 	}
 
-	public StockService getStockService() {
-		return stockService;
+	public StockReturnService getStockReturnService() {
+		return stockReturnService;
 	}
 	
-	@Resource(name = "stockService")
-	public void setStockService(StockService stockService) {
-		this.stockService = stockService;
+	@Resource(name = "stockReturnService")
+	public void setStockReturnService(StockReturnService stockReturnService) {
+		this.stockReturnService = stockReturnService;
 	}
 
 }
