@@ -172,10 +172,10 @@
 		            	if(data.success != null){
 				            $("#warning-block").html('<div class="alert alert-block alert-success">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				                    '<div class="success bold-center">添加成功,'+'<a href="coop/shangpinguanli.html" class="green">'+
+				                    '<div class="success bold-center">添加成功,'+'<a href="admin/shangpinguanli.html" class="green">'+
 				                    '<span id="mysecond" class="green">'+5+
 				                    '</span>秒自动跳转</a><div></div>');
-			            	 countDown(5, "coop/shangpinguanli.html");
+			            	 countDown(5, "admin/shangpinguanli.html");
 				        }
 				        else{
 				            if(data.name != null){

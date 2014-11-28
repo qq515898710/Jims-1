@@ -21,7 +21,7 @@
 	  <div class="sidebar-shortcuts" id="sidebar-shortcuts"> 
        <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large"> 
         <button class="btn btn-success" onclick="goPage('home.html')"><i class="icon-signal"></i></button> 
-        <button class="btn btn-info" onclick="goPage('home.html')"> <i class="icon-pencil"></i></button> 
+        <button class="btn btn-info" onclick="goPage('coop/jinhuodan.html')"> <i class="icon-pencil"></i></button> 
         <button class="btn btn-warning" onclick="goPage('home.html')"> <i class="icon-group"></i></button> 
         <button class="btn btn-danger" onclick="goPage('home.html')"> <i class="icon-cogs"></i></button> 
        </div><!--.sidebar-shortcuts-large  -->
@@ -54,7 +54,7 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="coop/gongyingshangguanli.html">供应商信息管理</a></li> 
+       <li><a href="admin/gongyingshangguanli.html">供应商信息管理</a></li> 
       </ul> 
       <!-- .breadcrumb -->
      </div> 

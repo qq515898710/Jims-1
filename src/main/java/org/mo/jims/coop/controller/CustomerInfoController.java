@@ -38,12 +38,20 @@ public class CustomerInfoController {
 	
 	private CustomerInfoService customerInfoService;
 
-	@RequestMapping(value = "coop/kehuguanli.html", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/kehuguanli.html", method = RequestMethod.GET)
 	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "baseManage");
 		model.put("active", "KeHuGuanLi");
 		logger.info("进入客户管理界面");
 		return new ModelAndView("coop/baseManage/KeHuGuanLi");
+	}
+	
+	@RequestMapping(value = "coop/kehuchaxun.html", method = RequestMethod.GET)
+	public ModelAndView showSearch(ModelMap model) {
+		model.put("baseActive", "searchStatistic");
+		model.put("active", "KeHuChaXun");
+		logger.info("进入客户查询界面");
+		return new ModelAndView("coop/searchStatistic/KeHuChaXun");
 	}
 	
 	@RequestMapping(value="coop/searchCustomerById",method=RequestMethod.POST)

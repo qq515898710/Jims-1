@@ -49,6 +49,14 @@ public class StockController {
 		return new ModelAndView("coop/stockManage/JinHuoDan");
 	}
 	
+	@RequestMapping(value = "coop/rukuchaxun.html", method = RequestMethod.GET)
+	public ModelAndView showSearch(ModelMap model) {
+		model.put("baseActive", "searchStatistic");
+		model.put("active", "RuKuChaXun");
+		logger.info("进入进货查询界面");
+		return new ModelAndView("coop/searchStatistic/RuKuChaXun");
+	}
+	
 	@RequestMapping(value = "coop/addStock", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
 	public JsonResponse addStock(@RequestBody final StockDTO[] stockDTO){

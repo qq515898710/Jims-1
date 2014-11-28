@@ -16,7 +16,6 @@ import org.mo.jims.coop.entity.InventoryInfo;
 import org.mo.jims.coop.service.GoodInfoService;
 import org.mo.jims.coop.service.InventoryInfoService;
 import org.mo.open.common.converter.SpringDateConverter;
-import org.mo.open.common.entity.User;
 import org.mo.open.common.exception.MyRuntimeException;
 import org.mo.open.common.service.UserService;
 import org.mo.open.common.util.JsonResponse;
@@ -36,8 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class InventoryInfoController {
 
-	private static Logger logger = LoggerFactory
-			.getLogger(InventoryInfoController.class);
+	private static Logger logger = LoggerFactory.getLogger(InventoryInfoController.class);
 
 	private InventoryInfoService inventoryInfoService;
 
@@ -117,7 +115,7 @@ public class InventoryInfoController {
 		return inventoryInfoByNameOrAbbreviation;
 	}
 
-	@RequestMapping(value = "admin/editInventory", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "coop/editInventory", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
 	public Map<String, String> editInventory(
 			@RequestBody final InventoryInfoDTO inventoryInfoDTO,

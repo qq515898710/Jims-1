@@ -37,12 +37,20 @@ public class ProviderInfoController {
 	
 	private ProviderInfoService providerInfoService;
 	
-	@RequestMapping(value = "coop/gongyingshangguanli.html", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/gongyingshangguanli.html", method = RequestMethod.GET)
 	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "baseManage");
 		model.put("active", "GongYingShangGuanLi");
 		logger.info("进入供应商管理界面");
 		return new ModelAndView("coop/baseManage/GongYingShangGuanLi");
+	}
+	
+	@RequestMapping(value = "coop/gongyingshangchaxun.html", method = RequestMethod.GET)
+	public ModelAndView showSearch(ModelMap model) {
+		model.put("baseActive", "searchStatistic");
+		model.put("active", "GongYingShangChaXun");
+		logger.info("进入供应商查询界面");
+		return new ModelAndView("coop/searchStatistic/GongYingShangChaXun");
 	}
 	
 	@RequestMapping(value="coop/searchProviderByName",method=RequestMethod.GET)
