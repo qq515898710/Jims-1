@@ -2,19 +2,14 @@ package org.mo.open.common.controller;
 
 import javax.annotation.Resource;
 
-import org.mo.open.common.dto.LoginDTO;
-import org.mo.open.common.entity.User;
+import org.mo.open.common.service.RoleService;
 import org.mo.open.common.service.UserService;
-import org.mo.open.common.util.JsonResponse;
-import org.mo.open.common.util.Page;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -22,28 +17,40 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
 	private UserService userService;
-
-	@RequestMapping(value = "caozuoyuanguanli.html/{page}/{size}", method = RequestMethod.GET)
-	public ModelAndView caoZuoYuanGuanLi(@PathVariable int page,
-			@PathVariable int size, ModelMap model) {
-		LoginDTO userDTO = new LoginDTO();
-		Page<User> allUserInfo = userService.getALLUserInfo(
-				userDTO.toObject(), page, size);
+	
+	private RoleService roleService;
+	
+	private static Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	@RequestMapping(value = "coop/profile.html", method = RequestMethod.GET)
+	public ModelAndView profile(ModelMap model){
+		logger.info("进入个人信息界面");
+		return new ModelAndView("common/profile", model);
+	}
+	
+	@RequestMapping(value = "coop/genggaimima.html", method = RequestMethod.GET)
+	public ModelAndView alterPassword(ModelMap model){
+		model.put("baseActive", "sysManage");
+		model.put("active", "GengGaiMiMa");
+		logger.info("进入修改密码界面");
+		return new ModelAndView("common/sysManage/GengGaiMiMa", model);
+	}
+	
+	@RequestMapping(value = "coop/caozuoyuanguanli.html", method = RequestMethod.GET)
+	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "sysManage");
 		model.put("active", "CaoZuoYuanGuanLi");
-		model.put("allUserInfo", allUserInfo);
+		logger.info("进入操作员管理界面");
 		return new ModelAndView("common/sysManage/CaoZuoYuanGuanLi", model);
 	}
 
-	@RequestMapping(value = "CaoZuoYuanGuanLi.html", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public JsonResponse showUserInfo(
-			@RequestParam(required = true, defaultValue = "10") int size,
-			@RequestParam(required = true, defaultValue = "1") int page,
-			@RequestBody(required = false) LoginDTO userDTO) {
-		Page<User> allUserInfo = userService.getALLUserInfo(
-				userDTO.toObject(), page, size);
-		return null;
+	public RoleService getRoleService() {
+		return roleService;
+	}
+
+	@Resource(name="roleService")
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
 	}
 
 	public UserService getUserService() {

@@ -83,10 +83,9 @@
          </span> <i class="icon-caret-down"></i>
        </a> 
        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"> 
-        <li><a href="#"> <i class="icon-cog"></i> <%=configBundle.getString("setting") %> </a></li> 
-        <li><a href="#"> <i class="icon-user"></i><%=configBundle.getString("profile") %></a></li> 
+        <li><a href="coop/profile.html"> <i class="icon-user"></i><%=configBundle.getString("profile") %></a></li> 
         <li class="divider"></li> 
-        <li><a href="#"> <i class="icon-off"></i><%=configBundle.getString("off") %> </a></li> 
+        <li><a href="loginout.html"> <i class="icon-off"></i><%=configBundle.getString("off") %> </a></li> 
        </ul></li> 
      </ul> 
      <!-- /.ace-nav --> 

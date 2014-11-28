@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.mo.open.common.entity.Permission;
+import org.mo.open.common.entity.Role;
 import org.mo.open.common.entity.User;
-import org.mo.open.common.repository.PermissionRepository;
+import org.mo.open.common.repository.RoleRepository;
 import org.mo.open.common.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	
 	protected static Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
 
-	private PermissionRepository permissionRepository;
+	private RoleRepository roleRepository;
 	
 	private UserRepository userRepository;
 
@@ -58,20 +58,20 @@ public class MyUserDetailsService implements UserDetailsService {
 	
 	private List<GrantedAuthority> grantAuthorities(User user) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		List<Permission> permissions = permissionRepository.getPermissions(user.getAccount());
-		for (Permission permission : permissions) {
+		List<Role> roles = roleRepository.selectByUser(user.getAccount());
+		for (Role permission : roles) {
 			authorities.add(new SimpleGrantedAuthority(permission.getName()));
 		}
 		return authorities;
 	}
 
-	public PermissionRepository getPermissionRepository() {
-		return permissionRepository;
+	public RoleRepository getRoleRepository() {
+		return roleRepository;
 	}
 
-	@Resource(name = "permissionRepository")
-	public void setPermissionRepository(PermissionRepository permissionRepository) {
-		this.permissionRepository = permissionRepository;
+	@Resource(name = "roleRepository")
+	public void setRoleRepository(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
 	}
 
 	public UserRepository getUserRepository() {

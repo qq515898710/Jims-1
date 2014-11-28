@@ -49,6 +49,14 @@ public class StockReturnController {
 		return new ModelAndView("coop/stockManage/JinHuoTuiHuo");
 	}
 	
+	@RequestMapping(value = "coop/rukutuihuochaxun.html", method = RequestMethod.GET)
+	public ModelAndView showSearch(ModelMap model) {
+		model.put("baseActive", "searchStatistic");
+		model.put("active", "RuKuTuiHuoChaXun");
+		logger.info("进入进货退货查询界面");
+		return new ModelAndView("coop/searchStatistic/RuKuTuiHuoChaXun");
+	}
+	
 	@RequestMapping(value = "coop/addStockReturn", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
 	public JsonResponse addStock(@RequestBody final StockReturnDTO[] stockReturnDTOs){

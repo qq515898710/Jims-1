@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.mo.open.common.repository.UserRoleRepository">
+<mapper namespace="org.mo.open.common.repository.RoleRepository">
 
 	<sql id="selcet_role">SELECT id, name, description FROM tb_role </sql>
 	
-	<insert id="insert" parameterType="UserRole" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insert" parameterType="Role" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO tb_role(name, description)
 		VALUE(#{name},#{description})
 	</insert>
 	
-	<update id="updateByPK" parameterType="UserRole">
+	<update id="updateByPK" parameterType="Role">
 		UPDATE tb_role SET 
 			name=#{name},
 			description=#{description}

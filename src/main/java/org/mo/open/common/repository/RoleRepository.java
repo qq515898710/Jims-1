@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository("roleRepository")
 public interface RoleRepository extends BaseRepository<Role, Long> {
 
-	public List<Role> selectByUser(@Param("account") String account);
+	public List<Role> selectByUser(String account);
 
 	public void deleteRelativity(RolePermission rolePermission);
 

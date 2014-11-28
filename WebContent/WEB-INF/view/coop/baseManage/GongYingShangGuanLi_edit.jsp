@@ -172,10 +172,10 @@ $(document).ready(function() {
 		            	if(data.success != null){
 				            $("#edit-alert").html('<div class="alert alert-block alert-success">'+
 				                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-				                    '<div class="success bold-center">修改成功,'+'<a href="coop/gongyingshangguanli.html" class="green">'+
+				                    '<div class="success bold-center">修改成功,'+'<a href="admin/gongyingshangguanli.html" class="green">'+
 				                    '<span id="mysecond" class="green">'+5+
 				                    '</span>秒自动跳转</a><div></div>');
-			            	 countDown(5, "coop/gongyingshangguanli.html");
+			            	 countDown(5, "admin/gongyingshangguanli.html");
 				        }
 				        else{
 				            if(data.name != null){

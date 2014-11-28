@@ -52,7 +52,7 @@
            <form id="login"  role="form" action="<c:url value='j_spring_security_check'/>" method="post"> 
             <fieldset> 
              <label class="block clearfix"> <span class="block input-icon input-icon-right"> 
-                <input type="text" class="form-control" placeholder="请输入用户名" id="username" name="j_username" /> <i class="icon-user"></i> </span> 
+                <input type="text" class="form-control" placeholder="请输入用户名" id="username" name="j_username"  value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}"/> <i class="icon-user"></i> </span> 
              </label> 
              <label class="block clearfix"> <span class="block input-icon input-icon-right"> 
                 <input type="password" class="form-control" placeholder="请输入密码"  id="password" name="j_password" /> <i class="icon-lock"></i> </span> 

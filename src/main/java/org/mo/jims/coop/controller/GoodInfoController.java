@@ -41,12 +41,20 @@ public class GoodInfoController {
 	
 	private ProviderInfoService providerInfoService;
 
-	@RequestMapping(value = "coop/shangpinguanli.html", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/shangpinguanli.html", method = RequestMethod.GET)
 	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "baseManage");
 		model.put("active", "ShangPinGuanLi");
 		logger.info("进入商品管理界面");
 		return new ModelAndView("coop/baseManage/ShangPinGuanLi");
+	}
+	
+	@RequestMapping(value = "coop/shangpinchaxun.html", method = RequestMethod.GET)
+	public ModelAndView showSearch(ModelMap model) {
+		model.put("baseActive", "searchStatistic");
+		model.put("active", "ShangPinChaXun");
+		logger.info("进入商品查询界面");
+		return new ModelAndView("coop/searchStatistic/ShangPinChaXun");
 	}
 	
 	@RequestMapping(value="coop/searchGoodsByName",method=RequestMethod.GET)
