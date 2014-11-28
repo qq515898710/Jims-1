@@ -7,41 +7,29 @@
 			tb_inventory_info.id AS id,
 		 	tb_inventory_info.good_id AS good_id, 
 		 	tb_good_info.name AS good_name,
-		 	tb_inventory_info.user_id AS user_id, 
-		 	tb_user.username AS user_username, 
-		 	tb_inventory_info.specification AS specification, 
 		 	tb_inventory_info.unit_cost AS unit_cost, 
 		 	tb_inventory_info.amount AS amount, 
 		 	tb_inventory_info.time AS time
 		FROM tb_inventory_info 
-		JOIN tb_good_info ON tb_inventory_info.good_id = tb_good_info.id 
-		JOIN tb_user ON tb_inventory_info.user_id = tb_user.account
+		JOIN tb_good_info ON tb_inventory_info.good_id = tb_good_info.id
 	</sql>
 	
 	<sql id="count_inventory_info">
 		SELECT COUNT(*) FROM tb_inventory_info 
 		JOIN tb_good_info ON tb_inventory_info.good_id = tb_good_info.id 
-		JOIN tb_user ON tb_inventory_info.user_id = tb_user.account
 	</sql>
 
-	<insert id="insert" parameterType="InventoryInfo">
+	<insert id="insert" parameterType="InventoryInfo" useGeneratedKeys="true">
 		INSERT INTO tb_inventory_info(
-			id,
 		 	good_id, 
-		 	user_id,
-		 	specification, 
 		 	unit_cost, 
-		 	amount, 
-		 	time)
-		VALUE(#{id},#{goodInfo.id},#{user.acccount},
-		#{specification},#{unitCost},#{amount},#{time})
+		 	amount)
+		VALUE(#{goodInfo.id},#{unitCost},#{amount})
 	</insert>
 
 	<update id="updateByPK" parameterType="InventoryInfo">
 		UPDATE tb_inventory_info SET
 		 	good_id=#{goodInfo.id}, 
-		 	user_id=#{user.account},
-		 	specification=#{specification}, 
 		 	unit_cost=#{unitCost}, 
 		 	amount=#{amount}, 
 		 	time=#{time}
@@ -200,28 +188,11 @@
 		</foreach>
 	</delete>
 	
-	<select id="selectByUser" resultMap="inventoryInfoResultMap">
-		SELECT 
-			tb_inventory_info.id AS id,
-		 	tb_inventory_info.good_id AS good_id, 
-		 	tb_inventory_info.user_id AS user_id, 
-		 	tb_user.username AS user_username, 
-		 	tb_inventory_info.specification AS specification, 
-		 	tb_inventory_info.unit_cost AS unit_cost, 
-		 	tb_inventory_info.amount AS amount, 
-		 	tb_inventory_info.time AS time
-		FROM tb_inventory_info 
-		JOIN tb_user ON tb_inventory_info.user_id = tb_user.account 
-		WHERE tb_user.username=LIKE CONCAT('%', #{username},'%') ORDER BY tb_inventory_info.time DESC
-	</select>
-	
 	<select id="selectByGoodName" resultMap="inventoryInfoResultMap">
 		SELECT 
 			tb_inventory_info.id AS id,
 		 	tb_inventory_info.good_id AS good_id, 
 		 	tb_good_info.name AS good_name,
-		 	tb_inventory_info.user_id AS user_id, 
-		 	tb_inventory_info.specification AS specification, 
 		 	tb_inventory_info.unit_cost AS unit_cost, 
 		 	tb_inventory_info.amount AS amount, 
 		 	tb_inventory_info.time AS time
@@ -233,14 +204,9 @@
 	<!-- inventoryInfo -->
 	<resultMap type="InventoryInfo" id="inventoryInfoResultMap">
 		<id property="id" column="id" />
-		<result property="specification" column="specification" />
 		<result property="unitCost" column="unit_cost" />
 		<result property="amount" column="amount" />
 		<result property="time" column="time"/>
-		<association property="user"  javaType="User">
-			<id property="account" column="user_id"/>
-			<result property="username" column="user_username"/>
-		</association>
 		<association property="goodInfo" javaType="GoodInfo">
 			<id property="id" column="good_id"/>
 			<result property="name" column="good_name"/>

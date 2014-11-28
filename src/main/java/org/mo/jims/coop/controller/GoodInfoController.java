@@ -49,6 +49,21 @@ public class GoodInfoController {
 		return new ModelAndView("coop/baseManage/ShangPinGuanLi");
 	}
 	
+	@RequestMapping(value="coop/searchGoodsByName",method=RequestMethod.GET)
+	@ResponseBody
+	public GoodInfo searchGoodByName(String name){
+		String newStr = "";
+		try {
+			// 编码有问题,get传过来的参数
+			newStr = new String(name.getBytes("iso8859-1"), "UTF-8");
+			//TODO:测试用
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		GoodInfo goodInfoByName = goodInfoService.getGoodInfoByName(newStr);
+		return goodInfoByName;
+	}
+	
 	@RequestMapping(value="coop/searchByProviderName",method=RequestMethod.GET)
 	@ResponseBody
 	public List<GoodInfo> searchProviderByName(@RequestParam(required=true)String name){

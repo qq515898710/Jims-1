@@ -15,36 +15,31 @@ public class InventoryInfoDTO implements java.io.Serializable {
 
 	private java.lang.String id;
 
-	private java.lang.String specification;
-
 	private float unitCost;
 
 	private int amount;
 
 	private String goodName;
 
-	private String username;
-
 	private String time;
 
 	private String formtoken;
 
-	public InventoryInfo toEditObject(GoodInfo goodInfo, User user)
+	public InventoryInfo toEditObject(GoodInfo goodInfo)
 			throws MyRuntimeException {
 		try {
-			return new InventoryInfo(id, specification, unitCost, amount,
-					goodInfo, user, JavaDateConverter.StringConverterDate(time));
+			return new InventoryInfo(id, unitCost, amount, goodInfo,
+					JavaDateConverter.StringConverterDate(time));
 		} catch (Exception e) {
 			throw new MyRuntimeException(
 					"toEditObject-InventoryInfoDTO convert fail");
 		}
 	}
 
-	public InventoryInfo toAddObject(GoodInfo goodInfo, User user)
+	public InventoryInfo toAddObject(GoodInfo goodInfo)
 			throws MyRuntimeException {
 		try {
-			return new InventoryInfo(specification, unitCost, amount, goodInfo,
-					user);
+			return new InventoryInfo(unitCost, amount, goodInfo);
 		} catch (Exception e) {
 			throw new MyRuntimeException(
 					"toAddObject-InventoryInfoDTO convert fail");
@@ -57,14 +52,6 @@ public class InventoryInfoDTO implements java.io.Serializable {
 
 	public void setId(java.lang.String id) {
 		this.id = id;
-	}
-
-	public java.lang.String getSpecification() {
-		return specification;
-	}
-
-	public void setSpecification(java.lang.String specification) {
-		this.specification = specification;
 	}
 
 	public float getUnitCost() {
@@ -91,14 +78,6 @@ public class InventoryInfoDTO implements java.io.Serializable {
 		this.goodName = goodName;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getTime() {
 		return time;
 	}
@@ -117,10 +96,9 @@ public class InventoryInfoDTO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "InventoryInfoDTO [id=" + id + ", specification="
-				+ specification + ", unitCost=" + unitCost + ", amount="
-				+ amount + ", goodName=" + goodName + ", username=" + username
-				+ ", time=" + time + ", formtoken=" + formtoken + "]";
+		return "InventoryInfoDTO [id=" + id + ", unitCost=" + unitCost
+				+ ", amount=" + amount + ", goodName=" + goodName + ", time="
+				+ time + ", formtoken=" + formtoken + "]";
 	}
 
 }

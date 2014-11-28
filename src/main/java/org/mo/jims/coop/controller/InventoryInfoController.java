@@ -136,9 +136,8 @@ public class InventoryInfoController {
 					try {
 						Thread.sleep(3000);
 						GoodInfo goodInfoByName = goodInfoService.getGoodInfoByName(inventoryInfoDTO.getGoodName());
-						User userByPK = userService.getUserByPK(inventoryInfoDTO.getUsername());
-						if (goodInfoByName != null && userByPK != null) {
-							InventoryInfo entity = inventoryInfoDTO.toAddObject(goodInfoByName, userByPK);
+						if (goodInfoByName != null) {
+							InventoryInfo entity = inventoryInfoDTO.toAddObject(goodInfoByName);
 							inventoryInfoService.alterInventoryInfo(entity);
 							modelMap.put("success", "ok");
 						} else {

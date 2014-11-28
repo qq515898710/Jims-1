@@ -11,7 +11,6 @@
 		 	tb_user.username AS user_username, 
 		 	tb_stock_return.good_id AS good_id, 
 		 	tb_good_info.name AS good_name, 
-		 	tb_stock_return.variety_amount AS variety_amount, 
 		 	tb_stock_return.unit_cost AS unit_cost, 
 		 	tb_stock_return.amount AS amount, 
 		 	tb_stock_return.sum AS sum, 
@@ -39,7 +38,6 @@
 		 	provider_id,
 		 	user_id, 
 		 	good_id, 
-		 	variety_amount, 
 		 	unit_cost, 
 		 	amount, 
 		 	sum, 
@@ -48,7 +46,7 @@
 		 	clearing_form, 
 		 	handler,
 		 	state)
-		VALUE(#{id}, #{providerInfo.id},#{user.id},#{goodInfo.id}, #{varietyAmount},#{unitCost},
+		VALUE(#{id}, #{providerInfo.id},#{user.account},#{goodInfo.id},#{unitCost},
 			#{amount},#{sum}, #{checkConclusion},#{time},#{clearingForm}, #{handler},#{approval, typeHandler=org.mo.jims.coop.typehandler.ApprovalHadler})
 	</insert>
 
@@ -56,8 +54,7 @@
 		UPDATE tb_stock_return SET
 		 	provider_id=#{providerInfo.id},
 		 	good_id=#{goodInfo.id}, 
-		 	user_id=#{user.id}, 
-		 	variety_amount=#{varietyAmount}, 
+		 	user_id=#{user.account}, 
 		 	unit_cost=#{unitCost}, 
 		 	amount=#{amount}, 
 		 	sum=#{sum}, 
@@ -216,7 +213,6 @@
 	<!-- stock_return -->
 	<resultMap type="StockReturn" id="stockReturnResultMap">
 		<id property="id" column="id" />
-		<result property="varietyAmount" column="variety_amount" />
 		<result property="unitCost" column="unit_cost" />
 		<result property="amount" column="amount" />
 		<result property="sum" column="sum" />

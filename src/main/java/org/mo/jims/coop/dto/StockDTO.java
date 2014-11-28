@@ -17,13 +17,11 @@ public class StockDTO implements java.io.Serializable {
 
 	private java.lang.String id;
 
-	private int varietyAmount;
+	private String unitCost;
 
-	private float unitCost;
+	private String amount;
 
-	private int amount;
-
-	private float sum;
+	private String sum;
 
 	private java.lang.String checkConclusion;
 
@@ -43,26 +41,33 @@ public class StockDTO implements java.io.Serializable {
 
 	private String formtoken;
 
+	public StockDTO() {
+		super();
+	}
+
 	public Stock toEditObject(Approval approval, GoodInfo goodInfo,
 			ProviderInfo providerInfo, User user) throws MyRuntimeException {
 		try {
-			return new Stock(id, varietyAmount, unitCost, amount, sum,
+			return new Stock(id, Float.valueOf(unitCost),
+					Integer.valueOf(amount), Float.valueOf(sum),
 					checkConclusion,
 					JavaDateConverter.StringConverterDate(time), clearingForm,
 					handler, approval, providerInfo, user, goodInfo);
 		} catch (Exception e) {
-			throw new MyRuntimeException("toEditObject--"+getClass().getName()+" convert fail");
+			throw new MyRuntimeException("toEditObject--"
+					+ getClass().getName() + " convert fail");
 		}
 	}
 
 	public Stock toAddObject(Approval approval, GoodInfo goodInfo,
 			ProviderInfo providerInfo, User user) throws MyRuntimeException {
 		try {
-			return new Stock(varietyAmount, unitCost, amount, sum,
-					checkConclusion, clearingForm, handler, approval,
-					providerInfo, goodInfo, user);
+			return new Stock(Float.valueOf(unitCost), Integer.valueOf(amount),
+					Float.valueOf(sum), checkConclusion, clearingForm, handler,
+					approval, providerInfo, goodInfo, user);
 		} catch (Exception e) {
-			throw new MyRuntimeException("toAddObject--"+getClass().getName()+" convert fail");
+			throw new MyRuntimeException("toAddObject--" + getClass().getName()
+					+ " convert fail");
 		}
 	}
 
@@ -74,27 +79,27 @@ public class StockDTO implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public float getUnitCost() {
+	public String getUnitCost() {
 		return unitCost;
 	}
 
-	public void setUnitCost(float unitCost) {
+	public void setUnitCost(String unitCost) {
 		this.unitCost = unitCost;
 	}
 
-	public int getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 
-	public float getSum() {
+	public String getSum() {
 		return sum;
 	}
 
-	public void setSum(float sum) {
+	public void setSum(String sum) {
 		this.sum = sum;
 	}
 
@@ -154,14 +159,6 @@ public class StockDTO implements java.io.Serializable {
 		this.username = username;
 	}
 
-	public int getVarietyAmount() {
-		return varietyAmount;
-	}
-
-	public void setVarietyAmount(int varietyAmount) {
-		this.varietyAmount = varietyAmount;
-	}
-
 	public java.lang.String getCheckConclusion() {
 		return checkConclusion;
 	}
@@ -180,13 +177,12 @@ public class StockDTO implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "StockDTO [id=" + id + ", varietyAmount=" + varietyAmount
-				+ ", unitCost=" + unitCost + ", amount=" + amount + ", sum="
-				+ sum + ", checkConclusion=" + checkConclusion + ", time="
-				+ time + ", clearingForm=" + clearingForm + ", handler="
-				+ handler + ", approval=" + approval + ", goodName=" + goodName
-				+ ", providerName=" + providerName + ", username=" + username
-				+ ", formtoken=" + formtoken + "]";
+		return "StockDTO [id=" + id + ", unitCost=" + unitCost + ", amount="
+				+ amount + ", sum=" + sum + ", checkConclusion="
+				+ checkConclusion + ", time=" + time + ", clearingForm="
+				+ clearingForm + ", handler=" + handler + ", approval="
+				+ approval + ", goodName=" + goodName + ", providerName="
+				+ providerName + ", username=" + username + ", formtoken="
+				+ formtoken + "]";
 	}
-
 }

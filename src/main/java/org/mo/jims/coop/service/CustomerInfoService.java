@@ -71,8 +71,12 @@ public class CustomerInfoService {
 			if (entity.getTime() == null) {
 				entity.setTime(customerInfoRepository.getCurrentTime());
 			}
-			customerInfoRepository.insert(entity);
-			return true;
+			String name = entity.getName();
+			CustomerInfo selectByName = customerInfoRepository.selectByName(name);
+			if (selectByName == null) {
+				customerInfoRepository.insert(entity);
+				return true;
+			}
 		}
 		return false;
 	}

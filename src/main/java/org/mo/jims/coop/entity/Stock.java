@@ -24,8 +24,6 @@ public class Stock implements Serializable {
 
 	private java.lang.String id;
 
-	private int varietyAmount;
-
 	private float unitCost;
 
 	private int amount;
@@ -52,13 +50,12 @@ public class Stock implements Serializable {
 		super();
 	}
 
-	public Stock(String id, int varietyAmount, float unitCost, int amount,
+	public Stock(String id, float unitCost, int amount,
 			float sum, String checkConclusion, Date time, String clearingForm,
 			String handler, Approval approval, ProviderInfo providerInfo,
 			User user, GoodInfo goodInfo) {
 		super();
 		this.id = id;
-		this.varietyAmount = varietyAmount;
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
@@ -72,13 +69,12 @@ public class Stock implements Serializable {
 		this.goodInfo = goodInfo;
 	}
 
-	public Stock(int varietyAmount, float unitCost, int amount, float sum,
+	public Stock( float unitCost, int amount, float sum,
 			String checkConclusion, String clearingForm, String handler,
 			Approval approval, ProviderInfo providerInfo, GoodInfo goodInfo,
 			User user) {
 		super();
 		this.id = "stock" + Sequence.nextId();
-		this.varietyAmount = varietyAmount;
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
@@ -97,14 +93,6 @@ public class Stock implements Serializable {
 
 	public void setId(java.lang.String id) {
 		this.id = id;
-	}
-
-	public int getVarietyAmount() {
-		return varietyAmount;
-	}
-
-	public void setVarietyAmount(int varietyAmount) {
-		this.varietyAmount = varietyAmount;
 	}
 
 	public float getUnitCost() {
@@ -197,7 +185,7 @@ public class Stock implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Stock [id=" + id + ", varietyAmount=" + varietyAmount
+		return "Stock [id=" + id
 				+ ", unitCost=" + unitCost + ", amount=" + amount + ", sum="
 				+ sum + ", checkConclusion=" + checkConclusion + ", time="
 				+ time + ", clearingForm=" + clearingForm + ", handler="
