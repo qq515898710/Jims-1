@@ -28,7 +28,7 @@ public class UserController {
 		return new ModelAndView("common/profile", model);
 	}
 	
-	@RequestMapping(value = "coop/genggaimima.html", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/genggaimima.html", method = RequestMethod.GET)
 	public ModelAndView alterPassword(ModelMap model){
 		model.put("baseActive", "sysManage");
 		model.put("active", "GengGaiMiMa");
@@ -36,7 +36,7 @@ public class UserController {
 		return new ModelAndView("common/sysManage/GengGaiMiMa", model);
 	}
 	
-	@RequestMapping(value = "coop/caozuoyuanguanli.html", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/caozuoyuanguanli.html", method = RequestMethod.GET)
 	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "sysManage");
 		model.put("active", "CaoZuoYuanGuanLi");

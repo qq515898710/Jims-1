@@ -54,7 +54,7 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="caozuoyuanguanli.html/1/10">操作员管理</a></li> 
+       <li><a href="admin/caozuoyuanguanli.html">操作员管理</a></li> 
       </ul> 
       <!-- .breadcrumb --> 
       <!-- 可添加div--> 

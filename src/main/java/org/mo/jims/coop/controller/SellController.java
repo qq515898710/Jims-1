@@ -35,7 +35,7 @@ public class SellController {
 	public ModelAndView show(ModelMap model) {
 		model.put("baseActive", "sellManage");
 		model.put("active", "XiaoShouDan");
-		logger.info("进入销售界面");
+		logger.info("进入销售单界面");
 		return new ModelAndView("coop/sellManage/XiaoShouDan");
 	}
 
@@ -43,7 +43,7 @@ public class SellController {
 	public ModelAndView showSearch(ModelMap model) {
 		model.put("baseActive", "searchStatistic");
 		model.put("active", "XiaoShouChaXun");
-		logger.info("进入销售查询界面");
+		logger.info("进入销售单查询界面");
 		return new ModelAndView("coop/searchStatistic/XiaoShouChaXun");
 	}
 	

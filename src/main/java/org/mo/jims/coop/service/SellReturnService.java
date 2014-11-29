@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.mo.jims.coop.entity.SellReturn;
+import org.mo.jims.coop.enumtype.Approval;
 import org.mo.jims.coop.repository.SellReturnRepository;
 import org.mo.open.common.util.Page;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,7 @@ public class SellReturnService {
 			if (entity.getTime() == null) {
 				entity.setTime(sellReturnRepository.getCurrentTime());
 			}
+			entity.setApproval(Approval.NOPASS);
 			sellReturnRepository.insert(entity);
 			return true;
 		}

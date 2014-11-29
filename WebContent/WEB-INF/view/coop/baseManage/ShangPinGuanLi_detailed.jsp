@@ -52,6 +52,10 @@
           <div class="profile-info-row"> 
            <div class="profile-info-name"> 备忘录(简介)</div> 
            <div class="profile-info-value"> <span class="editable editable-click" id="detailed-memo">-</span> </div> 
+          </div>
+          <div class="profile-info-row"> 
+           <div class="profile-info-name"> 供应商</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="providerName">-</span> </div> 
           </div> 
          </div> 
         </div> 
@@ -62,6 +66,8 @@
     </div> 
     <!--.modal-content  --> 
    </div> 
-   <!--.modal-dialog  --> 
+   <!--.modal-dialog  -->
+   <script type="text/javascript">
+   </script> 
   </div> 
   <!-- .search-dialog-message -->

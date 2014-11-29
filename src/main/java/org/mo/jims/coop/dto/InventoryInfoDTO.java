@@ -3,7 +3,6 @@ package org.mo.jims.coop.dto;
 import org.mo.jims.coop.entity.GoodInfo;
 import org.mo.jims.coop.entity.InventoryInfo;
 import org.mo.open.common.converter.JavaDateConverter;
-import org.mo.open.common.entity.User;
 import org.mo.open.common.exception.MyRuntimeException;
 
 public class InventoryInfoDTO implements java.io.Serializable {

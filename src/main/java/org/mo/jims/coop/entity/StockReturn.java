@@ -28,7 +28,7 @@ public class StockReturn implements Serializable {
 
 	private float sum;
 
-	private java.lang.String check_conclusion;
+	private java.lang.String checkConclusion;
 
 	private java.util.Date time;
 
@@ -49,7 +49,7 @@ public class StockReturn implements Serializable {
 	}
 
 	public StockReturn(String id, float unitCost,
-			int amount, float sum, String check_conclusion, Date time,
+			int amount, float sum, String checkConclusion, Date time,
 			String clearingForm, String handler,Approval approval, ProviderInfo providerInfo,
 			User user, GoodInfo goodInfo) {
 		super();
@@ -57,7 +57,7 @@ public class StockReturn implements Serializable {
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
-		this.check_conclusion = check_conclusion;
+		this.checkConclusion = checkConclusion;
 		this.time = time;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
@@ -68,7 +68,7 @@ public class StockReturn implements Serializable {
 	}
 
 	public StockReturn(float unitCost, int amount,
-			float sum, String check_conclusion, String clearingForm,
+			float sum, String checkConclusion, String clearingForm,
 			String handler,Approval approval, ProviderInfo providerInfo, User user,
 			GoodInfo goodInfo) {
 		super();
@@ -76,7 +76,7 @@ public class StockReturn implements Serializable {
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
-		this.check_conclusion = check_conclusion;
+		this.checkConclusion = checkConclusion;
 		this.clearingForm = clearingForm;
 		this.handler = handler;
 		this.approval = approval;
@@ -117,12 +117,12 @@ public class StockReturn implements Serializable {
 		this.sum = sum;
 	}
 
-	public java.lang.String getCheck_conclusion() {
-		return check_conclusion;
+	public java.lang.String getCheckConclusion() {
+		return checkConclusion;
 	}
 
-	public void setCheck_conclusion(java.lang.String check_conclusion) {
-		this.check_conclusion = check_conclusion;
+	public void setCheckConclusion(java.lang.String checkConclusion) {
+		this.checkConclusion = checkConclusion;
 	}
 
 	public java.util.Date getTime() {
@@ -185,7 +185,7 @@ public class StockReturn implements Serializable {
 	public String toString() {
 		return "StockReturn [id=" + id
 				+ ", unitCost=" + unitCost + ", amount=" + amount + ", sum="
-				+ sum + ", check_conclusion=" + check_conclusion + ", time="
+				+ sum + ", checkConclusion=" + checkConclusion + ", time="
 				+ time + ", clearingForm=" + clearingForm + ", handler="
 				+ handler + ", approval=" + approval.getContent()
 				+ ", providerInfo=" + providerInfo.toString() + ", user="
