@@ -46,6 +46,7 @@
    $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){   
       $(this).prev().focus();
    });
+   
    //2个的适合才有用,暂时影响我界面交互,不用
    $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
       $(this).next().focus();

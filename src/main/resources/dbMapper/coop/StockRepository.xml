@@ -34,17 +34,17 @@
 		 	tb_stock.check_conclusion AS check_conclusion, 
 		 	tb_stock.time AS time, 
 		 	tb_stock.clearing_form AS clearing_form, 
-		 	tb_stock.handler AS handler
+		 	tb_stock.handler AS handler,
 		 	tb_stock.state AS state
 		FROM tb_stock 
-		JOIN tb_provider_info ON tb_provider_info.id = tb_stock.provider_id 
+		JOIN tb_provider_info ON tb_provider_info.id = tb_stock.provider_id  
 		JOIN tb_user ON tb_user.account = tb_stock.user_id 
 		JOIN tb_good_info ON tb_good_info.id = tb_stock.good_id 
 	</sql>
 	
 	<sql id="count_stock_info">
 		SELECT COUNT(*) FROM tb_stock 
-		JOIN tb_provider_info ON tb_provider_info.id = tb_stock.provider_id 
+		JOIN tb_provider_info ON tb_provider_info.id = tb_stock.provider_id  
 		JOIN tb_user ON tb_user.account = tb_stock.user_id 
 		JOIN tb_good_info ON tb_good_info.id = tb_stock.good_id 
 	</sql>
@@ -78,7 +78,7 @@
 		 	check_conclusion =#{checkConclusion},
 		 	time=#{time}, 
 		 	clearing_form=#{clearingForm}, 
-		 	handler=#{handler}
+		 	handler=#{handler},
 		 	state=#{approval, typeHandler=org.mo.jims.coop.typehandler.ApprovalHadler}
 		WHERE
 			id=#{id}

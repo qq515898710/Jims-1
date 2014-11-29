@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.mo.jims.coop.entity.StockReturn;
+import org.mo.jims.coop.enumtype.Approval;
 import org.mo.jims.coop.repository.StockReturnRepository;
 import org.mo.open.common.util.Page;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,7 @@ public class StockReturnService {
 			if (entity.getTime() == null) {
 				entity.setTime(stockReturnRepository.getCurrentTime());
 			}
+			entity.setApproval(Approval.NOPASS);
 			stockReturnRepository.insert(entity);
 			return true;
 		}

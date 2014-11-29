@@ -45,7 +45,7 @@ public class InventoryInfoController {
 
 	@RequestMapping(value = "coop/kucunpandian.html", method = RequestMethod.GET)
 	public ModelAndView checkInventory(ModelMap model) {
-		model.put("baseActive", "baseManage");
+		model.put("baseActive", "depotManage");
 		model.put("active", "KuCunPanDian");
 		logger.info("进入库存盘点界面");
 		return new ModelAndView("coop/depotManage/KuCunPanDian");
@@ -53,7 +53,7 @@ public class InventoryInfoController {
 
 	@RequestMapping(value = "coop/jiagetiaozheng.html", method = RequestMethod.GET)
 	public ModelAndView adjustInventory(ModelMap model) {
-		model.put("baseActive", "baseManage");
+		model.put("baseActive", "depotManage");
 		model.put("active", "JiaGeTiaoZheng");
 		logger.info("进入价格调整界面");
 		return new ModelAndView("coop/depotManage/JiaGeTiaoZheng");

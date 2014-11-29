@@ -61,7 +61,7 @@
      <div class="page-content"> 
       <div class="row"> 
        <div class="col-xs-12">
-        <h3 class="header smaller lighter blue">
+        <h3 class="header smaller lighter blue fixed-div">
           <jsp:include page="KeHuGuanLi_detailed.jsp"></jsp:include>
           <button id="bt-search-dialog" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#search-dialog-message"><i class="icon-search align-top bigger-125"  ></i>查询 </button>
           <jsp:include page="KeHuGuanLi_search.jsp"></jsp:include>
