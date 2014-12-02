@@ -6,19 +6,17 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.mo.jims.coop.entity.GoodInfo;
-import org.mo.jims.coop.entity.ProviderGood;
-import org.mo.jims.coop.entity.ProviderInfo;
 import org.mo.jims.coop.repository.GoodInfoRepository;
-import org.mo.jims.coop.repository.ProviderInfoRepository;
 import org.mo.open.common.util.Page;
 import org.springframework.stereotype.Service;
 
 @Service("goodInfoService")
 public class GoodInfoService {
-
+	
+	private final static int BATCH_SIZE = 100;
+	
 	private GoodInfoRepository goodInfoRepository;
 
-	private ProviderInfoRepository providerInfoRepository;
 
 	public List<GoodInfo> getGoodInfoByProvider(String name) {
 		if (!"".equals(name) && name != null) {
@@ -31,14 +29,67 @@ public class GoodInfoService {
 		return goodInfoRepository.selectAllGoodName();
 	}
 
-	public boolean batchRemove(String[] ids) {
-		if (ids != null) {
-			goodInfoRepository.batchDelete(ids);
+	public boolean batchRemove(List<String> id) {
+		if (id.size() > 0) {
+			if (id.size() <= BATCH_SIZE) {
+				goodInfoRepository.batchDelete(id);
+			} else {
+				int count = id.size() / BATCH_SIZE;
+				if (id.size() % BATCH_SIZE != 0) {
+					count += 1;
+				}
+				List<String> temp = null;
+				int startIndex = 0;
+				int endIndex = 0;
+				for (int i = 0; i < count; i++) {
+					startIndex = i * BATCH_SIZE;
+					endIndex = startIndex + BATCH_SIZE;
+					if (endIndex > id.size()) {
+						endIndex = id.size();
+					}
+					System.out.println("=========== 批次：" + (i + 1)
+							+ ", startIndex:" + startIndex + ", endIndex:"
+							+ endIndex);
+					temp= id.subList(startIndex, endIndex);
+					goodInfoRepository.batchDelete(temp);
+				}
+			}
 			return true;
 		}
 		return false;
 	}
-
+	
+	public boolean batchInsert(List<GoodInfo> goodInfos){
+		if (goodInfos.size() > 0) {
+			if (goodInfos.size() <= BATCH_SIZE) {
+				goodInfoRepository.batchInsert(goodInfos);
+			} else {
+				int count = goodInfos.size() / BATCH_SIZE;
+				if (goodInfos.size() % BATCH_SIZE != 0) {
+					count += 1;
+				}
+				@SuppressWarnings("unused")
+				List<GoodInfo> temp = null;
+				int startIndex = 0;
+				int endIndex = 0;
+				for (int i = 0; i < count; i++) {
+					startIndex = i * BATCH_SIZE;
+					endIndex = startIndex + BATCH_SIZE;
+					if (endIndex > goodInfos.size()) {
+						endIndex = goodInfos.size();
+					}
+					System.out.println("=========== 批次：" + (i + 1)
+							+ ", startIndex:" + startIndex + ", endIndex:"
+							+ endIndex);
+					temp = goodInfos.subList(startIndex, endIndex);
+					goodInfoRepository.batchInsert(goodInfos);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	public GoodInfo getGoodInfoByName(String name) {
 		if (!"".equals(name) && name != null) {
 			return goodInfoRepository.selcetByName(name);
@@ -71,20 +122,21 @@ public class GoodInfoService {
 		return null;
 	}
 
-	public boolean saveGoodInfo(GoodInfo goodInfo, ProviderInfo providerInfo) {
-		if (goodInfo != null && providerInfo != null) {
+	public boolean saveGoodInfo(GoodInfo goodInfo) {
+		if (goodInfo != null) {
 			if (goodInfo.getTime() == null) {
 				goodInfo.setTime(goodInfoRepository.getCurrentTime());
 			}
 			String name = goodInfo.getName();
-			GoodInfo selcetByName = goodInfoRepository.selcetByName(name);
-			if(selcetByName == null){
-				goodInfoRepository.insert(goodInfo);
-				ProviderGood providerGood = new ProviderGood();
-				providerGood.setGoodInfo(goodInfo);
-				providerGood.setProviderInfo(providerInfo);
-				goodInfoRepository.saveRelativity(providerGood);
-				return true;
+			int countByGoodName = goodInfoRepository.countByGoodName(name);
+			if(countByGoodName == 0){
+				try {
+					goodInfoRepository.insert(goodInfo);
+					return true;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return false;
+				}
 			}
 		}
 		return false;
@@ -100,12 +152,7 @@ public class GoodInfoService {
 
 	public boolean removeGoodInfoByPK(String id) {
 		if (!"".equals(id) && id != null) {
-			GoodInfo selectByPK = goodInfoRepository.selectByPK(id);
-			ProviderGood providerGood = new ProviderGood();
-			providerGood.setGoodInfo(selectByPK);
 			goodInfoRepository.deleteByPK(id);
-			//TODO:暂时移除删除关系,由于数据库设置了cascade
-			//providerInfoRepository.deleteRelativity(providerGood);
 			return true;
 		}
 		return false;
@@ -154,16 +201,6 @@ public class GoodInfoService {
 	@Resource(name = "goodInfoRepository")
 	public void setGoodInfoRepository(GoodInfoRepository goodInfoRepository) {
 		this.goodInfoRepository = goodInfoRepository;
-	}
-
-	public ProviderInfoRepository getProviderInfoRepository() {
-		return providerInfoRepository;
-	}
-
-	@Resource(name = "providerInfoRepository")
-	public void setProviderInfoRepository(
-			ProviderInfoRepository providerInfoRepository) {
-		this.providerInfoRepository = providerInfoRepository;
 	}
 
 }

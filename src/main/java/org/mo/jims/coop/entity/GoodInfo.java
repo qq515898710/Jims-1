@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.mo.open.common.util.Sequence;
 
-
 /**
  * 商品信息
  */
@@ -27,7 +26,7 @@ public class GoodInfo implements Serializable {
 
 	private java.lang.String origin;
 
-	private java.lang.String units;
+	private float unitCost;
 
 	private java.lang.String pack;
 
@@ -36,8 +35,10 @@ public class GoodInfo implements Serializable {
 	private java.lang.String batchNum;
 
 	private java.lang.String memo;
-	
+
 	private Date time;
+
+	private ProviderInfo providerInfo;
 
 	private List<Sell> sell;
 
@@ -47,21 +48,19 @@ public class GoodInfo implements Serializable {
 
 	private List<StockReturn> stockReturn;
 
-	private List<ProviderInfo> providerInfo;
-
 	public GoodInfo() {
 		super();
 	}
 
 	public GoodInfo(String id, String name, String abbreviation, String origin,
-			String units, String pack, String approvalNum, String batchNum,
+			float unitCost, String pack, String approvalNum, String batchNum,
 			String memo, Date time) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.abbreviation = abbreviation;
 		this.origin = origin;
-		this.units = units;
+		this.unitCost = unitCost;
 		this.pack = pack;
 		this.approvalNum = approvalNum;
 		this.batchNum = batchNum;
@@ -70,14 +69,14 @@ public class GoodInfo implements Serializable {
 	}
 
 	public GoodInfo(String name, String abbreviation, String origin,
-			String units, String pack, String approvalNum, String batchNum,
+			float unitCost, String pack, String approvalNum, String batchNum,
 			String memo) {
 		super();
 		this.id = "g" + Sequence.nextId();
 		this.name = name;
 		this.abbreviation = abbreviation;
 		this.origin = origin;
-		this.units = units;
+		this.unitCost = unitCost;
 		this.pack = pack;
 		this.approvalNum = approvalNum;
 		this.batchNum = batchNum;
@@ -116,12 +115,12 @@ public class GoodInfo implements Serializable {
 		this.origin = origin;
 	}
 
-	public java.lang.String getUnits() {
-		return units;
+	public float getUnitCost() {
+		return unitCost;
 	}
 
-	public void setUnits(java.lang.String units) {
-		this.units = units;
+	public void setUnitCost(float unitCost) {
+		this.unitCost = unitCost;
 	}
 
 	public java.lang.String getPack() {
@@ -155,7 +154,7 @@ public class GoodInfo implements Serializable {
 	public void setMemo(java.lang.String memo) {
 		this.memo = memo;
 	}
-	
+
 	public Date getTime() {
 		return time;
 	}
@@ -196,21 +195,21 @@ public class GoodInfo implements Serializable {
 		this.stockReturn = stockReturn;
 	}
 
-	public List<ProviderInfo> getProviderInfo() {
+	public ProviderInfo getProviderInfo() {
 		return providerInfo;
 	}
 
-	public void setProviderInfo(List<ProviderInfo> providerInfo) {
+	public void setProviderInfo(ProviderInfo providerInfo) {
 		this.providerInfo = providerInfo;
 	}
 
 	@Override
 	public String toString() {
 		return "GoodInfo [id=" + id + ", name=" + name + ", abbreviation="
-				+ abbreviation + ", origin=" + origin + ", units=" + units
-				+ ", pack=" + pack + ", approvalNum=" + approvalNum
-				+ ", batchNum=" + batchNum + ", memo=" + memo + ", time="
-				+ time + "]";
+				+ abbreviation + ", origin=" + origin + ", unitCost="
+				+ unitCost + ", pack=" + pack + ", approvalNum=" + approvalNum
+				+ ", batchNum=" + batchNum + ", memo=" + memo
+				+ ", providerInfo=" + providerInfo.toString() + "]";
 	}
-	
+
 }

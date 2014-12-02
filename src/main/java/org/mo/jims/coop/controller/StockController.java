@@ -61,8 +61,7 @@ public class StockController {
 	@ResponseBody
 	public JsonResponse addStock(@RequestBody final StockDTO[] stockDTO){
 		JsonResponse jsonResponse = new JsonResponse();
-		UserDetails userDetails = (UserDetails) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = userDetails.getUsername();
 		User userByPK = userService.getUserByPK(username);
 		try{

@@ -20,7 +20,7 @@ public class GoodInfoDTO implements java.io.Serializable{
 
 	private java.lang.String origin;
 
-	private java.lang.String units;
+	private java.lang.String unitCost;
 
 	private java.lang.String pack;
 
@@ -34,6 +34,8 @@ public class GoodInfoDTO implements java.io.Serializable{
 	
 	private String providerName;
 	
+	private String providerId;
+	
 	private String formtoken;
 	
 	public GoodInfoDTO() {
@@ -42,7 +44,7 @@ public class GoodInfoDTO implements java.io.Serializable{
 
 	public GoodInfo toEditObject() throws MyRuntimeException {
 		try{
-			return new GoodInfo(id, name, abbreviation, origin, units, pack,
+			return new GoodInfo(id, name, abbreviation, origin, Float.parseFloat(unitCost), pack,
 					approvalNum, batchNum, memo,
 					JavaDateConverter.StringConverterDate(time));
 		}catch(Exception e){
@@ -52,7 +54,7 @@ public class GoodInfoDTO implements java.io.Serializable{
 	
 	public GoodInfo toAddObject() throws MyRuntimeException {
 		try{
-			return new GoodInfo(name, abbreviation, origin, units, pack,
+			return new GoodInfo(name, abbreviation, origin, Float.parseFloat(unitCost), pack,
 					approvalNum, batchNum, memo);
 		}catch(Exception e){
 			throw new MyRuntimeException("toAddObject-GoodInfoDTO convert fail");
@@ -91,12 +93,12 @@ public class GoodInfoDTO implements java.io.Serializable{
 		this.origin = origin;
 	}
 
-	public java.lang.String getUnits() {
-		return units;
+	public java.lang.String getUnitCost() {
+		return unitCost;
 	}
 
-	public void setUnits(java.lang.String units) {
-		this.units = units;
+	public void setUnitCost(java.lang.String unitCost) {
+		this.unitCost = unitCost;
 	}
 
 	public java.lang.String getPack() {
@@ -157,10 +159,18 @@ public class GoodInfoDTO implements java.io.Serializable{
 		this.providerName = providerName;
 	}
 
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+
 	@Override
 	public String toString() {
 		return "GoodInfoDTO [id=" + id + ", name=" + name + ", abbreviation="
-				+ abbreviation + ", origin=" + origin + ", units=" + units
+				+ abbreviation + ", origin=" + origin + ", unitCost=" + unitCost
 				+ ", pack=" + pack + ", approvalNum=" + approvalNum
 				+ ", batchNum=" + batchNum + ", memo=" + memo + ", time="
 				+ time + ", providerName=" + providerName + ", formtoken="

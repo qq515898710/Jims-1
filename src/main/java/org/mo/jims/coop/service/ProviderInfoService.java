@@ -6,13 +6,14 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.mo.jims.coop.entity.ProviderInfo;
-import org.mo.jims.coop.entity.ProviderGood;
 import org.mo.jims.coop.repository.ProviderInfoRepository;
 import org.mo.open.common.util.Page;
 import org.springframework.stereotype.Service;
 
 @Service("providerInfoService")
 public class ProviderInfoService {
+
+	private final static int BATCH_SIZE = 100;
 
 	private ProviderInfoRepository providerInfoRepository;
 
@@ -27,9 +28,62 @@ public class ProviderInfoService {
 		return providerInfoRepository.selectAllProviderName();
 	}
 
-	public Boolean batchRemove(String[] id) {
-		if (id != null) {
-			providerInfoRepository.batchDelete(id);
+	public boolean batchRemove(List<String> id) {
+		if (id.size() > 0) {
+			if (id.size() <= BATCH_SIZE) {
+				providerInfoRepository.batchDelete(id);
+			} else {
+				int count = id.size() / BATCH_SIZE;
+				if (id.size() % BATCH_SIZE != 0) {
+					count += 1;
+				}
+				List<String> temp = null;
+				int startIndex = 0;
+				int endIndex = 0;
+				for (int i = 0; i < count; i++) {
+					startIndex = i * BATCH_SIZE;
+					endIndex = startIndex + BATCH_SIZE;
+					if (endIndex > id.size()) {
+						endIndex = id.size();
+					}
+					System.out.println("=========== 批次：" + (i + 1)
+							+ ", startIndex:" + startIndex + ", endIndex:"
+							+ endIndex);
+					temp= id.subList(startIndex, endIndex);
+					providerInfoRepository.batchDelete(temp);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean batchInsert(List<ProviderInfo> providerInfos){
+		if (providerInfos.size() > 0) {
+			if (providerInfos.size() <= BATCH_SIZE) {
+				providerInfoRepository.batchInsert(providerInfos);
+			} else {
+				int count = providerInfos.size() / BATCH_SIZE;
+				if (providerInfos.size() % BATCH_SIZE != 0) {
+					count += 1;
+				}
+				@SuppressWarnings("unused")
+				List<ProviderInfo> temp = null;
+				int startIndex = 0;
+				int endIndex = 0;
+				for (int i = 0; i < count; i++) {
+					startIndex = i * BATCH_SIZE;
+					endIndex = startIndex + BATCH_SIZE;
+					if (endIndex > providerInfos.size()) {
+						endIndex = providerInfos.size();
+					}
+					System.out.println("=========== 批次：" + (i + 1)
+							+ ", startIndex:" + startIndex + ", endIndex:"
+							+ endIndex);
+					temp = providerInfos.subList(startIndex, endIndex);
+					providerInfoRepository.batchInsert(providerInfos);
+				}
+			}
 			return true;
 		}
 		return false;
@@ -72,8 +126,8 @@ public class ProviderInfoService {
 				entity.setTime(providerInfoRepository.getCurrentTime());
 			}
 			String name = entity.getName();
-			ProviderInfo selectByName = providerInfoRepository.selectByName(name);
-			if(selectByName == null){
+			int countByProviderName = providerInfoRepository.countByProviderName(name);
+			if (countByProviderName == 0) {
 				providerInfoRepository.insert(entity);
 				return true;
 			}
@@ -91,11 +145,7 @@ public class ProviderInfoService {
 
 	public boolean removeProviderInfoByPK(String id) {
 		if (id != null && !"".equals(id)) {
-			ProviderInfo selectByPK = providerInfoRepository.selectByPK(id);
-			ProviderGood providerGood = new ProviderGood();
-			providerGood.setProviderInfo(selectByPK);
 			providerInfoRepository.deleteByPK(id);
-			providerInfoRepository.deleteRelativity(providerGood);
 			return true;
 		}
 		return false;

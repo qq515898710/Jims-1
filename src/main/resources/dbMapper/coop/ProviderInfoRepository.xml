@@ -173,30 +173,48 @@
 		LIMIT #{offset}, #{size} 
 	</select>
 	
-	<delete id="batchDelete" parameterType="java.lang.String">
+	<delete id="batchDelete" parameterType="java.util.List">
 		DELETE FROM tb_provider_info WHERE id IN
-		<foreach collection="array" open="(" separator="," close=")"  item="id">
+		<foreach collection="list" open="(" separator="," close=")"  index="index" item="id">
 			#{id}
 		</foreach>
 	</delete>
 	
+	<insert id="batchInsert" parameterType="java.util.List">
+		INSERT INTO tb_provider_info(
+			id,
+		 	name, 
+		 	abbreviation,
+		 	address, 
+		 	postal_code, 
+		 	phone, 
+		 	fax, 
+		 	contacts, 
+		 	telephone, 
+		 	deposit_bank,
+		 	email,
+		 	time 
+		 )
+		VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.id}, #{item.name},#{item.abbreviation},#{item.address}, 
+			#{item.postalCode},#{item.phone},#{item.fax},#{item.contacts},
+			#{item.telephone},#{item.depositBank},#{item.email},#{item.time})
+		</foreach>
+	</insert>
+	
 	<select id="selectByGood" resultMap="providerInfoResultMap">
 		SELECT * FROM tb_provider_info 
-		JOIN tb_provider_good ON tb_provider_info.id = tb_provider_good.provider_id 
-		JOIN tb_good_info ON tb_good_info.id = tb_provider_good.good_id
+		JOIN tb_good_info ON tb_provider_info.id = tb_good_info.provider_id 
 		WHERE tb_good_info.name = #{name} ORDER BY tb_provider_info.time DESC
 	</select>
 	
-	<delete  id="deleteRelativity" parameterType="ProviderGood">
-		DELETE from tb_provider_good
-		<where>
-			<if test="providerInfo.id !=null and providerInfo.id !=''">provider_id=#{providerInfo.id}</if>
-			<if test="goodInfo.id !=null and goodInfo.id !=''">good_id=#{goodInfo.id}</if>
-		</where>
-	</delete>
-	
 	<select id="selectAllProviderName" resultType="String">
 		SELECT name FROM tb_provider_info ORDER BY time DESC
+	</select>
+	
+	<select id="countByProviderName" resultType="int">
+		SELECT COUNT(name) FROM tb_provider_info WHERE name = BINARY #{name}
 	</select>
 	
 	<!-- providerInfo -->

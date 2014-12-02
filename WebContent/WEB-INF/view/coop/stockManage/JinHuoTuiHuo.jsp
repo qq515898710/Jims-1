@@ -94,17 +94,17 @@
                        <li>
                          <i class="icon-caret-right blue"></i>
                          <label name="address">地址：</label>
-                         <span name="address" id="address">-</span>
+                         <span name="address" id="address"></span>
                        </li>
                        <li>
                          <i class="icon-caret-right blue"></i>
                          <label name="contacts">联系人：</label>
-                         <span name="contacts" id="contacts">-</span>
+                         <span name="contacts" id="contacts"></span>
                        </li>
                        <li>
                          <i class="icon-caret-right blue"></i>
                          <label name="telephone">联系电话：</label>
-                         <span name="telephone" id="telephone">-</span>
+                         <span name="telephone" id="telephone"></span>
                        </li>
                      </ul>
                    </div><!--.row  -->
@@ -123,17 +123,17 @@
                        <li>
                          <i class="icon-caret-right green"></i>
                          <label name="origin">产地：</label>
-                         <span name="origin" id="origin">-</span>
+                         <span name="origin" id="origin"></span>
                        </li>
                        <li>
                          <i class="icon-caret-right green"></i>
                          <label name="pack">包装：</label>
-                         <span name="pack" id="pack">-</span>
+                         <span name="pack" id="pack"></span>
                        </li>
                        <li>
                          <i class="icon-caret-right green"></i>
-                         <label name="approvalNum">批准文号：</label>
-                         <span name="approvalNum" id="approvalNum">-</span>
+                         <label name="unitCost">价格：</label>
+                         <span name="unitCost" id="unitCost"></span>
                        </li>
                      </ul>
                    </div><!--.row  -->
@@ -245,20 +245,28 @@
 			    data: "name="+$("#providerName").val(), 
 			    aysnc : false,
 			    success: function (data){
-				    $("#goodName-div").html("<select id='goodName' class='chosen-select' data-placeholder='请选择一个商品'></select>");
-			    	var result="";
-			    	if(data != null && data != ""){
-						result="<option value='0' select >&nbsp;</option>";
-						for(var i = 0; i < data.length;i++){
-							result+="<option value=\""+data[i].name+"\">"+data[i].name+"</option>";
+				    if(data.length > 0){
+					    $("#goodName-div").html("<select id='goodName' class='chosen-select' data-placeholder='请选择一个商品'></select>");
+				    	var result="";
+				    	if(data != null && data != ""){
+							result="<option value='0' select >&nbsp;</option>";
+							for(var i = 0; i < data.length;i++){
+								result+="<option value=\""+data[i].name+"\">"+data[i].name+"</option>";
+							}
+						}else{
+							result="<option value='0' select >&nbsp;</option>";
 						}
+				    	$("#goodName").html(result);
+						//TODO // 好感人的界面
+						$("#goodName").chosen();
+						$("#goodName_chosen").css("width","160px");
 					}else{
-						result="<option value='0' select >&nbsp;</option>";
+						$("#goodName-div").html("");
+					    $("#origin").html("");
+					    $("#pack").html("");
+					    $("#unitCost").html("");
+					    $("#form-good-name").attr("value","");
 					}
-			    	$("#goodName").html(result);
-					//TODO // 好感人的界面
-					$("#goodName").chosen();
-					$("#goodName_chosen").css("width","160px");
 			    }
 		    });
 		});
@@ -267,7 +275,7 @@
 		    $.get("coop/searchGoodsByName",{name:$("#goodName").val()},function(msg){
 			    $("#origin").html(msg.origin);
 			    $("#pack").html(msg.pack);
-			    $("#approvalNum").html(msg.approvalNum);
+			    $("#unitCost").html(msg.unitCost);
 			    $("#form-good-id").attr("value",msg.id);
 			    $("#form-good-name").attr("value",msg.name);
 			});

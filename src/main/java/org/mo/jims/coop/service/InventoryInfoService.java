@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 @Service("inventoryInfoService")
 public class InventoryInfoService {
 
+	private final static int BATCH_SIZE = 100;
+	
 	private InventoryInfoRepository inventoryInfoRepository;
 
 	public List<InventoryInfo> getByInventoryInfoGoodName(String goodName) {
@@ -22,9 +24,31 @@ public class InventoryInfoService {
 		return null;
 	}
 
-	public boolean batchRemove(String[] id) {
-		if (id != null) {
-			inventoryInfoRepository.batchDelete(id);
+	public boolean batchRemove(List<String> id) {
+		if (id.size() > 0) {
+			if (id.size() <= BATCH_SIZE) {
+				inventoryInfoRepository.batchDelete(id);
+			} else {
+				int count = id.size() / BATCH_SIZE;
+				if (id.size() % BATCH_SIZE != 0) {
+					count += 1;
+				}
+				List<String> temp = null;
+				int startIndex = 0;
+				int endIndex = 0;
+				for (int i = 0; i < count; i++) {
+					startIndex = i * BATCH_SIZE;
+					endIndex = startIndex + BATCH_SIZE;
+					if (endIndex > id.size()) {
+						endIndex = id.size();
+					}
+					System.out.println("=========== 批次：" + (i + 1)
+							+ ", startIndex:" + startIndex + ", endIndex:"
+							+ endIndex);
+					temp= id.subList(startIndex, endIndex);
+					inventoryInfoRepository.batchDelete(temp);
+				}
+			}
 			return true;
 		}
 		return false;

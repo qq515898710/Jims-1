@@ -23,8 +23,9 @@
 		INSERT INTO tb_inventory_info(
 		 	good_id, 
 		 	unit_cost, 
-		 	amount)
-		VALUE(#{goodInfo.id},#{unitCost},#{amount})
+		 	amount,
+		 	time)
+		VALUE(#{goodInfo.id},#{unitCost},#{amount},#{time})
 	</insert>
 
 	<update id="updateByPK" parameterType="InventoryInfo">
@@ -181,9 +182,9 @@
 		LIMIT #{offset}, #{size}
 	</select>
 	
-	<delete id="batchDelete" parameterType="java.lang.String">
+	<delete id="batchDelete" parameterType="java.util.List">
 		DELETE FROM tb_inventory_info WHERE id IN
-		<foreach collection="array" open="(" separator="," close=")"  item="id">
+		<foreach collection="list" open="(" separator="," close=")"  item="id" index="index">
 			#{id}
 		</foreach>
 	</delete>

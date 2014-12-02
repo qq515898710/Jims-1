@@ -4,32 +4,46 @@
 
 	<sql id="select_good_info">
 		SELECT 
-			id,
-		 	name, 
-		 	abbreviation,
-		 	origin, 
-		 	units, 
-		 	pack, 
-		 	approval_num, 
-		 	batch_num, 
-		 	memo,
-		 	time
-		FROM tb_good_info
+			tb_good_info.id AS id,
+		 	tb_good_info.name AS name,
+		 	tb_good_info.provider_id AS provider_id,
+		 	tb_provider_info.name AS provider_name,
+		 	tb_good_info.abbreviation AS abbreviation,
+		 	tb_good_info.origin AS origin, 
+		 	tb_good_info.unit_cost AS unit_cost, 
+		 	tb_good_info.pack AS pack, 
+		 	tb_good_info.approval_num AS approval_num, 
+		 	tb_good_info.batch_num AS batch_num, 
+		 	tb_good_info.memo AS memo,
+		 	tb_good_info.time AS time
+		FROM tb_good_info 
+		JOIN tb_provider_info ON tb_good_info.provider_id = tb_provider_info.id
 	</sql>
 
 	<insert id="insert" parameterType="GoodInfo">
-		INSERT INTO tb_good_info(id,name,abbreviation,origin,units,
-			pack,approval_num,batch_num,memo,time)
-		VALUE(#{id}, #{name},#{abbreviation},#{origin}, #{units},
+		INSERT INTO tb_good_info(
+			id,
+			provider_id,
+			name,
+			abbreviation,
+			origin,
+			unit_cost,
+			pack,
+			approval_num,
+			batch_num,
+			memo,
+			time)
+		VALUE(#{id}, #{providerInfo.id}, #{name},#{abbreviation},#{origin}, #{unitCost},
 			#{pack},#{approvalNum},#{batchNum},#{memo},#{time})
 	</insert>
 
 	<update id="updateByPK" parameterType="GoodInfo">
 		UPDATE tb_good_info SET
 		 	name=#{name}, 
+		 	provider_id = #{providerInfo.id},
 		 	abbreviation=#{abbreviation},
 		 	origin=#{origin}, 
-		 	units=#{units}, 
+		 	unit_cost=#{unitCost}, 
 		 	pack=#{pack}, 
 		 	approval_num=#{approvalNum}, 
 		 	batch_num=#{batchNum}, 
@@ -45,7 +59,7 @@
 
 	<select id="selectByPK" resultMap="goodInfoResultMap">
 		<include refid="select_good_info" />
-		WHERE id = #{id} 
+		WHERE tb_good_info.id = #{id} 
 	</select>
 	
 	<select id="getCurrentTime" resultType="Date">
@@ -53,7 +67,8 @@
 	</select>
 	
 	<select id="getLatestInsert" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info ORDER BY id DESC LIMIT 1 
+		<include refid="select_good_info"/>
+		ORDER BY tb_good_info.id DESC LIMIT 1 
 	</select>
 	
 	<select id="getLatestInsertId" resultType="String">
@@ -61,39 +76,48 @@
 	</select>
 
 	<select id="selectToday" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info WHERE TO_DAYS(time) = TO_DAYS(NOW()) ORDER BY time DESC;
+		<include refid="select_good_info"/>
+		WHERE TO_DAYS(tb_good_info.time) = TO_DAYS(NOW()) ORDER BY tb_good_info.time DESC;
 	</select>
 	
 	<select id="selectYesterday" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info WHERE TO_DAYS(NOW())-TO_DAYS(time) = 1 ORDER BY time DESC;
+		<include refid="select_good_info"/>
+		WHERE TO_DAYS(NOW())-TO_DAYS(tb_good_info.time) = 1 ORDER BY tb_good_info.time DESC;
 	</select>
 	
 	<select id="selectThisWeek" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info WHERE YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY time DESC;
+		<include refid="select_good_info"/>
+		WHERE YEARWEEK(DATE_FORMAT(tb_good_info.time,'%Y-%m-%d')) = YEARWEEK(NOW()) ORDER BY tb_good_info.time DESC;
 	</select>
 	
 	<select id="selectLastWeek" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(time,'%Y-%m-%d')) = 1 ORDER BY time DESC;
+		<include refid="select_good_info"/>
+		WHERE YEARWEEK(NOW())-YEARWEEK(DATE_FORMAT(tb_good_info.time,'%Y-%m-%d')) = 1 ORDER BY tb_good_info.time DESC;
 	</select>
 	
 	<select id="selectThisMonth" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY time DESC;
+		<include refid="select_good_info"/>
+		WHERE DATE_FORMAT(tb_good_info.time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY tb_good_info.time DESC;
 	</select>
 	
 	<select id="selectLastMonth" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info WHERE DATE_FORMAT(time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY time DESC;
+		<include refid="select_good_info"/>
+		WHERE DATE_FORMAT(tb_good_info.time,'%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%Y-%m') ORDER BY tb_good_info.time DESC;
 	</select>
 	
 	<select id="selectThisYear" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info WHERE YEAR(time) = YEAR(NOW()) ORDER BY time DESC;
+		<include refid="select_good_info"/>
+		WHERE YEAR(tb_good_info.time) = YEAR(NOW()) ORDER BY tb_good_info.time DESC;
 	</select>
 	
 	<select id="selectLastYear" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info WHERE YEAR(time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY time DESC;
+		<include refid="select_good_info"/>
+		WHERE YEAR(tb_good_info.time) = YEAR(DATE_SUB(NOW(),INTERVAL 1 YEAR)) ORDER BY tb_good_info.time DESC;
 	</select>
 	
 	<select id="selectAll" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info ORDER BY time DESC
+		<include refid="select_good_info"/> 
+		ORDER BY tb_good_info.time DESC
 	</select>
 	
 	<select id="countToday" resultType="int">
@@ -134,7 +158,7 @@
 
 	<select id="selcetByName" resultMap="goodInfoResultMap">
 		<include refid="select_good_info" />
-		WHERE name = #{name} ORDER BY time DESC
+		WHERE tb_good_info.name = #{name} ORDER BY tb_good_info.time DESC
 	</select>
 	
 	<select id="countAllByCriteria" resultType="int">
@@ -149,35 +173,53 @@
 	<select id="selectAllByCriteria" resultMap="goodInfoResultMap">
 		<include refid="select_good_info" />
 		<where>
-			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
-			<if test="beginTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
-			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
+			<if test="name != null and name != ''">tb_good_info.name LIKE CONCAT('%', #{name},'%') OR  tb_good_info.abbreviation LIKE CONCAT('%', #{name},'%')</if>
+			<if test="beginTime != null"><![CDATA[AND DATE_FORMAT(tb_good_info.time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
+			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(tb_good_info.time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
 		</where>
 		ORDER BY time DESC
 		LIMIT #{offset}, #{size} 
 	</select>
 	
-	<delete id="batchDelete" parameterType="java.lang.String">
+	<delete id="batchDelete" parameterType="java.util.List">
 		DELETE FROM tb_good_info WHERE id IN
-		<foreach collection="array" open="(" separator="," close=")"  item="id">
+		<foreach collection="list" open="(" separator="," close=")"  item="id" index="index">
 			#{id}
 		</foreach>
 	</delete>
 	
+	<insert id="batchInsert" parameterType="java.util.List">
+		INSERT INTO tb_good_info(
+			id,
+			provider_id,
+			name,
+			abbreviation,
+			origin,
+			unit_cost,
+			pack,
+			approval_num,
+			batch_num,
+			memo,
+			time)
+		VALUES
+		<foreach collection="list" separator="," index="index" item="item">
+			(#{item.id}, #{item.providerInfo.id}, #{item.name},
+			#{item.abbreviation},#{item.origin}, #{item.unitCost},
+			#{item.pack},#{item.approvalNum},#{item.batchNum},#{item.memo},#{item.time})
+		</foreach>
+	</insert>
+	
 	<select id="selectByProvider" resultMap="goodInfoResultMap">
-		SELECT * FROM tb_good_info 
-		JOIN tb_provider_good ON tb_good_info.id = tb_provider_good.good_id 
-		JOIN tb_provider_info ON tb_provider_info.id = tb_provider_good.provider_id
+		<include refid="select_good_info" />
 		WHERE tb_provider_info.name = #{name} ORDER BY tb_good_info.time DESC
 	</select>
 	
-	<insert id="saveRelativity" parameterType="ProviderGood">
-		INSERT INTO tb_provider_good(provider_id, good_id)
-		VALUE(#{providerInfo.id}, #{goodInfo.id})
-	</insert>
-	
 	<select id="selectAllGoodName" resultType="String">
 		SELECT name FROM tb_good_info ORDER BY time DESC
+	</select>
+	
+	<select id="countByGoodName" resultType="int">
+		SELECT COUNT(name) FROM tb_good_info WHERE name = BINARY #{name}
 	</select>
 
 	<!-- goodInfo -->
@@ -186,12 +228,16 @@
 		<result property="name" column="name" />
 		<result property="abbreviation" column="abbreviation" />
 		<result property="origin" column="origin" />
-		<result property="units" column="units" />
+		<result property="unitCost" column="unit_cost" />
 		<result property="pack" column="pack" />
 		<result property="approvalNum" column="approval_num" />
 		<result property="batchNum" column="batch_num" />
 		<result property="memo" column="memo" />
 		<result property="time" column="time" />
+		<association property="providerInfo" javaType="ProviderInfo">
+		 	<id property="id" column="provider_id"/>
+		 	<result property="name" column="provider_name"/>
+		</association>
 	</resultMap>
 
 </mapper>

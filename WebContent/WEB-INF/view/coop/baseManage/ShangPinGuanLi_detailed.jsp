@@ -55,19 +55,13 @@
           </div>
           <div class="profile-info-row"> 
            <div class="profile-info-name"> 供应商</div> 
-           <div class="profile-info-value"> <span class="editable editable-click" id="providerName">-</span> </div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-providerName">-</span> </div> 
           </div> 
          </div> 
         </div> 
        </div> 
       </div> 
-     </div> 
-     <!--.modal-body  --> 
-    </div> 
-    <!--.modal-content  --> 
-   </div> 
-   <!--.modal-dialog  -->
-   <script type="text/javascript">
-   </script> 
-  </div> 
-  <!-- .search-dialog-message -->
+     </div> <!--.modal-body  --> 
+    </div> <!--.modal-content  --> 
+   </div> <!--.modal-dialog  -->
+  </div> <!-- .search-dialog-message -->

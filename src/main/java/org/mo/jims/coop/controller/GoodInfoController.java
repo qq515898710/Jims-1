@@ -1,6 +1,7 @@
 package org.mo.jims.coop.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,13 @@ public class GoodInfoController {
 		model.put("active", "ShangPinChaXun");
 		logger.info("进入商品查询界面");
 		return new ModelAndView("coop/searchStatistic/ShangPinChaXun");
+	}
+	
+	@RequestMapping(value="coop/searchallgoodname",method=RequestMethod.GET)
+	@ResponseBody
+	public List<String> searchAllGoodName(){
+		List<String> allGoodName = goodInfoService.getAllGoodName();
+		return allGoodName;
 	}
 	
 	@RequestMapping(value="coop/searchGoodsByName",method=RequestMethod.GET)
@@ -146,7 +154,13 @@ public class GoodInfoController {
 					public void run() {
 						try {
 							Thread.sleep(3000);
+							String providerId = goodInfoDTO.getProviderId();
+							ProviderInfo providerInfoByPK = providerInfoService.getProviderInfoByPK(providerId);
+							//TODO 测试
+							System.out.println(goodInfoDTO.toString());
+							System.out.println(providerInfoByPK.toString());
 							GoodInfo entity = goodInfoDTO.toEditObject();
+							entity.setProviderInfo(providerInfoByPK);
 							goodInfoService.alterGoodInfo(entity);
 						} catch (InterruptedException e) {
 							modelMap.put("tip", "修改失败");
@@ -165,14 +179,14 @@ public class GoodInfoController {
 	@RequestMapping(value = "admin/deleteGood", method = RequestMethod.POST)
 	@ResponseBody
 	public JsonResponse delete(@RequestParam(required=true) String deleteId) {
-		JsonResponse jsonResponse =null;
+		JsonResponse jsonResponse = null;
 		String[] ids = deleteId.split(",");
-		if (ids.length > 1) {
-			boolean batchRemove = goodInfoService.batchRemove(ids);
-			 jsonResponse = deleteTip(batchRemove);
+		List<String> id = new ArrayList<String>();
+		for (String result : ids) {
+			id.add(result);
 		}
-		boolean removeByPK = goodInfoService.removeGoodInfoByPK(deleteId);
-		jsonResponse = deleteTip(removeByPK);
+		boolean batchRemove = goodInfoService.batchRemove(id);
+		jsonResponse = deleteTip(batchRemove);
 		return jsonResponse;
 	}
 
@@ -196,10 +210,12 @@ public class GoodInfoController {
 							Thread.sleep(3000);
 							GoodInfo entity = addGoodInfoDTO.toAddObject();
 							//TODO 商品添加好没做啊,记得来修改啊,关于多对多的问题啊
+							//TODO 测试
+							System.out.println(addGoodInfoDTO.toString());
 							ProviderInfo providerInfoByName = providerInfoService.getProviderInfoByName(addGoodInfoDTO.getProviderName());
 							if (providerInfoByName != null) {
-								goodInfoService.saveGoodInfo(entity,
-										providerInfoByName);
+								entity.setProviderInfo(providerInfoByName);
+								goodInfoService.saveGoodInfo(entity);
 							}else{
 								modelMap.put("tip", "供应商不存在哦");
 							}
@@ -232,8 +248,8 @@ public class GoodInfoController {
 		if ("".equals(goodInfoDTO.getOrigin())) {
 			modelMap.put("origin", "产地不能为空");
 		}
-		if ("".equals(goodInfoDTO.getUnits())) {
-			modelMap.put("units", "单位不能为空");
+		if ("".equals(goodInfoDTO.getUnitCost())) {
+			modelMap.put("unitCost", "单价不能为空");
 		}
 		if ("".equals(goodInfoDTO.getPack())) {
 			modelMap.put("pack", "包装不能为空");

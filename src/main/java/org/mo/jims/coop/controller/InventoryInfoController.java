@@ -1,7 +1,9 @@
 package org.mo.jims.coop.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -160,13 +162,12 @@ public class InventoryInfoController {
 			@RequestParam(required = true) String deleteId) {
 		JsonResponse jsonResponse = null;
 		String[] ids = deleteId.split(",");
-		if (ids.length > 1) {
-			boolean batchRemove = inventoryInfoService.batchRemove(ids);
-			jsonResponse = deleteTip(batchRemove);
+		List<String> id = new ArrayList<String>();
+		for(String result :ids){
+			id.add(result);
 		}
-		boolean removeByPK = inventoryInfoService
-				.removeInventoryInfoByPK(deleteId);
-		jsonResponse = deleteTip(removeByPK);
+		boolean batchRemove = inventoryInfoService.batchRemove(id);
+		jsonResponse = deleteTip(batchRemove);
 		return jsonResponse;
 	}
 

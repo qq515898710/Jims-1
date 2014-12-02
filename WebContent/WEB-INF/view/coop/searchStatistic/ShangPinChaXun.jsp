@@ -241,6 +241,7 @@
 	            $("#table-result").showLoading();
 	        },
 		    success: function (data){
+		    	$("#detailed-providerName").html(data.providerInfo.name);
 		    	if(data.name != null && data.name != ''){
 		    		$("#detailed-name").html(data.name);
 		    	}else{

@@ -2,16 +2,28 @@ package org.mo.jims.coop.controller;
 
 import javax.annotation.Resource;
 
+import org.mo.jims.coop.dto.SellReturnDTO;
+import org.mo.jims.coop.entity.CustomerInfo;
+import org.mo.jims.coop.entity.GoodInfo;
+import org.mo.jims.coop.entity.SellReturn;
+import org.mo.jims.coop.enumtype.Approval;
 import org.mo.jims.coop.service.CustomerInfoService;
 import org.mo.jims.coop.service.GoodInfoService;
-import org.mo.jims.coop.service.SellService;
+import org.mo.jims.coop.service.SellReturnService;
+import org.mo.open.common.entity.User;
+import org.mo.open.common.exception.MyRuntimeException;
 import org.mo.open.common.service.UserService;
+import org.mo.open.common.util.JsonResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -21,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class SellReturnController {
 
-	public SellService sellService;
+	public SellReturnService sellReturnService;
 
 	public GoodInfoService goodInfoService;
 
@@ -46,14 +58,38 @@ public class SellReturnController {
 		logger.info("进入销售退货查询界面");
 		return new ModelAndView("coop/searchStatistic/XiaoShouTuiHuoChaXun");
 	}
-
-	public SellService getSellService() {
-		return sellService;
+	
+	@RequestMapping(value = "coop/addSellReturn", method = RequestMethod.POST, consumes="application/json")
+	@ResponseBody
+	public JsonResponse addSell(@RequestBody final SellReturnDTO[] sellReturnDTO){
+		JsonResponse jsonResponse = new JsonResponse();
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = userDetails.getUsername();
+		User userByPK = userService.getUserByPK(username);
+		try{
+			for(SellReturnDTO dto : sellReturnDTO){
+				String goodName = dto.getGoodName();
+				GoodInfo goodInfoByName = goodInfoService.getGoodInfoByName(goodName);
+				String customerName = dto.getCustomerName();
+				CustomerInfo customerInfoByName = customerInfoService.getCustomerInfoByName(customerName);
+				SellReturn addObject = dto.toAddObject(Approval.NOPASS, goodInfoByName, customerInfoByName, userByPK);
+				sellReturnService.saveSellReturn(addObject);
+			}
+			jsonResponse.setMessage("插入成功");
+			jsonResponse.setSuccess(true);
+			return  jsonResponse;
+		}catch(Exception e){
+			throw new MyRuntimeException("添加销售退货信息失败");
+		}
 	}
 
-	@Resource(name = "sellService")
-	public void setSellService(SellService sellService) {
-		this.sellService = sellService;
+	public SellReturnService getSellReturnService() {
+		return sellReturnService;
+	}
+
+	@Resource(name = "sellReturnService")
+	public void setSellReturnService(SellReturnService sellReturnService) {
+		this.sellReturnService = sellReturnService;
 	}
 
 	public GoodInfoService getGoodInfoService() {

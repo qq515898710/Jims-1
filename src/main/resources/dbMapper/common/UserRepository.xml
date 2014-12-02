@@ -25,7 +25,7 @@
 	
 	<select id="selectByPK" resultMap="userResultMap">
 		<include refid="select_user" />
-		WHERE account = BINARY #{account} OR username= #{account}
+		WHERE account = BINARY #{account} OR username = BINARY #{account}
 	</select>
 
 	<select id="getCurrentTime" resultType="Date">

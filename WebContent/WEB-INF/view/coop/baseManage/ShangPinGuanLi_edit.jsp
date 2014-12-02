@@ -32,9 +32,9 @@
         </div> 
        </div> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-units"> 单位： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-unitCost"> 单价： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="edit-units" class="col-xs-8" /> <div id="edit-units-tip"></div>
+         <input type="text" id="edit-unitCost" class="col-xs-8" /> <div id="edit-unitCost-tip"></div>
         </div> 
        </div> 
        <div class="form-group"> 
@@ -64,6 +64,7 @@
        <input type="hidden" name="formtoken"  value="<%=token%>"  id="edit-formtoken">
        <input type="hidden" name="id"  id="edit-id">
        <input type="hidden" name="time" id="edit-time">
+       <input type="hidden" name="provider" id="edit-provider">
        <!-- 警告框 -->
        <div id="edit-alert"></div>
 <!--        <div class="form-group">  -->
@@ -110,12 +111,13 @@ $(document).ready(function() {
 					 $("#edit-name").attr("value",data.name);
 					 $("#edit-abbreviation").attr("value",data.abbreviation);
 					 $("#edit-origin").attr("value",data.origin);
-					 $("#edit-units").attr("value",data.units);
+					 $("#edit-unitCost").attr("value",data.unitCost);
 					 $("#edit-pack").attr("value",data.pack);
 					 $("#edit-approvalNum").attr("value",data.approvalNum);
 					 $("#edit-batchNum").attr("value",data.batchNum);
 					 $("#edit-memo").attr("value",data.memo);
 					 $("#edit-time").attr("value",data.time);
+					 $("#edit-provider").attr("value",data.providerInfo.id);
 				}
 			 });
 			$("#alert").html("");
@@ -137,12 +139,13 @@ $(document).ready(function() {
 	                'name': $("#edit-name").val(),
 	                'abbreviation': $("#edit-abbreviation").val(),
 	                'origin': $("#edit-origin").val(),
-	                'units': $("#edit-units").val(),
+	                'unitCost': $("#edit-unitCost").val(),
 	                'pack': $("#edit-pack").val(),
 	                'approvalNum': $("#edit-approvalNum").val(),
 	                'batchNum': $("#edit-batchNum").val(),
 	                'memo': $("#edit-memo").val(),
 	                'time': $("#edit-time").val(),
+	                'providerId': $("#edit-provider").val(),
 	                'formtoken': $("#edit-formtoken").val()
 	            }),
 	            success: function(data) {
@@ -170,8 +173,8 @@ $(document).ready(function() {
 					        if(data.origin != null){
 					        	$("#edit-origin-tip").html('<span class="formtips onError" style="font-size:50%">' + data.origin + '</span>');
 						    }
-					        if(data.units != null){
-					        	$("#edit-units-tip").html('<span class="formtips onError" style="font-size:50%">' + data.units + '</span>');
+					        if(data.unitCost != null){
+					        	$("#edit-unitCost-tip").html('<span class="formtips onError" style="font-size:50%">' + data.unitCost + '</span>');
 						    }
 					        if(data.pack != null){
 					        	$("#edit-pack-tip").html('<span class="formtips onError" style="font-size:50%">' + data.pack + '</span>');
