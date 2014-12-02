@@ -31,9 +31,9 @@
         </div> 
        </div> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="units"> 单位： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="unitCost"> 单价： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="units" class="col-xs-8" /><div id="units-tip"></div>
+         <input type="text" id="unitCost" class="col-xs-8" /><div id="unitCost-tip"></div>
         </div> 
        </div> 
        <div class="form-group"> 
@@ -62,8 +62,9 @@
        </div>
        <div class="form-group"> 
         <label class="col-sm-3 control-label no-padding-right font" for="providerName">选择供应商： </label> 
-        <div class="col-sm-9"> 
-         <select id="providerName" class="col-xs-8 chosen-select" data-placeholder="请选择一个供应商"></select>
+        <div class="col-sm-9">
+         <select id="providerName" class="col-xs-8 chosen-select" data-placeholder="请选择一个供应商">
+         </select>
         </div> 
        </div><!--.form-group-->
        <input type="hidden" name="formtoken"  value="<%=token%>"  id="formtoken">
@@ -78,18 +79,18 @@
     </div> 
    </div> 
   </div>
-  <script>
-  	 $(document).ready(function() {
+  <script type="text/javascript">
+  jQuery(function($) {
+	  
 		$.get("coop/listProviderByName", function(msg){
 			var result="<option value='0' select >&nbsp;</option>";
 			for(var i = 0; i < msg.length;i++){
-				result+="<option value=\""+msg[i]+"\">"+msg[i]+"</option>";
+				console.info(msg[i]);
+				result+="<option value='"+msg[i]+"'>"+msg[i]+"</option>";
 			}
-			$("#providerName").html(result);
-			//TODO
-			// 好感人的界面
-			$(".chosen-select").chosen();
-			$("#providerName_chosen").css("width","260px");
+			$(".chosen-select").html(result);
+		    $(".chosen-select").chosen();
+		    $("#providerName_chosen").css("width","260px");
 	    });
 
  	    $('form :input').blur(function() {//表单验证
@@ -107,10 +108,10 @@
 	                $("#abbreviation-tip").html('<span class="formtips onError" style="font-size:50%">' + errorMsg + '</span>');
 	            }
 	        }
-	        if ($(this).is('#units')) {
+	        if ($(this).is('#unitCost')) {
 	            if (this.value == "") {
-	                var errorMsg = '单位不正确';
-	                $("#units-tip").html('<span class="formtips onError" style="font-size:50%">' + errorMsg + '</span>');
+	                var errorMsg = '单价不正确';
+	                $("#unitCost-tip").html('<span class="formtips onError" style="font-size:50%">' + errorMsg + '</span>');
 	            }
 	        }
 	        if ($(this).is('#origin')) {
@@ -153,12 +154,12 @@
 	                'name': $("#name").val(),
 	                'abbreviation': $("#abbreviation").val(),
 	                'origin': $("#origin").val(),
-	                'units': $("#units").val(),
+	                'unitCost': $("#unitCost").val(),
 	                'pack': $("#pack").val(),
 	                'approvalNum': $("#approvalNum").val(),
 	                'batchNum': $("#batchNum").val(),
 	                'memo': $("#memo").val(),
-	                'providerName':$("#providerName").val(),
+	                'providerName':$(".chosen-select").val(),
 	                'formtoken': $("#formtoken").val()
 	            }),
 	            async: true,
@@ -187,8 +188,8 @@
 					        if(data.origin != null){
 					        	$("#origin-tip").html('<span class="formtips onError" style="font-size:50%">' + data.origin + '</span>');
 						    }
-					        if(data.units != null){
-					        	$("#units-tip").html('<span class="formtips onError" style="font-size:50%">' + data.units + '</span>');
+					        if(data.unitCost != null){
+					        	$("#unitCost-tip").html('<span class="formtips onError" style="font-size:50%">' + data.unitCost + '</span>');
 						    }
 					        if(data.pack != null){
 					        	$("#pack-tip").html('<span class="formtips onError" style="font-size:50%">' + data.pack + '</span>');

@@ -14,9 +14,9 @@ public class InventoryInfoDTO implements java.io.Serializable {
 
 	private java.lang.String id;
 
-	private float unitCost;
+	private String unitCost;
 
-	private int amount;
+	private String amount;
 
 	private String goodName;
 
@@ -27,7 +27,8 @@ public class InventoryInfoDTO implements java.io.Serializable {
 	public InventoryInfo toEditObject(GoodInfo goodInfo)
 			throws MyRuntimeException {
 		try {
-			return new InventoryInfo(id, unitCost, amount, goodInfo,
+			return new InventoryInfo(id, Float.parseFloat(unitCost),
+					Integer.parseInt(amount), goodInfo,
 					JavaDateConverter.StringConverterDate(time));
 		} catch (Exception e) {
 			throw new MyRuntimeException(
@@ -38,7 +39,8 @@ public class InventoryInfoDTO implements java.io.Serializable {
 	public InventoryInfo toAddObject(GoodInfo goodInfo)
 			throws MyRuntimeException {
 		try {
-			return new InventoryInfo(unitCost, amount, goodInfo);
+			return new InventoryInfo(Float.parseFloat(unitCost),
+					Integer.parseInt(amount), goodInfo);
 		} catch (Exception e) {
 			throw new MyRuntimeException(
 					"toAddObject-InventoryInfoDTO convert fail");
@@ -53,19 +55,19 @@ public class InventoryInfoDTO implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public float getUnitCost() {
+	public String getUnitCost() {
 		return unitCost;
 	}
 
-	public void setUnitCost(float unitCost) {
+	public void setUnitCost(String unitCost) {
 		this.unitCost = unitCost;
 	}
 
-	public int getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.mo.jims.coop.entity.GoodInfo;
+import org.mo.jims.coop.entity.ProviderInfo;
 import org.mo.open.common.util.BaseTest;
 import org.mo.open.common.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ public class GoodInfoServiceTest extends BaseTest{
 
 	@Autowired
 	private GoodInfoService goodInfoService;
+	
+	@Autowired
+	private ProviderInfoService providerInfoService;
 	
 	@Test
 	public void testGetGoodInfoByProvider() {
@@ -51,7 +55,10 @@ public class GoodInfoServiceTest extends BaseTest{
 
 	@Test
 	public void testSaveGoodInfo() {
-		
+		GoodInfo goodInfo = new GoodInfo("红米", "红米", "红米", 201f, "红米", "红米", "红米", "红米");
+		ProviderInfo providerInfo = providerInfoService.getProviderInfoByName("c") ;
+		goodInfo.setProviderInfo(providerInfo );
+		goodInfoService.saveGoodInfo(goodInfo);
 	}
 
 	@Test

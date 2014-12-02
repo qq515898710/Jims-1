@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.mo.jims.coop.entity.GoodInfo;
-import org.mo.jims.coop.entity.ProviderGood;
 import org.mo.open.common.repository.BaseRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,8 +21,10 @@ public interface GoodInfoRepository extends BaseRepository<GoodInfo, String> {
 			@Param("endTime") Date endTime, @Param("offset") int offset,
 			@Param("size") int size);
 
-	public void batchDelete(String[] ids);// 单参数的不需要@Param
+	public void batchDelete(List<String> ids);// 单参数的不需要@Param
 
+	public void batchInsert(List<GoodInfo> goodInfos);
+	
 	/**
 	 * 根据供应商查询货物
 	 * 
@@ -32,7 +33,7 @@ public interface GoodInfoRepository extends BaseRepository<GoodInfo, String> {
 	 */
 	public List<GoodInfo> selectByProvider(String name);
 	
-	public void saveRelativity(ProviderGood providerGood);
-	
 	public List<String> selectAllGoodName();
+	
+	public int countByGoodName(String name);
 }

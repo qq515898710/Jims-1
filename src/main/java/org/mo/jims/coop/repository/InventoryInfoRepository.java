@@ -18,7 +18,7 @@ public interface InventoryInfoRepository extends BaseRepository<InventoryInfo, S
 			@Param("beginTime") Date beginTime, @Param("endTime") Date endTime,
 			@Param("offset") int offset, @Param("size") int size);
 
-	public void batchDelete(String[] id);
+	public void batchDelete(List<String> id);
 
 	public List<InventoryInfo> selectByGoodName(String goodName);
 

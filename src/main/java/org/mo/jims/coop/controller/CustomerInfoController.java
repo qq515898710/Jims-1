@@ -2,6 +2,7 @@ package org.mo.jims.coop.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -52,6 +53,28 @@ public class CustomerInfoController {
 		model.put("active", "KeHuChaXun");
 		logger.info("进入客户查询界面");
 		return new ModelAndView("coop/searchStatistic/KeHuChaXun");
+	}
+	
+	@RequestMapping(value = "coop/searchallcustomername", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> searchAllCustomerName() {
+		List<String> allCustomerName = customerInfoService.getAllCustomerName();
+		return allCustomerName;
+	}
+	
+	@RequestMapping(value = "coop/searchcustomerbyname", method = RequestMethod.GET)
+	@ResponseBody
+	public CustomerInfo searchCustomerByName(@RequestParam(required=true)String name){
+		String newStr = "";
+		try {
+			// 编码有问题,get传过来的参数
+			newStr = new String(name.getBytes("iso8859-1"), "UTF-8");
+			//TODO:测试用
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		CustomerInfo customerInfoByName = customerInfoService.getCustomerInfoByName(newStr);
+		return customerInfoByName;
 	}
 	
 	@RequestMapping(value="coop/searchCustomerById",method=RequestMethod.POST)

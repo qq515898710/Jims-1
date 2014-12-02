@@ -17,11 +17,11 @@ public class SellReturnDTO implements java.io.Serializable {
 
 	private java.lang.String id;
 
-	private float unitCost;
+	private String unitCost;
 
-	private int amount;
+	private String amount;
 
-	private float sum;
+	private String sum;
 
 	private String time;
 
@@ -42,7 +42,8 @@ public class SellReturnDTO implements java.io.Serializable {
 	public SellReturn toEditObject(Approval approval, GoodInfo goodInfo,
 			CustomerInfo customerInfo, User user) throws MyRuntimeException {
 		try {
-			return new SellReturn(id, unitCost, amount, sum,
+			return new SellReturn(id, Float.valueOf(unitCost),
+					Integer.valueOf(amount), Float.valueOf(sum),
 					JavaDateConverter.StringConverterDate(time), clearingForm,
 					handler, approval, goodInfo, customerInfo, user);
 		} catch (Exception e) {
@@ -54,7 +55,8 @@ public class SellReturnDTO implements java.io.Serializable {
 	public SellReturn toAddObject(Approval approval, GoodInfo goodInfo,
 			CustomerInfo customerInfo, User user) throws MyRuntimeException {
 		try {
-			return new SellReturn(unitCost, amount, sum, clearingForm, handler,
+			return new SellReturn(Float.valueOf(unitCost),
+					Integer.valueOf(amount), Float.valueOf(sum), clearingForm, handler,
 					approval, goodInfo, customerInfo, user);
 		} catch (Exception e) {
 			throw new MyRuntimeException(
@@ -70,27 +72,27 @@ public class SellReturnDTO implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public float getUnitCost() {
+	public String getUnitCost() {
 		return unitCost;
 	}
 
-	public void setUnitCost(float unitCost) {
+	public void setUnitCost(String unitCost) {
 		this.unitCost = unitCost;
 	}
 
-	public int getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 
-	public float getSum() {
+	public String getSum() {
 		return sum;
 	}
 
-	public void setSum(float sum) {
+	public void setSum(String sum) {
 		this.sum = sum;
 	}
 

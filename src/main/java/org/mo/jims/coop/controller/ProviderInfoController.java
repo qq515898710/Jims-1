@@ -1,6 +1,7 @@
 package org.mo.jims.coop.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,12 +156,12 @@ public class ProviderInfoController {
 	public JsonResponse delete(@RequestParam(required=true) String deleteId) {
 		JsonResponse jsonResponse =null;
 		String[] ids = deleteId.split(",");
-		if (ids.length > 1) {
-			boolean batchRemove = providerInfoService.batchRemove(ids);
-			 jsonResponse = deleteTip(batchRemove);
+		List<String> id = new ArrayList<String>();
+		for(String result : ids){
+			id.add(result);
 		}
-		boolean removeByPK = providerInfoService.removeProviderInfoByPK(deleteId);
-		jsonResponse = deleteTip(removeByPK);
+		boolean batchRemove = providerInfoService.batchRemove(id);
+		jsonResponse = deleteTip(batchRemove);
 		return jsonResponse;
 	}
 
