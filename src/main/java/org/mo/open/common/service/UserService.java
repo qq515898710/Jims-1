@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.mo.open.common.entity.Role;
 import org.mo.open.common.entity.User;
+import org.mo.open.common.entity.UserRole;
+import org.mo.open.common.repository.RoleRepository;
 import org.mo.open.common.repository.UserRepository;
 import org.mo.open.common.util.ManageProperties;
 import org.mo.open.common.util.Page;
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
 	private UserRepository userRepository;
+	
+	private RoleRepository roleRepository;
 	
 	private Md5PasswordEncoder md5PasswordEncoder;
 	
@@ -46,6 +51,7 @@ public class UserService {
 		if (userPage.getTotalElement() == 0) {
 			return userPage;
 		}
+		List<Role> selectByUser = roleRepository.selectByUser(user.getAccount());
 		List<User> selectAll = userRepository.selectAllByCriteria(user.getAccount(),
 				user.getUsername(), (page - 1) * pageSize, pageSize);
 		userPage.setContent(selectAll);
@@ -74,8 +80,12 @@ public class UserService {
 	 */
 	
 	public boolean saveUser(User entity) {
-		User userByAccount = this.getUserByPK(entity.getUsername());
-		if (userByAccount != null) {
+		int countUserByAccount = userRepository.countUserByAccount(entity.getAccount());
+		if(countUserByAccount > 0){
+			return false;
+		}
+		int countUserByUsername = userRepository.countUserByUsername(entity.getUsername());
+		if(countUserByUsername > 0){
 			return false;
 		}
 		String content = ManageProperties.getInstance().getContent("SALT");
@@ -87,6 +97,11 @@ public class UserService {
 		entity.setCreateDate(userRepository.getCurrentTime());
 		entity.setLatestDate(userRepository.getCurrentTime());
 		userRepository.insert(entity);
+		UserRole userRole = new UserRole();
+		userRole.setUser(entity);
+		Role role = roleRepository.selectByName("user");
+		userRole.setRole(role);
+		roleRepository.saveRelativity(userRole);
 		return true;
 	}
 
@@ -127,6 +142,15 @@ public class UserService {
 	@Resource(name = "md5PasswordEncoder")
 	public void setMd5PasswordEncoder(Md5PasswordEncoder md5PasswordEncoder) {
 		this.md5PasswordEncoder = md5PasswordEncoder;
+	}
+	
+	public RoleRepository getRoleRepository() {
+		return roleRepository;
+	}
+	
+	@Resource(name = "roleRepository")
+	public void setRoleRepository(RoleRepository roleRepository) {
+		this.roleRepository = roleRepository;
 	}
 
 }

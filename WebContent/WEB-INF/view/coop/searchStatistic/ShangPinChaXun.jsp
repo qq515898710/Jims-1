@@ -187,8 +187,6 @@
 					            		  +"<td >"+item.pack+"</td> "
 					            		  +"<td >"+"<div class='visible-md visible-lg hidden-sm hidden-xs action-buttons' id='buttontools'>"
 					            		  				+"<a class='blue' href='javascript:show(\""+item.id+"\")'> <i class='icon-zoom-in bigger-130'></i>"
-					            		  				+"<a class='green' href='javascript:edit(\""+item.id+"\")' > <i class='icon-pencil bigger-130'></i> </a>"
-					            		  				+"<a class='red' href='javascript:delete(\""+item.id+"\")' > <i class='icon-trash bigger-130'></i> </a>"
 					            		  				+"</td> "+"</tr>");
 					            });
 								var begin = Math.max(1, msg.currentPage - pagerRange/2 );

@@ -2,7 +2,6 @@ package org.mo.jims.coop.dto;
 
 import org.mo.jims.coop.entity.GoodInfo;
 import org.mo.jims.coop.entity.InventoryInfo;
-import org.mo.open.common.converter.JavaDateConverter;
 import org.mo.open.common.exception.MyRuntimeException;
 
 public class InventoryInfoDTO implements java.io.Serializable {
@@ -24,12 +23,10 @@ public class InventoryInfoDTO implements java.io.Serializable {
 
 	private String formtoken;
 
-	public InventoryInfo toEditObject(GoodInfo goodInfo)
+	public InventoryInfo toEditObject()
 			throws MyRuntimeException {
 		try {
-			return new InventoryInfo(id, Float.parseFloat(unitCost),
-					Integer.parseInt(amount), goodInfo,
-					JavaDateConverter.StringConverterDate(time));
+			return new InventoryInfo(id, Float.parseFloat(unitCost), Integer.parseInt(amount));
 		} catch (Exception e) {
 			throw new MyRuntimeException(
 					"toEditObject-InventoryInfoDTO convert fail");

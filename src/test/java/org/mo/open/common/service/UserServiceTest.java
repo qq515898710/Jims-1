@@ -28,7 +28,7 @@ public class UserServiceTest extends BaseTest{
 
 	@Test
 	public void testSaveUser() {
-		User entity = new User("莫梓奇4", "123456");
+		User entity = new User("66666662", "123456");
 		boolean saveUser = userService.saveUser(entity);
 		if(saveUser){
 			System.out.println("保存成功");

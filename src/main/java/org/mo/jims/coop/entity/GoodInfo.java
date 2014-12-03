@@ -208,8 +208,7 @@ public class GoodInfo implements Serializable {
 		return "GoodInfo [id=" + id + ", name=" + name + ", abbreviation="
 				+ abbreviation + ", origin=" + origin + ", unitCost="
 				+ unitCost + ", pack=" + pack + ", approvalNum=" + approvalNum
-				+ ", batchNum=" + batchNum + ", memo=" + memo
-				+ ", providerInfo=" + providerInfo.toString() + "]";
+				+ ", batchNum=" + batchNum + ", memo=" + memo + "]";
 	}
 
 }

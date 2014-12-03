@@ -57,19 +57,194 @@
       </ul> 
       <!-- .breadcrumb -->
      </div> 
-     <div class="page-content"> 
+     <div class="page-content">
+      <div class="page-header fixed-div">
+        <p><lable>商品名称：</lable><input type="text" id="name"/></p>
+        <p>
+          <lable>录入时间：</lable>
+          <input type="text" id="beginTime" class="date-picker" data-date-format="yyyy-mm-dd" />
+          &nbsp;到&nbsp;
+          <input type="text" id="endTime" class="date-picker" data-date-format="yyyy-mm-dd"/>
+        </p>
+        <p>
+          <button class="btn btn-primary btn-sm" id="search"><i class="icon-search align-top bigger-125"></i>查询</button>
+          <button class="btn btn-success btn-sm" id="search-all"><i class="icon-search align-top bigger-125"></i>查询全部</button>
+        </p>
+      </div><!--.page-header  -->
       <div class="row"> 
        <div class="col-xs-12">
        <div class="space-6"></div>
-         <div class="row">
-         </div><!--.row  -->
+         <div id="alert"></div>
+         <div id="table-result">
+           <div class="table-header">所有信息 </div>
+           <div class="table-responsive">
+             <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
+               <div class="row">
+                 <div class="col-sm-6">
+                   <div id="pager">
+                     <label>显示 
+                       <select size="1" onchange="javascript:gotoPage(1,'goodName=&beginTime=&endTime=')" id="p_pageSizeSelect">
+                         <option value="10" selected="selected">10</option>
+                         <option value="25">25</option>
+                         <option value="50">50</option>
+                         <option value="100">100</option>
+                       </select>记录
+                     </label>
+                   </div><!--#page  -->
+                 </div><!--.col-sm-6  -->
+                 <div id="pages"></div>
+               </div><!--.row  -->
+               <!-- 显示列表数据 -->
+               <table id="table" class="table table-striped table-bordered table-hover dataTable" aria-describedby="sample-table-2_info">
+                 <thead>
+                   <tr role="row">
+                     <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace"  id="checkall"/> <span class="lbl"></span> </label> </th> 
+                     <th  role="columnheader"  rowspan="1" colspan="1" style="width: 50px;" >序号</th>
+                     <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >商品名称</th> 
+                     <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >单价</th> 
+                     <th role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" > <i class="icon-time bigger-110 hidden-480"></i>录入时间</th> 
+                     <th  role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" >数量 </th> 
+                     <th  role="columnheader" rowspan="1" colspan="1" style="width: 156px;" aria-label="">操作</th>
+                   </tr>
+                 </thead>
+                 <tbody role="alert" aria-live="polite" aria-relevant="all"  id="tb">
+               </table><!--#table  -->
+               <div class="row" ><div class="col-sm-6"  id="other"></div></div><!--.row  -->
+             </div><!--.dataTables_wrapper  -->
+           </div><!--.table-responsive  -->
+         </div><!--.table-result  -->
        </div> <!-- .col-xs-12 -->
       </div> <!-- /.row --> 
      </div> <!-- /.page-content --> 
     </div> <!-- /.main-content --> 
     <script type="text/javascript">
+    jQuery(function($) {
+
+        gotoPage(1,'goodName=&beginTime=&endTime=');
+        
+	    $("#search").click(function () {
+           var searchName=$("#name").val();
+           var beginTime=$("#beginTime").val();
+           var endTime=$("#endTime").val();
+           gotoPage(1,"goodName="+searchName+"&beginTime="+beginTime+"&endTime="+endTime);
+	    });
+	    
+	    $("#search-all").click(function () {
+	    	gotoPage(1,'goodName=&beginTime=&endTime=');
+	    });
+	    
+	    $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){   
+	    });
+		   
+		/* 复选框操作 */
+		$('table th input:checkbox').on('click' , function(){
+			var that = this;
+			$(this).closest('table').find('tr > td:first-child input:checkbox')
+			.each(function(){
+				this.checked = that.checked;
+				$(this).closest('tr').toggleClass('selected');
+			});
+		});
+		
+		$(document).keydown(function(event){
+			if(event.keyCode==13){//enter键
+			    $("#search").click();
+			}
+		});
+	});
+	
+	//分页显示工具
+	function gotoPage(pageIndex, cond) {
+		var pagerRange = 6;//
+		var pageSize =  $("#p_pageSizeSelect").val(); //获取每一页显示多少记录
+		var loc="<div class='col-sm-6'><div class='dataTables_paginate paging_bootstrap'><ul class='pagination'>";
+		$('#tb').html("");
+		$.ajax({
+			url : "coop/pageOfInventorysByCriteria",
+			type : 'get',
+			data : "page=" + pageIndex + "&size=" + pageSize+"&"+cond,
+			beforeSend:function(XMLHttpRequest){
+				  //TODO 测试用
+	              //alert('远程调用开始...');
+	              $("#table-result").showLoading();
+	         },
+			success : function(msg) {
+				if(msg.totalElement == 0){
+					$('#tb').append("<tr><td colspan=7><div class='alert alert-block alert-danger'><div class='danger bold-center'>没结果</div><div></td></tr>");
+					$('#pages').html("");
+					$("#other").html("");
+				}else{
+					$.each(msg.content, function(i, item) {
+			              $('#tb').append( "<tr>"
+			            		  +"<td><label> <input type='checkbox' class='ace' name='checkbox' value='"+item.id+"' /><span class='lbl'></span> </label></td>"
+			            		  +"<td >"+(++i)+"</td> "
+			            		  +"<td >"+item.goodInfo.name+"</td> "
+			            		  +"<td >"+item.unitCost+"</td> "
+			            		  +"<td >"+getFormatDateByLong(item.time,"yyyy-MM-dd")+"</td> "
+			            		  +"<td >"+item.amount+"</td> "
+			            		  +"<td >"+"<div class='visible-md visible-lg hidden-sm hidden-xs action-buttons' id='buttontools'>"
+			            		  				+"<a class='green' href='javascript:edit(\""+item.id+"\")' > <i class='icon-pencil bigger-130'></i> </a>"
+			            		  				+"</td> "+"</tr>");
+			            });
+						var begin = Math.max(1, msg.currentPage - pagerRange/2 );
+						var end = Math.min(begin + (pagerRange - 1), msg.totalPage);
+						if(msg.currentPage !=1){
+							loc+="<li class='prev '><a href='javascript:gotoPage(1,\""+cond+"\")'><i class=' icon-double-angle-left '></i></a></li><li class='prev '><a href='javascript:gotoPage("+(msg.currentPage - 1)+",\""+cond+"\")'><i class=' icon-angle-left '></i></a></li>";
+						}else{
+							loc+="<li class='prev disabled'><a href='javascript:void(0)'><i class=' icon-double-angle-left '></i></a></li><li class='prev disabled'><a href='javascript:void(0)'><i class=' icon-angle-left '></i></a></li>";
+						}
+						for(var i = begin; i <= end; i++){
+							if(msg.currentPage == i){
+								loc+="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>"
+							}else{
+								loc+="<li><a href='javascript:gotoPage("+i +",\""+cond+"\")' >"+i+"</a></li>"
+							}
+						}
+						if(msg.currentPage!=msg.totalPage){
+							loc+="<li class='next'><a href='javascript:gotoPage("+(msg.currentPage + 1)+",\""+cond+"\")'><i class='icon-angle-right '></i></a></li><li class='next '><a href='javascript:gotoPage("+msg.totalPage+",\""+cond+"\")'><i class='icon-double-angle-right '></i></a></li>";
+						}else{
+							loc+="<li class='next disabled'><a href='javascript:void(0)'><i class='icon-angle-right '></i></a></li><li class='next disabled'><a href='javascript:void(0)'><i class='icon-double-angle-right '></i></a></li>";
+						}
+						loc+="</ul></div></div>";
+						$('#pages').html(loc);
+						$("#other").html('<a href="javascript:gotoPage(1,\'goodName=&beginTime=&endTime=\')" ><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
+				}
+				$("#table-result").hideLoading();
+			},
+			complete:function(XMLHttpRequest,textStatus){
+				  //TODO 测试用
+	              // alert('远程调用成功，状态文本值：'+textStatus);
+				$("#table-result").hideLoading();
+	         },
+	         error:function(XMLHttpRequest,textStatus,errorThrown){
+	              alert('error...状态文本值：'+textStatus+" 异常信息："+errorThrown);
+	              $("#table-result").hideLoading();
+	          }
+		});
+	}
+
+	function edit(id) {
+		var searchId=id;
+		$("#alert").html("");
+		$.ajax({
+		    type: "POST", 
+		    url: "coop/searchInventoryById", 
+		    data: "searchId=" + searchId, 
+		    dataType: "json", 
+		    success: function (data){
+				 $("#edit-id").attr("value",data.id);
+				 $("#edit-name").attr("value",data.goodInfo.name);
+				 $("#edit-unitCost").attr("value",data.unitCost);
+				 $("#edit-amount").attr("value",data.amount);
+				 $("#edit-time").attr("value",data.time);
+			}
+		 });
+		$("#alert").html("");
+		$('#edit-dialog-message').modal('show');
+	}
     </script> 
-    <!-- 工具导入 --> 
+    <!-- 工具导入 -->
+    <jsp:include page="JiaGeTiaoZheng_edit.jsp"></jsp:include>
     <jsp:include page="/WEB-INF/view/tool.jsp"></jsp:include>
     <!-- /#ace-settings-container --> 
    </div><!-- /.main-container-inner --> 
