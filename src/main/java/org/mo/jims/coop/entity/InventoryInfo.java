@@ -32,14 +32,11 @@ public class InventoryInfo implements Serializable {
 		super();
 	}
 
-	public InventoryInfo(String id, float unitCost, int amount,
-			GoodInfo goodInfo, Date time) {
+	public InventoryInfo(String id, float unitCost, int amount) {
 		super();
 		this.id = id;
 		this.unitCost = unitCost;
 		this.amount = amount;
-		this.goodInfo = goodInfo;
-		this.time = time;
 	}
 
 	public InventoryInfo(float unitCost, int amount, GoodInfo goodInfo) {

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.mo.jims.coop.dto.InventoryInfoDTO;
-import org.mo.jims.coop.entity.GoodInfo;
 import org.mo.jims.coop.entity.InventoryInfo;
 import org.mo.jims.coop.service.GoodInfoService;
 import org.mo.jims.coop.service.InventoryInfoService;
@@ -80,8 +79,7 @@ public class InventoryInfoController {
 	@RequestMapping(value = "coop/showInventoryInfoPercentageofDayOnThisMonth", method = RequestMethod.GET)
 	@ResponseBody
 	public Float showInventoryInfoPercentageofDayOnThisMonth() {
-		Float inventoryInfoPercentageofDayOnThisMonth = inventoryInfoService
-				.getInventoryInfoPercentageofDayOnThisMonth();
+		Float inventoryInfoPercentageofDayOnThisMonth = inventoryInfoService.getInventoryInfoPercentageofDayOnThisMonth();
 		return inventoryInfoPercentageofDayOnThisMonth;
 	}
 	
@@ -111,13 +109,12 @@ public class InventoryInfoController {
 		}
 		SpringDateConverter springDateConverter = new SpringDateConverter();
 		Page<InventoryInfo> inventoryInfoByNameOrAbbreviation = inventoryInfoService
-				.getInventoryInfoByCriteria(newStr,
-						springDateConverter.convert(beginTime),
+				.getInventoryInfoByCriteria(newStr,springDateConverter.convert(beginTime),
 						springDateConverter.convert(endTime), page, size);
 		return inventoryInfoByNameOrAbbreviation;
 	}
 
-	@RequestMapping(value = "coop/editInventory", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "admin/editInventory", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
 	public Map<String, String> editInventory(
 			@RequestBody final InventoryInfoDTO inventoryInfoDTO,
@@ -129,23 +126,18 @@ public class InventoryInfoController {
 		String token = (String) session.getAttribute("InventoryEidtToken");
 		if (formtoken.equals(token)) {// 防止重复提及表单
 			// 启动线程,1.7新特性
+			modelMap.put("result", "成功");
+			//TODO 返回值很大问题,不可以放在线程里面,则表示我代码写的非常不好
 			ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
 			newCachedThreadPool.execute(new Runnable() {
 				@Override
 				public void run() {
 					try {
 						Thread.sleep(3000);
-						GoodInfo goodInfoByName = goodInfoService.getGoodInfoByName(inventoryInfoDTO.getGoodName());
-						if (goodInfoByName != null) {
-							InventoryInfo entity = inventoryInfoDTO.toAddObject(goodInfoByName);
-							inventoryInfoService.alterInventoryInfo(entity);
-							modelMap.put("success", "ok");
-						} else {
-							modelMap.put("tip", "修改失败");
-						}
+						InventoryInfo entity = inventoryInfoDTO.toEditObject();
+						inventoryInfoService.alterInventoryInfo(entity);
 					} catch (InterruptedException e) {
-						modelMap.put("tip", "修改失败");
-						throw new MyRuntimeException(getClass().getName() + "修改失败");
+						throw new MyRuntimeException(getClass().getName() + "库存修改失败");
 					}
 				}
 			});

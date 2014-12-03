@@ -2,8 +2,10 @@ package org.mo.open.common.controller;
 
 import javax.annotation.Resource;
 
+import org.mo.open.common.entity.User;
 import org.mo.open.common.service.RoleService;
 import org.mo.open.common.service.UserService;
+import org.mo.open.common.util.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -42,6 +44,13 @@ public class UserController {
 		model.put("active", "CaoZuoYuanGuanLi");
 		logger.info("进入操作员管理界面");
 		return new ModelAndView("common/sysManage/CaoZuoYuanGuanLi", model);
+	}
+	
+	public Page<User> list(String account, String username,int page, int size){
+		User user = new User();
+		user.setAccount(account);
+		user.setUsername(username);
+		return userService.getALLUserInfo(user, page, size);
 	}
 
 	public RoleService getRoleService() {

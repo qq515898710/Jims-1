@@ -30,10 +30,8 @@
 
 	<update id="updateByPK" parameterType="InventoryInfo">
 		UPDATE tb_inventory_info SET
-		 	good_id=#{goodInfo.id}, 
 		 	unit_cost=#{unitCost}, 
-		 	amount=#{amount}, 
-		 	time=#{time}
+		 	amount=#{amount}
 		WHERE
 			id=#{id}
 	</update>

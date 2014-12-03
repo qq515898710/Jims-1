@@ -19,5 +19,7 @@ public interface RoleRepository extends BaseRepository<Role, Long> {
 	public void saveRelativity(UserRole userRole);
 
 	public List<UserLog> selectByPage(@Param("offset") int offset, @Param("size") int size);
+	
+	public Role selectByName(String name);
 
 }

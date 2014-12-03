@@ -17,8 +17,13 @@ public interface UserRepository extends BaseRepository<User, String> {
 			@Param("username") String username, @Param("offset") int offset,
 			@Param("size") int size);
 
-	public User selectUserByAccountAndPassword(@Param("account")String account, @Param("password")String password);
+	public User selectUserByAccountAndPassword(@Param("account")String account,
+			@Param("password")String password);
 	
 	public void deleteRelativity(UserRole userRole);
+	
+	public int countUserByAccount(String account);
+	
+	public int countUserByUsername(String username);
 
 }

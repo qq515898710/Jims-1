@@ -49,7 +49,7 @@
 	<select id="selectByUser" resultMap="roleResultMap">
 		<include refid="selcet_role"/>
 		JOIN tb_user_role ON tb_user_role.role_id = tb_role.id
-		WHERE tb_user_role.user_id = #{account}
+		WHERE tb_user_role.user_id = BINARY #{account}
 	</select>
 	
 	<delete id="deleteRelativity" parameterType="RolePermission">
@@ -62,12 +62,17 @@
 	
 	<insert id="saveRelativity" parameterType="UserRole">
 		INSERT INTO tb_user_role(user_id,role_id)
-		VALUE(#{user.id},#{role.id})
+		VALUE(#{user.account},#{role.id})
 	</insert>
 	
 	<select id="selectByPage" resultMap="roleResultMap">
 		<include refid="selcet_role"/>
 		LIMIT #{offset}, #{size}
+	</select>
+	
+	<select id="selectByName" resultMap="roleResultMap">
+		<include refid="selcet_role"/>
+		WHERE name = BINARY #{name}
 	</select>
 		
 	<!-- userRole -->
