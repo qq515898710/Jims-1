@@ -67,12 +67,12 @@
             <label>帐号：</label><input type="text" id="search-account">&nbsp;
             <label>姓名：</label><input type="text" id="search-username">
           </p>
-          <button id="bt-search-dialog" class="btn hide-option btn-sm" data-toggle="modal"  data-target="#search-dialog-message" title="查找"><i class="icon-search align-top bigger-125"></i>查找 </button>
+          <button id="search" class="btn hide-option btn-sm" data-toggle="modal"  data-target="#search-dialog-message" title="查找"><i class="icon-search align-top bigger-125"></i>查找 </button>
           <button id="bt-add-dialog" class="btn btn-success hide-option btn-sm" data-toggle="modal"  data-target="#add-dialog-message" title="添加"><i class="icon-plus-sign align-top bigger-125"></i>添加 </button>
           <tags:caozuoyuan_add></tags:caozuoyuan_add>
           <button id="bt-edit-dialog" class="btn btn-primary hide-option btn-sm" data-toggle="modal"  data-target="#edit-dialog-message" title="修改"><i class="icon-edit align-top bigger-125"></i>修改</button>
           <button id="bt-delete-dialog" class="btn btn-danger hide-option btn-sm" data-toggle="modal"  data-target="#delete-dialog-message" title="删除"><i class="icon-trash align-top bigger-125"></i>删除 </button>
-                   <button id="bt-import-dialog" class="btn btn-purple hide-option btn-sm" data-toggle="modal"  data-target="#delete-dialog-message"  title="模版execl表格导入,点&lt;更多&gt;下载 " ><i class=" icon-cloud-upload align-top bigger-125"></i>导入 </button>  
+          <button id="bt-import-dialog" class="btn btn-purple hide-option btn-sm" data-toggle="modal"  data-target="#delete-dialog-message"  title="模版execl表格导入,点&lt;更多&gt;下载 " ><i class=" icon-cloud-upload align-top bigger-125"></i>导入 </button>  
           <button id="bt-outport-dialog" class="btn btn-grey hide-option btn-sm" data-toggle="modal"  data-target="#delete-dialog-message" title="导出"><i class="icon-cloud-download align-top bigger-125"></i>导出 </button>  
           <div class="btn-group"> 
             <button data-toggle="dropdown" class="btn btn-pink dropdown-toggle btn-sm2 "><i class="icon-stackexchange" ></i> 更多<i class="icon-angle-down icon-on-right"></i></button> 
@@ -91,7 +91,7 @@
           <div class="table-responsive"> 
            <div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
               <div class="row" >
-              <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1,'name=&beginTime=&endTime=')" id="p_pageSizeSelect">
+              <div class="col-sm-6"><div id="pager"  ><label >显示 <select size="1" onchange="javascript:gotoPage(1,'account=&username=')" id="p_pageSizeSelect">
                 <option value="10" selected="selected" >10</option>
                 <option value="25" >25</option>
                 <option value="50" >50</option>
@@ -132,8 +132,14 @@
     <script type="text/javascript">
 	jQuery(function($) {
 		
+		$("#search").click(function () {
+           var account = $("#search-account").val();
+           var username = $("#search-username").val();
+           gotoPage(1,"account="+account+"&username="+username);
+        });
+		
 		/* 获取数据 */
-		//gotoGongYingShangPage(1,"name=&beginTime=&endTime=");
+		gotoPage(1,"account=&username=");
 		
 		/* 复选框操作 */
 		$('table th input:checkbox').on('click' , function(){
@@ -148,13 +154,12 @@
 
 	//分页显示工具
 	function gotoPage(pageIndex, cond) {
-		var action = 'coop/pageOfCustomersByName';
+		var action = 'admin/pageofuserlist';
 		var pagerRange = 6;//
 		var pageSize =  $("#p_pageSizeSelect").val(); //获取每一页显示多少记录
 		var loc="<div class='col-sm-6'><div class='dataTables_paginate paging_bootstrap'><ul class='pagination'>";
 		$('#tb').html("");
 		//TODO 测试用
-		//alert("page=" + pageIndex + "&size=" + pageSize+"&"+cond);
 		$.ajax({
 					url : action,
 					type : 'get',
@@ -172,17 +177,26 @@
 							$("#other").html("");
 						}else{
 							$.each(msg.content, function(i, item) {
+								  var array = new Array();
+								  console.info(item.role);
+							      for(var j = 0; j < item.role; j++){
+							    	  console.info(item.role[j]);
+							    	  for(var k = 0; k < item.role[j].description; k++){
+									        console.info(description[k]);
+										    array.push(description[k]);
+							    	  }
+								  }
 					              $('#tb').append( "<tr>"
 					            		  +"<td><label> <input type='checkbox' class='ace' name='checkbox' value='"+item.id+"' /><span class='lbl'></span> </label></td>"
 					            		  +"<td >"+(++i)+"</td> "
-					            		  +"<td >"+item.name+"</td> "
-					            		  +"<td >"+item.address+"</td> "
-					            		  +"<td >"+getFormatDateByLong(item.time,"yyyy-MM-dd")+"</td> "
-					            		  +"<td >"+item.phone+"</td> "
+					            		  +"<td >"+item.account+"</td> "
+					            		  +"<td >"+item.username+"</td> "
+					            		  +"<td >"+getFormatDateByLong(item.createDate,"yyyy-MM-dd")+"</td> "
+					            		  +"<td >"+array.join(',')+"</td> "
 					            		  +"<td >"+"<div class='visible-md visible-lg hidden-sm hidden-xs action-buttons' id='buttontools'>"
-					            		  				+"<a class='blue' href='javascript:showCustomer(\""+item.id+"\")'> <i class='icon-zoom-in bigger-130'></i>"
-					            		  				+"<a class='green' href='javascript:editCustomer(\""+item.id+"\")' > <i class='icon-pencil bigger-130'></i> </a>"
-					            		  				+"<a class='red' href='javascript:deleteCustomer(\""+item.id+"\")' > <i class='icon-trash bigger-130'></i> </a></div>"
+					            		  				+"<a class='blue' href='javascript:show(\""+item.id+"\")'> <i class='icon-zoom-in bigger-130'></i>"
+					            		  				+"<a class='green' href='javascript:edit(\""+item.id+"\")' > <i class='icon-pencil bigger-130'></i> </a>"
+					            		  				+"<a class='red' href='javascript:delete(\""+item.id+"\")' > <i class='icon-trash bigger-130'></i> </a></div>"
 					            		  				+"</td> "+"</tr>");
 					            });
 								var begin = Math.max(1, msg.currentPage - pagerRange/2 );
@@ -206,7 +220,7 @@
 								}
 								loc+="</ul></div></div>";
 								$('#pages').html(loc);
-								$("#other").html('<a href="javascript:gotoPage(1,\'name=&beginTime=&endTime=\')" ><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
+								$("#other").html('<a href="javascript:gotoPage(1,\'account=&username=\')" ><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
 						}
 						$("#table-result").hideLoading();
 					},

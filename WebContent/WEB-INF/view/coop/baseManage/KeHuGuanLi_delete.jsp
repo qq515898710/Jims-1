@@ -57,7 +57,7 @@
 	});
 
   $("#delete-ok").on('click',function() { //提交事件
-		var $btn = $(this).button('loading');
+// 		var $btn = $(this).button('loading');
 		$.ajax({ 
 		    type: "post", 
 		    url: "admin/deleteCustomer", 
@@ -80,8 +80,9 @@
 		    error: function(request,error){ 
 		        alert('Error deleting item(s), try again later.'); 
 		      } 
-		    }).always(function() {
-	            $btn.button('reset');
+// 		    })
+// 		    .always(function() {
+// 	            $btn.button('reset');
 	        }); //ajax;
 	});
   });
