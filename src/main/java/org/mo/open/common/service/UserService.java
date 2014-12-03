@@ -51,9 +51,12 @@ public class UserService {
 		if (userPage.getTotalElement() == 0) {
 			return userPage;
 		}
-		List<Role> selectByUser = roleRepository.selectByUser(user.getAccount());
 		List<User> selectAll = userRepository.selectAllByCriteria(user.getAccount(),
 				user.getUsername(), (page - 1) * pageSize, pageSize);
+		for(User result :selectAll){
+			List<Role> selectByUser = roleRepository.selectByUser(result.getAccount());
+			result.setRole(selectByUser);
+		}
 		userPage.setContent(selectAll);
 		return userPage;
 	}

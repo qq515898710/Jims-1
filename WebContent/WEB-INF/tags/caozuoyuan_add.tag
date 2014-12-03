@@ -34,24 +34,35 @@
       </form> 
      </div>
      <div class="modal-footer"> 
-      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="icon-remove bigger-110"></i>取消</button> 
-      <button type="button" class="btn btn-primary btn-sm"><i class="icon-ok bigger-110"></i>确定</button> 
+      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="cancel"><i class="icon-remove bigger-110"></i>取消</button> 
+      <button type="button" class="btn btn-primary btn-sm" id="ok"><i class="icon-ok bigger-110"></i>确定</button> 
      </div> 
     </div> 
    </div>
    <script type="text/javascript">
+   
+   //1.  var array = new Array();
+   //2. 往数组添加数据：
+   //array.push($(this).val());
+   //3.数组以“,”分隔输出：
+   //alert(array.join(','));
+   
    jQuery(function($) {
-	   $("#role-all").click(function(){
-		   if(jQuery(this).attr("checked") == true){// 全选  
-               jQuery("input[type=checkbox][name=role]").each(function(){  
-                       jQuery(this).attr("checked", true);  
-                   });  
-           }else if(jQuery(this).attr("checked") != true){// 取消全选  
-               jQuery("input[type=checkbox][name=role]").each(function(){  
-                   jQuery(this).attr("checked", false);  
-               });  
-           }  
+	   $("#role-all").on('click' , function(){
+		   var that = this;
+		   $("input[name=role]").each(function(){
+			   this.checked = that.checked;
+			   jQuery("#role").attr("checked", this.checked);
+		   });
 	   });
+	   
+ 	   $("#cancel").on("click",function(){//取消事件
+ 	 	   location.reload();
+ 	 	});
+	 	
+ 	   $("#close").on("click",function(){//x事件
+ 		  location.reload();
+  	 	});
    });
    </script>
   </div> 
