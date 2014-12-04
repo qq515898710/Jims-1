@@ -1,71 +1,80 @@
-//销售表添加一条记录并状态显示为通过,库存就减一
-create trigger trigger_reduce_inventory_sell_insert after insert 
-   on tb_sell 
-   for each row 
+DROP TRIGGER IF EXISTS `trigger_insert_tb_inventory_after`;
+DELIMITER ;;
+CREATE TRIGGER `trigger_insert_tb_inventory_after` AFTER INSERT ON `tb_good_info` FOR EACH ROW
+   begin
+     insert into tb_inventory_info(good_id,unit_cost,time) value(new.id,new.unit_cost,now());
+   end
+;;
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trigger_reduce_inventory_sell_insert`;
+DELIMITER ;;
+CREATE TRIGGER `trigger_reduce_inventory_sell_insert` AFTER INSERT ON `tb_sell` FOR EACH ROW  
    begin
      update tb_inventory_info set amount=amount - new.amount 
      where good_id = new.good_id and new.state = '0';
-   end;
-
-//更新销售表的状态(通过),库存就减一
-create trigger trigger_reduce_inventory_sell_update after update 
-   on tb_sell 
-   for each row 
+   end
+;;
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trigger_reduce_inventory_sell_update`;
+DELIMITER ;;
+CREATE TRIGGER `trigger_reduce_inventory_sell_update` AFTER UPDATE ON `tb_sell` FOR EACH ROW  
    begin
      update tb_inventory_info set amount=amount - new.amount 
      where good_id = old.good_id and new.state = '0';
-   end;
-
-//销售退货表添加一条记录并状态显示为通过,库存就加一
-create trigger trigger_reduce_inventory_sell_return_insert after insert 
-   on tb_sell_return 
-   for each row 
+   end
+;;
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trigger_reduce_inventory_sell_return_insert`;
+DELIMITER ;;
+CREATE TRIGGER `trigger_reduce_inventory_sell_return_insert` AFTER INSERT ON `tb_sell_return` FOR EACH ROW  
    begin
      update tb_inventory_info set amount=amount + new.amount 
      where good_id = new.good_id and new.state = '0';
-   end;
-
-//更新销售退货表的状态(通过),库存就加一
-create trigger trigger_reduce_inventory_sell_return_update after update 
-   on tb_sell_return 
-   for each row 
+   end
+;;
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trigger_reduce_inventory_sell_return_update`;
+DELIMITER ;;
+CREATE TRIGGER `trigger_reduce_inventory_sell_return_update` AFTER UPDATE ON `tb_sell_return` FOR EACH ROW  
    begin
      update tb_inventory_info set amount=amount + new.amount 
      where good_id = old.good_id and new.state = '0';
-   end;
-
-//入库表添加一条记录并状态显示为通过,库存就加一
-create trigger trigger_reduce_inventory_stock_insert after insert 
-   on tb_stock  
-   for each row 
+   end
+;;
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trigger_reduce_inventory_stock_insert`;
+DELIMITER ;;
+CREATE TRIGGER `trigger_reduce_inventory_stock_insert` AFTER INSERT ON `tb_stock` FOR EACH ROW   
    begin
-     update tb_inventory_info set amount=amount + new.amount 
+     update tb_inventory_info set amount=amount + new.amount ,unit_cost = (new.unit_cost * 0.2 + new.unit_cost)
      where good_id = new.good_id and new.state = '0';
-   end;
-
-//更新入库表的状态(通过),库存就加一
-create trigger trigger_reduce_inventory_stock_update after update 
-   on tb_stock 
-   for each row 
+   end
+;;
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trigger_reduce_inventory_stock_update`;
+DELIMITER ;;
+CREATE TRIGGER `trigger_reduce_inventory_stock_update` AFTER UPDATE ON `tb_stock` FOR EACH ROW   
    begin
-     update tb_inventory_info set amount = amount + new.amount 
+     update tb_inventory_info set amount = amount + new.amount, unit_cost = (new.unit_cost * 0.2 + new.unit_cost)
      where good_id = old.good_id and new.state = '0';
-   end;
-
-//入库退货表添加一条记录并状态显示为通过,库存就减一
-create trigger trigger_reduce_inventory_stock_return_insert after insert 
-   on tb_stock_return 
-   for each row 
+   end
+;;
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trigger_reduce_inventory_stock_return_insert`;
+DELIMITER ;;
+CREATE TRIGGER `trigger_reduce_inventory_stock_return_insert` AFTER INSERT ON `tb_stock_return` FOR EACH ROW  
    begin
      update tb_inventory_info set amount=amount - new.amount 
      where good_id = new.good_id and new.state = '0';
-   end;
-
-//更新入库退货表的状态(通过),库存就减一
-create trigger trigger_reduce_inventory_stock_return_update after update 
-   on tb_stock_return  
-   for each row 
+   end
+;;
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trigger_reduce_inventory_stock_return_update`;
+DELIMITER ;;
+CREATE TRIGGER `trigger_reduce_inventory_stock_return_update` AFTER UPDATE ON `tb_stock_return` FOR EACH ROW  
    begin
      update tb_inventory_info set amount=amount - new.amount 
      where good_id = old.good_id and new.state = '0';
-   end;
+   end
+;;
+DELIMITER ;

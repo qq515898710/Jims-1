@@ -25,5 +25,7 @@ public interface UserRepository extends BaseRepository<User, String> {
 	public int countUserByAccount(String account);
 	
 	public int countUserByUsername(String username);
+	
+	public void batchDelete(List<String> ids);// 单参数的不需要@Param
 
 }

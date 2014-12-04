@@ -23,6 +23,8 @@ public class UserService {
 	
 	private Md5PasswordEncoder md5PasswordEncoder;
 	
+	private final static int BATCH_SIZE = 100;
+	
 	private final String SALT = "/%El-B9ua* vbo@N#,WU[+Mp+c-5#zgP&1w^-I*#|r]i`HdQ7eMTA$UCFXnA]2xR";
 
 	public boolean checkLogin(User user){
@@ -33,6 +35,30 @@ public class UserService {
 		}
 		return false;
 	}
+	
+	public boolean removeUserRoleRelativity(UserRole userRole){
+		userRepository.deleteRelativity(userRole);
+		return true;
+	}
+	
+	public boolean existAccount(String account){
+		int countUserByAccount = userRepository.countUserByAccount(account);
+		if(countUserByAccount > 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public boolean existUsername(String username){
+		int countUserByUsername = userRepository.countUserByUsername(username);
+		if(countUserByUsername > 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 	/**
 	 * 分页显示用户信息, 从1算起
 	 * 
@@ -99,12 +125,26 @@ public class UserService {
 		entity.setPassword(encodePassword);
 		entity.setCreateDate(userRepository.getCurrentTime());
 		entity.setLatestDate(userRepository.getCurrentTime());
-		userRepository.insert(entity);
-		UserRole userRole = new UserRole();
-		userRole.setUser(entity);
-		Role role = roleRepository.selectByName("user");
-		userRole.setRole(role);
-		roleRepository.saveRelativity(userRole);
+		try{
+			userRepository.insert(entity);
+		}catch(Exception exception){
+			System.err.println("保存用户信息失败");
+			return false;
+		}
+		List<Role> role2 = entity.getRole();
+		if (role2 != null) {
+			for (Role role : role2) {
+				UserRole userRole = new UserRole();
+				userRole.setUser(entity);
+				userRole.setRole(role);
+				roleRepository.saveRelativity(userRole);
+			}
+		} else if(role2 == null || role2.size() == 1){
+			UserRole userRole = new UserRole();
+			userRole.setUser(entity);
+			Role role = roleRepository.selectByName("user");
+			userRole.setRole(role);
+		}
 		return true;
 	}
 
@@ -116,7 +156,12 @@ public class UserService {
 	
 	public boolean alterUser(User entity) {
 		if (entity != null) {
-			entity.setLatestDate(userRepository.getCurrentTime());
+			String content = ManageProperties.getInstance().getContent("SALT");
+			if (content == null) {
+				content = SALT;
+			}
+			String encodePassword = md5PasswordEncoder.encodePassword(entity.getPassword(), content);
+			entity.setPassword(encodePassword);
 			userRepository.updateByPK(entity);
 			return true;
 		}
@@ -127,6 +172,36 @@ public class UserService {
 	public boolean removeUserByPK(String id) {
 		userRepository.deleteByPK(id);
 		return true;
+	}
+	
+	public boolean batchRemove(List<String> id){
+		if (id.size() > 0) {
+			if (id.size() <= BATCH_SIZE) {
+				userRepository.batchDelete(id);
+			} else {
+				int count = id.size() / BATCH_SIZE;
+				if (id.size() % BATCH_SIZE != 0) {
+					count += 1;
+				}
+				List<String> temp = null;
+				int startIndex = 0;
+				int endIndex = 0;
+				for (int i = 0; i < count; i++) {
+					startIndex = i * BATCH_SIZE;
+					endIndex = startIndex + BATCH_SIZE;
+					if (endIndex > id.size()) {
+						endIndex = id.size();
+					}
+					System.out.println("=========== 批次：" + (i + 1)
+							+ ", startIndex:" + startIndex + ", endIndex:"
+							+ endIndex);
+					temp= id.subList(startIndex, endIndex);
+					userRepository.batchDelete(temp);
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public UserRepository getUserRepository() {

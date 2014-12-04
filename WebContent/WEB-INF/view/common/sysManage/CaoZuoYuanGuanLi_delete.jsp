@@ -4,7 +4,7 @@
     <div class="modal-content"> 
      <div class="modal-header"> 
       <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true">&times;</span><span class="sr-only">x</span> </button> 
-      <h6 class="modal-title" id="mySmallModalLabel"> <i class="icon-trash align-top bigger-125"></i>&nbsp;删除供应商信息 </h6> 
+      <h6 class="modal-title" id="mySmallModalLabel"> <i class="icon-trash align-top bigger-125"></i>&nbsp;删除用户信息 </h6> 
      </div>
      <!--.modal-header  --> 
      <div class="modal-body">
@@ -38,14 +38,14 @@
 			selectedItems2.push($(this).val());
 		});
 		
-		if (selectedItems2 .length == 0) {
-			$("#alert").html('<div class="alert alert-block alert-danger">'+
+		if (selectedItems2.length == 0) {
+			$("#c-alert").html('<div class="alert alert-block alert-danger">'+
 					'<button type="button" class="close" data-dismiss="alert" id="close"> <i class="icon-remove"></i> </button>'+
 					'<div class="danger bold-center">没勾选任何记录</div> </div>');
 		}else{
 			deleteIds=selectedItems2.join(',');
 			len=selectedItems2.length;
-			$("#alert").html("");
+			$("#c-alert").html("");
 			if(len > 0){
 				$("#delete-content").html("确定删除选中的"+len+"行记录?");
 			}else{
@@ -59,17 +59,17 @@
 // 		var $btn = $(this).button('loading');
 		$.ajax({ 
 		    type: "post", 
-		    url: "admin/deleteProvider", 
+		    url: "admin/deleteuserbyid", 
 		    data: "deleteId=" + deleteIds,
 		    dataType: "json", 
 		    success: function (data) {
 			    if(data.success){
 		            $("#delete-tip").html('<div class="alert alert-block alert-success">'+
 		                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-		                    '<div class="success bold-center">'+data.message+','+'<a href="admin/gongyingshangguanli.html" class="green">'+
+		                    '<div class="success bold-center">'+data.message+','+'<a href="admin/caozuoyuanguanli.html" class="green">'+
 		                    '<span id="mysecond" class="green">'+5+
 		                    '</span>秒自动跳转</a><div></div>');
-			        countDown(5, "admin/gongyingshangguanli.html");
+			        countDown(5, "admin/caozuoyuanguanli.html");
 				 }else{
 				    $("#delete-tip").html('<div class="alert alert-block alert-danger">'+
 		                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+

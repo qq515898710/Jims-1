@@ -124,7 +124,7 @@
            var searchName=$("#name").val();
            var beginTime=$("#beginTime").val();
            var endTime=$("#endTime").val();
-           gotoGongYingShangPage(1,"name="+searchName+"&beginTime="+beginTime+"&endTime="+endTime);
+           gotoPage(1,"name="+searchName+"&beginTime="+beginTime+"&endTime="+endTime);
 	    });
 	    
 	    $("#search-all").click(function () {

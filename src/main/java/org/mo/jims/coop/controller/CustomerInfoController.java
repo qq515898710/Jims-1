@@ -164,7 +164,7 @@ public class CustomerInfoController {
 	@RequestMapping(value = "admin/deleteCustomer", method = RequestMethod.POST)
 	@ResponseBody
 	public JsonResponse delete(@RequestParam(required=true) String deleteId) {
-		JsonResponse jsonResponse =null;
+		JsonResponse jsonResponse = null;
 		String[] ids = deleteId.split(",");
 		if (ids.length > 1) {
 			boolean batchRemove = customerInfoService.batchRemove(ids);

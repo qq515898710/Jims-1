@@ -53,7 +53,7 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="admin/genggaimima.html">更改密码</a></li> 
+       <li><a href="admin/jueseguanli.html">角色管理</a></li> 
       </ul> 
       <!-- .breadcrumb -->
      </div> 
