@@ -58,7 +58,7 @@
 <script type="text/javascript" src="assets/js/scm.js"></script>
 <script type="text/javascript" src="assets/js/deal-time.js"></script>
 </head>
-<body>
+<body onbeforeunload="window.location='loginout.html'">
   <div class="navbar navbar-default" id="navbar"> 
    <script type="text/javascript">
 			try {

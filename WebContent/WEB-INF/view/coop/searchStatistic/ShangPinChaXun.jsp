@@ -255,10 +255,10 @@
 		    	}else{
 		    		$("#detailed-origin").html('未知');
 		    	}
-		    	if(data.units!=null && data.units!=''){
-		    		$("#detailed-units").html(data.units);
+		    	if(data.unitCost!=null && data.unitCost!=''){
+		    		$("#detailed-unitCost").html(data.unitCost);
 		    	}else{
-		    		$("#detailed-units" ).html('未知');
+		    		$("#detailed-unitCost" ).html('未知');
 		    	}
 		    	if(data.pack!=null && data.pack!=''){
 		    		$("#detailed-pack").html(data.pack);

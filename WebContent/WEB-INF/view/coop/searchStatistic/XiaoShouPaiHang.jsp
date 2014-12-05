@@ -53,7 +53,7 @@
 				</script> 
       <ul class="breadcrumb"> 
        <li><i class="icon-home home-icon"></i> <a href="home.html">首页</a></li> 
-       <li><a href="coop/rukutuihuochaxun.html">进货退货查询</a></li> 
+       <li><a href="coop/xiaoshoupaihang.html">销售排行</a></li> 
       </ul> 
       <!-- .breadcrumb -->
      </div> 

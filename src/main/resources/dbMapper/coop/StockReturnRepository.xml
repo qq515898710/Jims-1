@@ -52,16 +52,9 @@
 
 	<update id="updateByPK" parameterType="StockReturn">
 		UPDATE tb_stock_return SET
-		 	provider_id=#{providerInfo.id},
-		 	good_id=#{goodInfo.id}, 
-		 	user_id=#{user.account}, 
 		 	unit_cost=#{unitCost}, 
 		 	amount=#{amount}, 
 		 	sum=#{sum}, 
-		 	check_conclusion =#{checkConclusion},
-		 	time=#{time}, 
-		 	clearing_form=#{clearingForm}, 
-		 	handler=#{handler},
 		 	state=#{approval, typeHandler=org.mo.jims.coop.typehandler.ApprovalHadler}
 		WHERE
 			id=#{id}
@@ -73,7 +66,7 @@
 
 	<select id="selectByPK" resultMap="stockReturnResultMap">
 		<include refid="select_stock_return_info_join" />
-		WHERE id = #{id}
+		WHERE tb_stock_return.id = #{id}
 	</select>
 	
 	<select id="getCurrentTime" resultType="Date">

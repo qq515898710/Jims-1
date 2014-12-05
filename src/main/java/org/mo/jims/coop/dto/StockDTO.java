@@ -4,7 +4,6 @@ import org.mo.jims.coop.entity.ProviderInfo;
 import org.mo.jims.coop.entity.GoodInfo;
 import org.mo.jims.coop.entity.Stock;
 import org.mo.jims.coop.enumtype.Approval;
-import org.mo.open.common.converter.JavaDateConverter;
 import org.mo.open.common.entity.User;
 import org.mo.open.common.exception.MyRuntimeException;
 
@@ -45,14 +44,10 @@ public class StockDTO implements java.io.Serializable {
 		super();
 	}
 
-	public Stock toEditObject(Approval approval, GoodInfo goodInfo,
-			ProviderInfo providerInfo, User user) throws MyRuntimeException {
+	public Stock toEditObject(Approval approval) throws MyRuntimeException {
 		try {
 			return new Stock(id, Float.valueOf(unitCost),
-					Integer.valueOf(amount), Float.valueOf(sum),
-					checkConclusion,
-					JavaDateConverter.StringConverterDate(time), clearingForm,
-					handler, approval, providerInfo, user, goodInfo);
+					Integer.valueOf(amount), Float.valueOf(sum), approval);
 		} catch (Exception e) {
 			throw new MyRuntimeException("toEditObject--"
 					+ getClass().getName() + " convert fail");

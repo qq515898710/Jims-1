@@ -16,7 +16,7 @@
        <div class="form-group"> 
         <label class="col-sm-3 control-label no-padding-right font" for="edit-name"> 商品名称： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="edit-name" class="col-xs-8" /><div id="edit-name-tip"></div> 
+         <input type="text" id="edit-name" class="col-xs-8" readonly="readonly"/><div id="edit-name-tip"></div> 
         </div> 
        </div> 
        <div class="form-group"> 

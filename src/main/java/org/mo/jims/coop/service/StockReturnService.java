@@ -17,11 +17,11 @@ public class StockReturnService {
 	private StockReturnRepository stockReturnRepository;
 
 	public Page<StockReturn> getStockReturnByCriteria(String goodName,
-			String customerName, Date beginTime, Date endTime, int page,
+			String customerName,String username, Date beginTime, Date endTime, int page,
 			int pageSize) {
 		Page<StockReturn> StockReturnPage = new Page<StockReturn>();
 		StockReturnPage.setTotalElement(stockReturnRepository
-				.countAllByCriteria(goodName, customerName, null, beginTime,
+				.countAllByCriteria(goodName, customerName, username, beginTime,
 						endTime), pageSize);
 		StockReturnPage.setPageSize(pageSize);
 		StockReturnPage.setCurrentPage(page);
@@ -29,7 +29,7 @@ public class StockReturnService {
 			return StockReturnPage;
 		}
 		List<StockReturn> selectAllByNameOrAbbreviation = stockReturnRepository
-				.selectAllByCriteria(goodName, customerName, null, beginTime,
+				.selectAllByCriteria(goodName, customerName, username, beginTime,
 						endTime, (page - 1) * pageSize, pageSize);
 		StockReturnPage.setContent(selectAllByNameOrAbbreviation);
 		return StockReturnPage;

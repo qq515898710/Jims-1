@@ -6,7 +6,6 @@
 package org.mo.jims.coop.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.mo.jims.coop.enumtype.Approval;
 import org.mo.open.common.entity.User;
@@ -49,22 +48,13 @@ public class StockReturn implements Serializable {
 	}
 
 	public StockReturn(String id, float unitCost,
-			int amount, float sum, String checkConclusion, Date time,
-			String clearingForm, String handler,Approval approval, ProviderInfo providerInfo,
-			User user, GoodInfo goodInfo) {
+			int amount, float sum, Approval approval) {
 		super();
 		this.id = id;
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
-		this.checkConclusion = checkConclusion;
-		this.time = time;
-		this.clearingForm = clearingForm;
-		this.handler = handler;
 		this.approval = approval;
-		this.providerInfo = providerInfo;
-		this.user = user;
-		this.goodInfo = goodInfo;
 	}
 
 	public StockReturn(float unitCost, int amount,

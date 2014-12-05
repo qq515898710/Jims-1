@@ -14,9 +14,9 @@
      <div class="modal-body"> 
       <form id="add-form-dialog" class="form-horizontal" role="form"> 
        <div class="form-group"> 
-        <label class="col-sm-3 control-label no-padding-right font" for="edit-name"> 供应商名称： </label> 
+        <label class="col-sm-3 control-label no-padding-right font" for="edit-name" > 供应商名称： </label> 
         <div class="col-sm-9"> 
-         <input type="text" id="edit-name" class="col-xs-8" /><div id="edit-name-tip"></div> 
+         <input type="text" id="edit-name" class="col-xs-8" readonly="readonly"/><div id="edit-name-tip"></div> 
         </div> 
        </div> 
        <div class="form-group"> 

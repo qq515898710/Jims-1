@@ -16,19 +16,20 @@ public class StockService {
 
 	private StockRepository stockRepository;
 
-	public Page<Stock> getStockByCriteria(String goodName, String customerName,
-			Date beginTime, Date endTime, int page, int pageSize) {
+	public Page<Stock> getStockByCriteria(String goodname, String providername,
+			String username, Date beginTime, Date endTime, int page,
+			int pageSize) {
 		Page<Stock> StockPage = new Page<Stock>();
-		StockPage.setTotalElement(stockRepository.countAllByCriteria(goodName,
-				customerName, null, beginTime, endTime), pageSize);
+		StockPage.setTotalElement(stockRepository.countAllByCriteria(goodname,
+				providername, username, beginTime, endTime), pageSize);
 		StockPage.setPageSize(pageSize);
 		StockPage.setCurrentPage(page);
 		if (StockPage.getTotalElement() == 0) {
 			return StockPage;
 		}
 		List<Stock> selectAllByNameOrAbbreviation = stockRepository
-				.selectAllByCriteria(goodName, customerName, null, beginTime,
-						endTime, (page - 1) * pageSize, pageSize);
+				.selectAllByCriteria(goodname, providername, username,
+						beginTime, endTime, (page - 1) * pageSize, pageSize);
 		StockPage.setContent(selectAllByNameOrAbbreviation);
 		return StockPage;
 	}

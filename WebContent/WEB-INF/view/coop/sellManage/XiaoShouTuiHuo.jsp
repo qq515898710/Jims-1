@@ -316,10 +316,10 @@
 				        "<td class='center' >"+clearingForm+"</td>"+
 				        "</tr>";
 				
-				if($("#stack-table").find("tr").length >= 6){
+				if($("#stack-table").find("tr").length >= 2){
 		            $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
 		                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-		                    '<div class="danger bold-center">只能添加5行数据</div></div>');
+		                    '<div class="danger bold-center">只能添加1行数据</div></div>');
 				}else{
 					$("#alert-tip").html("");
 					addTr("stack-table", -1, str);
