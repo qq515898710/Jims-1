@@ -105,7 +105,7 @@
                    <tr role="row">
                      <th role="columnheader" rowspan="1" colspan="1" style="width: 57px;" aria-label=""> <label> <input type="checkbox" class="ace"  id="checkall"/> <span class="lbl"></span> </label> </th> 
                      <th  role="columnheader"  rowspan="1" colspan="1" style="width: 50px;" >序号</th>
-                     <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >供应商名称</th> 
+                     <th  role="columnheader"  rowspan="1" colspan="1" style="width: 153px;" >客户名称</th> 
                      <th role="columnheader"  rowspan="1" colspan="1" style="width: 133px;" >商品名称</th> 
                      <th role="columnheader"  rowspan="1" colspan="1" style="width: 130px;" > <i class="icon-time bigger-110 hidden-480"></i>录入时间</th> 
                      <th  role="columnheader"  rowspan="1" colspan="1" style="width: 100px;" >数量 </th>

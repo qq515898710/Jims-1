@@ -69,6 +69,8 @@
         <p>
           <button class="btn btn-primary btn-sm" id="search"><i class="icon-search align-top bigger-125"></i>查询</button>
           <button class="btn btn-success btn-sm" id="search-all"><i class="icon-search align-top bigger-125"></i>查询全部</button>
+          <button class="btn btn-success btn-sm" ><i class="icon-undo align-top bigger-125"></i>重置</button>
+          <button class="btn btn-success btn-sm" ><i class="icon-print align-top bigger-125"></i>打印</button>
         </p>
       </div><!--.page-header  -->
       <div class="row"> 

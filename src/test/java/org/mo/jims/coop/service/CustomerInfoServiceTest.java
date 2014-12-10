@@ -40,10 +40,11 @@ public class CustomerInfoServiceTest extends BaseTest {
 		Date date = dateFormat.parse("2014-12-10");
 		Date date2 = dateFormat.parse("2014-12-13");
 		Page<CustomerInfo> customerInfoByNameOrAbbreviation = customerInfoService
-				.getCustomerInfoByCriteria("城院", date, date2, 1, 50);
+				.getCustomerInfoByCriteria("阿迪王", date, date2, 1, 50);
 		Assert.assertNotNull("customerInfoByNameOrAbbreviation is null",
 				customerInfoByNameOrAbbreviation);
-		if(customerInfoByNameOrAbbreviation.getTotalElement()>0){
+		System.out.println("customerInfoByNameOrAbbreviation.getTotalElement():"+customerInfoByNameOrAbbreviation.getTotalElement());
+		if(customerInfoByNameOrAbbreviation.getTotalElement() > 0){
 			List<CustomerInfo> content = customerInfoByNameOrAbbreviation
 					.getContent();
 			Assert.assertNotNull("content is null",
