@@ -239,6 +239,10 @@
 			    $("#form-provider-name").attr("value",msg.name);
 			});
 		    $("#goodName-div").html();
+		    $("#origin").html("");
+		    $("#pack").html("");
+		    $("#unitCost").html("");
+		    $("#form-good-name").attr("value","");
 		    $.ajax({
 			    type: "get",
 			    url: "coop/searchByProviderName", 
@@ -321,7 +325,7 @@
 	function addStockTable(){
 		var providername = $("#form-provider-name").val();
 		var goodname = $("#form-good-name").val();
-		if(providername == null || providername == "" || goodname == "" || providername == null){
+		if(providername == null || providername == "0" || goodname == "0" || providername == null){
             $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
                     '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
                     '<div class="danger bold-center">请选择供应商和商品再添加</div></div>');
@@ -350,10 +354,10 @@
 				        "<td class='center' >"+checkConclusion+"</td>"+
 				        "</tr>";
 				
-				if($("#stack-table").find("tr").length >= 6){
+				if($("#stack-table").find("tr").length >= 2){
 		            $("#alert-tip").html('<div class="alert alert-block alert-danger">'+
 		                    '<button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>'+
-		                    '<div class="danger bold-center">只能添加5行数据</div></div>');
+		                    '<div class="danger bold-center">只能添加1行数据</div></div>');
 				}else{
 					$("#alert-tip").html("");
 					addTr("stack-table", -1, str);

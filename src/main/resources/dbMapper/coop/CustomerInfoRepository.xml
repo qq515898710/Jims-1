@@ -146,18 +146,22 @@
 	<select id="countAllByCriteria" resultType="int">
 		SELECT COUNT(*) FROM tb_customer_info
 		<where>
-			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
-			<if test="beginTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
-			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
+			<if test="name != ''">(name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%'))</if>
+<!-- 			<if test="beginTime != null"><![CDATA[AND time >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if> -->
+<!-- 			<if test="endTime != null"><![CDATA[AND time <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if> -->
+			<if test="beginTime != null"><![CDATA[AND tb_customer_info.time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND tb_customer_info.time <= #{endTime}]]></if>
 		</where>
 	</select>
 	
 	<select id="selectAllByCriteria" resultMap="customerInfoResultMap">
 		<include refid="select_customer_info" />
 		<where>
-			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
-			<if test="beginTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
-			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
+			<if test="name != ''">(name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%'))</if>
+<!-- 			<if test="beginTime != null"><![CDATA[AND time >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if> -->
+<!-- 			<if test="endTime != null"><![CDATA[AND time <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if> -->
+			<if test="beginTime != null"><![CDATA[AND time >= #{beginTime}]]></if>
+			<if test="endTime != null"><![CDATA[AND time <= #{endTime}]]></if>
 		</where>
 		ORDER BY tb_customer_info.time DESC 
 		LIMIT #{offset}, #{size} 

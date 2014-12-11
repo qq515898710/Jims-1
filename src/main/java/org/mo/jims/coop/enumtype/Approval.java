@@ -43,5 +43,4 @@ public enum Approval {
 	public static Approval ident(String ident){
 		return cache.get(ident);
 	}
-
 }

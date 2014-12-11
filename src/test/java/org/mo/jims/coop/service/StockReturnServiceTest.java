@@ -32,7 +32,8 @@ public class StockReturnServiceTest extends BaseTest{
 
 	@Test
 	public void testGetStockReturnByPK() {
-		
+		StockReturn stockReturnByPK = stockReturnService.getStockReturnByPK("stockr14177600454120001");
+		System.out.println(stockReturnByPK.toString());
 	}
 
 	@Test

@@ -200,33 +200,26 @@ public class GoodInfoController {
 		String token = (String) session.getAttribute("token");
 		if (formtoken.equals(token)) {//防止重复提及表单
 			if (modelMap.isEmpty()) {//对表单校验,空继续执行
-				modelMap.put("success", "ok");
-				//启动线程,1.7新特性
-				ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
-				newCachedThreadPool.execute(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							Thread.sleep(3000);
-							GoodInfo entity = addGoodInfoDTO.toAddObject();
-							//TODO 商品添加好没做啊,记得来修改啊,关于多对多的问题啊
-							//TODO 测试
-							System.out.println(addGoodInfoDTO.toString());
-							ProviderInfo providerInfoByName = providerInfoService.getProviderInfoByName(addGoodInfoDTO.getProviderName());
-							if (providerInfoByName != null) {
-								entity.setProviderInfo(providerInfoByName);
-								goodInfoService.saveGoodInfo(entity);
-							}else{
-								modelMap.put("tip", "供应商不存在哦");
-							}
-						} catch (InterruptedException e) {
-							modelMap.put("tip", "保存失败");
-							throw new MyRuntimeException(
-									"保存失败");
+				try {
+					GoodInfo entity = addGoodInfoDTO.toAddObject();
+					System.out.println(addGoodInfoDTO.toString());
+					ProviderInfo providerInfoByName = providerInfoService.getProviderInfoByName(addGoodInfoDTO.getProviderName());
+					if (providerInfoByName != null) {
+						entity.setProviderInfo(providerInfoByName);
+						boolean saveGoodInfo = goodInfoService.saveGoodInfo(entity);
+						if(saveGoodInfo){
+							modelMap.put("success", "ok");
+							session.removeAttribute("token");
+						}else{
+							modelMap.put("tip", "商品名称已经存在");
 						}
+					} else {
+						modelMap.put("tip", "供应商不存在哦");
 					}
-				});
-				session.removeAttribute("token");
+				} catch (Exception e) {
+					modelMap.put("tip", "保存失败");
+					throw new MyRuntimeException("保存失败");
+				}
 			}
 		}else {
 			modelMap.put("tip", "请不要重复提交");

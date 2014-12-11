@@ -156,7 +156,7 @@
 	<select id="countAllByCriteria" resultType="int">
 		SELECT COUNT(*) FROM tb_provider_info
 		<where>
-			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+			<if test="name != null and name != ''">(name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%'))</if>
 			<if test="beginTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
 			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
 		</where>
@@ -165,7 +165,7 @@
 	<select id="selectAllByCriteria" resultMap="providerInfoResultMap">
 		<include refid="select_provider_info" />
 		<where>
-			<if test="name != null and name != ''">name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%')</if>
+			<if test="name != null and name != ''">(name LIKE CONCAT('%', #{name},'%') OR  abbreviation LIKE CONCAT('%', #{name},'%'))</if>
 			<if test="beginTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') >= DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]></if>
 			<if test="endTime != null"><![CDATA[AND DATE_FORMAT(time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]></if>
 		</where>

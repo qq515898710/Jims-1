@@ -50,15 +50,9 @@
 
 	<update id="updateByPK" parameterType="SellReturn">
 		UPDATE tb_sell_return SET
-		 	good_id=#{goodInfo.id}, 
-		 	customer_id=#{customerInfo.id},
-		 	user_id=#{user.account}, 
 		 	unit_cost=#{unitCost}, 
 		 	amount=#{amount}, 
 		 	sum=#{sum}, 
-		 	time=#{time}, 
-		 	clearing_form=#{clearingForm}, 
-		 	handler=#{handler},
 		 	state=#{approval, typeHandler=org.mo.jims.coop.typehandler.ApprovalHadler}
 		WHERE
 			id=#{id}

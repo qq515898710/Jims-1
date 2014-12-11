@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.PropertyResourceBundle"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> 
 <%PropertyResourceBundle configBundle = (PropertyResourceBundle)PropertyResourceBundle.getBundle("configs/scm"); %>
 <jsp:include page="header.jsp"></jsp:include>
 <div class="main-container" id="main-container"> 
@@ -129,6 +130,7 @@
           </div><!--.col-sm-7 infobox-container  -->
           <div class="vspace-sm"></div>
           <div class="col-sm-5">
+          <sec:authorize access="hasRole('admin')">
             <div class="widget-box">
               <div class="widget-header widget-header-flat widget-header-small">
                 <h5><i class="icon-signal"></i>访问来源</h5>
@@ -151,6 +153,7 @@
                 </div>
               </div><!--widget-body  -->
             </div><!--widget-box  -->
+           </sec:authorize>
           </div><!--.col-sm-5 -->
        </div><!--.row  -->
        <div class="hr hr32 hr-dotted"></div>
@@ -186,6 +189,7 @@
               </div><!--.widget-box transparent  -->
             </div><!--.col-sm-5  -->
             <div class="col-sm-7">
+            <sec:authorize access="hasRole('admin')">
               <div id="recent-box" class="widget-box transparent">
                 <div class="widget-header">
                   <h4 class="lighter smaller"><i class="icon-rss orange"></i>最近</h4>
@@ -220,6 +224,7 @@
                   </div><!--.widget-main padding-4  -->
                 </div><!--.widget-body  -->
               </div><!--#recent-box  -->
+              </sec:authorize>
             </div><!--.col-sm-6  -->
        </div><!--.row  -->
        <div id="qzcode" class="hide"></div>

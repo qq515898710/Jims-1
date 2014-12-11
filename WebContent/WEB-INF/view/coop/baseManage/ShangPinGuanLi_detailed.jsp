@@ -30,8 +30,8 @@
            <div class="profile-info-value"> <span class="editable editable-click" id="detailed-origin">-</span> </div> 
           </div> 
           <div class="profile-info-row"> 
-           <div class="profile-info-name"> 单位 </div> 
-           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-units">-</span> </div> 
+           <div class="profile-info-name"> 单价(元)</div> 
+           <div class="profile-info-value"> <span class="editable editable-click" id="detailed-unitCost">-</span> </div> 
           </div> 
           <div class="profile-info-row"> 
            <div class="profile-info-name"> 包装</div> 

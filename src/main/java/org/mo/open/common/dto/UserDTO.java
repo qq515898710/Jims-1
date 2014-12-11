@@ -15,20 +15,18 @@ public class UserDTO implements java.io.Serializable {
 	private String roleName;
 
 	private String password;
+	
+	private String formtoken;
+	
+	private String repassword;
 
 	public User toAddObject(){
-		User user = new User();
-		user.setAccount(account);
-		user.setUsername(username);
-		user.setPassword(password);
+		User user = new User(username, password);
 		return user;
 	}
 	
 	public User toEditObject(){
-		User user = new User();
-		user.setAccount(account);
-		user.setUsername(username);
-		user.setPassword(password);
+		User user = new User(account, username, password);
 		return user;
 	}
 	
@@ -62,6 +60,29 @@ public class UserDTO implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	
+	public String getFormtoken() {
+		return formtoken;
+	}
+
+	public void setFormtoken(String formtoken) {
+		this.formtoken = formtoken;
+	}
+
+	public String getRepassword() {
+		return repassword;
+	}
+
+	public void setRepassword(String repassword) {
+		this.repassword = repassword;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [account=" + account + ", username=" + username
+				+ ", roleName=" + roleName + ", password=" + password + "]";
 	}
 	
 }

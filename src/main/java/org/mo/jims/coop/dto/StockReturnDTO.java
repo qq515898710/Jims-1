@@ -4,7 +4,6 @@ import org.mo.jims.coop.entity.ProviderInfo;
 import org.mo.jims.coop.entity.GoodInfo;
 import org.mo.jims.coop.entity.StockReturn;
 import org.mo.jims.coop.enumtype.Approval;
-import org.mo.open.common.converter.JavaDateConverter;
 import org.mo.open.common.entity.User;
 import org.mo.open.common.exception.MyRuntimeException;
 
@@ -41,12 +40,9 @@ public class StockReturnDTO implements java.io.Serializable {
 
 	private String formtoken;
 
-	public StockReturn toEditObject(Approval approval, GoodInfo goodInfo,
-			ProviderInfo providerInfo, User user) throws MyRuntimeException {
+	public StockReturn toEditObject(Approval approval) throws MyRuntimeException {
 		try {
-			return new StockReturn(id, unitCost, amount, sum, checkConclusion,
-					JavaDateConverter.StringConverterDate(time), clearingForm,
-					handler, approval, providerInfo, user, goodInfo);
+			return new StockReturn(id, unitCost, amount, sum, approval);
 		} catch (Exception e) {
 			throw new MyRuntimeException("toEditObject--"
 					+ getClass().getName() + " convert fail");

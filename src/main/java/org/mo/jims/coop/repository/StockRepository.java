@@ -29,12 +29,12 @@ public interface StockRepository extends BaseRepository<Stock, String> {
 			@Param("ProviderName") String ProviderName,
 			@Param("GoodName") String GoodName,
 			@Param("UserName") String UserName,
-			@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+			@Param("beginTime") Date beginTime, @Param("endTime") Date endTime);
 
 	public List<Stock> selectAllByCriteria(
 			@Param("ProviderName") String ProviderName,
 			@Param("GoodName") String GoodName,
 			@Param("UserName") String UserName,
-			@Param("startTime") Date startTime, @Param("endTime") Date endTime,
+			@Param("beginTime") Date beginTime, @Param("endTime") Date endTime,
 			@Param("offset") int offset, @Param("size") int size);
 }

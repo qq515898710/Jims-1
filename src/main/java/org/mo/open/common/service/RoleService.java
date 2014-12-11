@@ -5,24 +5,35 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.mo.open.common.entity.Role;
+import org.mo.open.common.entity.UserRole;
 import org.mo.open.common.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 @Service( "roleService")
 public class RoleService  {
+	
 	private RoleRepository roleRepository;
-
+	
+	public List<Role> getByUser(String account){
+		List<Role> selectByUser = roleRepository.selectByUser(account);
+		return selectByUser;
+	}
+	public boolean saveUserRoleRelativity(UserRole userRole){
+		roleRepository.saveRelativity(userRole);
+		return true;
+	}
+	public Role getRoleByName(String name){
+		return roleRepository.selectByName(name);
+	}
 	
 	public List<Role> getRoleAll() {
 		return roleRepository.selectAll();
 	}
-
 	
 	public Role getRoleByPK(Long id) {
 		return roleRepository.selectByPK(id);
 	}
 
-	
 	public boolean saveRole(Role entity) {
 		if (entity == null) {
 			return false;

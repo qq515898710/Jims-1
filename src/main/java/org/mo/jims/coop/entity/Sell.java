@@ -6,7 +6,6 @@
 package org.mo.jims.coop.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.mo.jims.coop.enumtype.Approval;
 import org.mo.open.common.entity.User;
@@ -48,21 +47,14 @@ public class Sell implements Serializable {
 		super();
 	}
 
-	public Sell(String id, float unitCost, int amount, float sum, Date time,
-			String clearingForm, String handler, Approval approval,
-			GoodInfo goodInfo, CustomerInfo customerInfo, User user) {
+	public Sell(String id, float unitCost, int amount, float sum, Approval approval) {
 		super();
 		this.id = id;
 		this.unitCost = unitCost;
 		this.amount = amount;
 		this.sum = sum;
-		this.time = time;
-		this.clearingForm = clearingForm;
-		this.handler = handler;
 		this.approval = approval;
-		this.goodInfo = goodInfo;
-		this.customerInfo = customerInfo;
-		this.user = user;
+
 	}
 
 	public Sell(float unitCost, int amount, float sum, String clearingForm,

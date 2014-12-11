@@ -55,6 +55,7 @@
 			<tx:method name="get*" isolation="DEFAULT" propagation="REQUIRED" read-only="true"/>
 			<tx:method name="alter*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="RuntimeException"/>
 			<tx:method name="batch*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="RuntimeException" />
+			<tx:method name="exist*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="RuntimeException" />
 		</tx:attributes>
 	</tx:advice>
 	

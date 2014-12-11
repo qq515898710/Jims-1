@@ -69,6 +69,8 @@
         <p>
           <button class="btn btn-primary btn-sm" id="search"><i class="icon-search align-top bigger-125"></i>查询</button>
           <button class="btn btn-success btn-sm" id="search-all"><i class="icon-search align-top bigger-125"></i>查询全部</button>
+          <button class="btn btn-success btn-sm" ><i class="icon-undo align-top bigger-125"></i>重置</button>
+          <button class="btn btn-success btn-sm" ><i class="icon-print align-top bigger-125"></i>打印</button>
         </p>
       </div><!--.page-header  -->
       <div class="row"> 
@@ -119,11 +121,14 @@
     </div> <!-- /.main-content --> 
     <script type="text/javascript">
 	jQuery(function($) {
+		
+        gotoPage(1,'name=&beginTime=&endTime=');
 
 	    $("#search").click(function () {
            var searchName=$("#name").val();
            var beginTime=$("#beginTime").val();
            var endTime=$("#endTime").val();
+           console.info(searchName+"-"+"-"+beginTime+"-"+endTime);
            gotoPage(1,"name="+searchName+"&beginTime="+beginTime+"&endTime="+endTime);
 	    });
 	    
@@ -131,8 +136,6 @@
 	    	gotoPage(1,'name=&beginTime=&endTime=');
 	    });
 	    
-        gotoPage(1,'name=&beginTime=&endTime=');
-		
 	    $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){   
 	    });
 		   
@@ -146,11 +149,6 @@
 			});
 		});
 		
-		$(document).keydown(function(event){
-			if(event.keyCode==13){//enter键
-			    $("#search").click();
-			}
-		});
 	});
 	
 	//分页显示工具

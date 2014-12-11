@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="delete-dialog-message" class="modal fade bs-example-modal-sm " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"> 
    <div class="modal-dialog modal-sm"> 
     <div class="modal-content"> 
@@ -57,7 +56,7 @@
 	});
 
   $("#delete-ok").on('click',function() { //提交事件
-		var $btn = $(this).button('loading');
+// 		var $btn = $(this).button('loading');
 		$.ajax({ 
 		    type: "post", 
 		    url: "admin/deleteProvider", 
@@ -80,8 +79,9 @@
 		    error: function(request,error){ 
 		        alert('Error deleting item(s), try again later.'); 
 		      } 
-		    }).always(function() {
-	            $btn.button('reset');
+// 		    })
+// 		    .always(function() {
+// 	            $btn.button('reset');
 	        }); //ajax;
 	});
   });

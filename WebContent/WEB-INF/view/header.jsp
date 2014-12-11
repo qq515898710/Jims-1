@@ -58,7 +58,7 @@
 <script type="text/javascript" src="assets/js/scm.js"></script>
 <script type="text/javascript" src="assets/js/deal-time.js"></script>
 </head>
-<body>
+<body onbeforeunload="window.location='loginout.html'">
   <div class="navbar navbar-default" id="navbar"> 
    <script type="text/javascript">
 			try {
@@ -80,6 +80,7 @@
          <span class="user-info"> 
            <small><%=configBundle.getString("weclome") %><%=configBundle.getString("presence") %>,</small>
            <sec:authentication property="name"/>
+           <sec:authorize ifAllGranted="admin"  >管理员</sec:authorize>
          </span> <i class="icon-caret-down"></i>
        </a> 
        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"> 

@@ -4,7 +4,6 @@ import org.mo.jims.coop.entity.CustomerInfo;
 import org.mo.jims.coop.entity.GoodInfo;
 import org.mo.jims.coop.entity.SellReturn;
 import org.mo.jims.coop.enumtype.Approval;
-import org.mo.open.common.converter.JavaDateConverter;
 import org.mo.open.common.entity.User;
 import org.mo.open.common.exception.MyRuntimeException;
 
@@ -39,13 +38,10 @@ public class SellReturnDTO implements java.io.Serializable {
 
 	private String formtoken;
 
-	public SellReturn toEditObject(Approval approval, GoodInfo goodInfo,
-			CustomerInfo customerInfo, User user) throws MyRuntimeException {
+	public SellReturn toEditObject(Approval approval) throws MyRuntimeException {
 		try {
 			return new SellReturn(id, Float.valueOf(unitCost),
-					Integer.valueOf(amount), Float.valueOf(sum),
-					JavaDateConverter.StringConverterDate(time), clearingForm,
-					handler, approval, goodInfo, customerInfo, user);
+					Integer.valueOf(amount), Float.valueOf(sum),approval);
 		} catch (Exception e) {
 			throw new MyRuntimeException(
 					"toEditObject-SellReturnDTO convert fail");

@@ -53,11 +53,7 @@
 	</select>
 	
 	<delete id="deleteRelativity" parameterType="RolePermission">
-		DELETE FROM tb_role_permission
-		<where>
-			<if test="role.id !=null">role_id = #{role.id}</if>
-			<if test="permission.id !=null">permission_id = #{permission.id}</if>
-		</where>
+		DELETE FROM tb_role_permission WHERE role_id = #{role.id} AND permission_id = #{permission.id}
 	</delete>
 	
 	<insert id="saveRelativity" parameterType="UserRole">

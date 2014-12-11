@@ -69,6 +69,8 @@
         <p>
           <button class="btn btn-primary btn-sm" id="search"><i class="icon-search align-top bigger-125"></i>查询</button>
           <button class="btn btn-success btn-sm" id="search-all"><i class="icon-search align-top bigger-125"></i>查询全部</button>
+          <button class="btn btn-success btn-sm" ><i class="icon-undo align-top bigger-125"></i>重置</button>
+          <button class="btn btn-success btn-sm" ><i class="icon-print align-top bigger-125"></i>打印</button>
         </p>
       </div><!--.page-header  -->
       <div class="row"> 
@@ -83,7 +85,7 @@
                  <div class="col-sm-6">
                    <div id="pager">
                      <label>显示 
-                       <select size="1" onchange="javascript:gotoPage(1,'name=&beginTime=&endTime=')" id="p_pageSizeSelect">
+                       <select size="1" onchange="javascript:gotoPageSPCX(1,'name=&beginTime=&endTime=')" id="p_pageSizeSelect">
                          <option value="10" selected="selected">10</option>
                          <option value="25">25</option>
                          <option value="50">50</option>
@@ -124,14 +126,14 @@
            var searchName=$("#name").val();
            var beginTime=$("#beginTime").val();
            var endTime=$("#endTime").val();
-           gotoPage(1,"name="+searchName+"&beginTime="+beginTime+"&endTime="+endTime);
+           gotoPageSPCX(1,"name="+searchName+"&beginTime="+beginTime+"&endTime="+endTime);
 	    });
 	    
 	    $("#search-all").click(function () {
-	    	gotoPage(1,'name=&beginTime=&endTime=');
+	    	gotoPageSPCX(1,'name=&beginTime=&endTime=');
 	    });
 	    
-        gotoPage(1,'name=&beginTime=&endTime=');
+        gotoPageSPCX(1,'name=&beginTime=&endTime=');
 		
 	    $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){   
 	    });
@@ -154,7 +156,7 @@
 	});
 
     //分页显示工具
-	function gotoPage(pageIndex, cond) {
+	function gotoPageSPCX(pageIndex, cond) {
 		var pagerRange = 6;//
 		var pageSize =  $("#p_pageSizeSelect").val(); //获取每一页显示多少记录
 		var loc="<div class='col-sm-6'><div class='dataTables_paginate paging_bootstrap'><ul class='pagination'>";
@@ -192,7 +194,7 @@
 								var begin = Math.max(1, msg.currentPage - pagerRange/2 );
 								var end = Math.min(begin + (pagerRange - 1), msg.totalPage);
 								if(msg.currentPage !=1){
-									loc+="<li class='prev '><a href='javascript:gotoPage(1,\""+cond+"\")'><i class=' icon-double-angle-left '></i></a></li><li class='prev '><a href='javascript:gotoPage("+(msg.currentPage - 1)+",\""+cond+"\")'><i class=' icon-angle-left '></i></a></li>";
+									loc+="<li class='prev '><a href='javascript:gotoPageSPCX(1,\""+cond+"\")'><i class=' icon-double-angle-left '></i></a></li><li class='prev '><a href='javascript:gotoPageSPCX("+(msg.currentPage - 1)+",\""+cond+"\")'><i class=' icon-angle-left '></i></a></li>";
 								}else{
 									loc+="<li class='prev disabled'><a href='javascript:void(0)'><i class=' icon-double-angle-left '></i></a></li><li class='prev disabled'><a href='javascript:void(0)'><i class=' icon-angle-left '></i></a></li>";
 								}
@@ -200,17 +202,17 @@
 									if(msg.currentPage == i){
 										loc+="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>"
 									}else{
-										loc+="<li><a href='javascript:gotoPage("+i +",\""+cond+"\")' >"+i+"</a></li>"
+										loc+="<li><a href='javascript:gotoPageSPCX("+i +",\""+cond+"\")' >"+i+"</a></li>"
 									}
 								}
 								if(msg.currentPage!=msg.totalPage){
-									loc+="<li class='next'><a href='javascript:gotoPage("+(msg.currentPage + 1)+",\""+cond+"\")'><i class='icon-angle-right '></i></a></li><li class='next '><a href='javascript:gotoPage("+msg.totalPage+",\""+cond+"\")'><i class='icon-double-angle-right '></i></a></li>";
+									loc+="<li class='next'><a href='javascript:gotoPageSPCX("+(msg.currentPage + 1)+",\""+cond+"\")'><i class='icon-angle-right '></i></a></li><li class='next '><a href='javascript:gotoPageSPCX("+msg.totalPage+",\""+cond+"\")'><i class='icon-double-angle-right '></i></a></li>";
 								}else{
 									loc+="<li class='next disabled'><a href='javascript:void(0)'><i class='icon-angle-right '></i></a></li><li class='next disabled'><a href='javascript:void(0)'><i class='icon-double-angle-right '></i></a></li>";
 								}
 								loc+="</ul></div></div>";
 								$('#pages').html(loc);
-								$("#other").html('<a href="javascript:gotoPage(1,\'name=&beginTime=&endTime=\')" ><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
+								$("#other").html('<a href="javascript:gotoPageSPCX(1,\'name=&beginTime=&endTime=\')" ><i class="icon-refresh"></i></a>&nbsp;|&nbsp;<label >共 '+msg.totalElement+' 记录&nbsp;|&nbsp;共 '+msg.totalPage +' 页</label>');
 						}
 						$("#table-result").hideLoading();
 					},
@@ -255,10 +257,10 @@
 		    	}else{
 		    		$("#detailed-origin").html('未知');
 		    	}
-		    	if(data.units!=null && data.units!=''){
-		    		$("#detailed-units").html(data.units);
+		    	if(data.unitCost!=null && data.unitCost!=''){
+		    		$("#detailed-unitCost").html(data.unitCost);
 		    	}else{
-		    		$("#detailed-units" ).html('未知');
+		    		$("#detailed-unitCost" ).html('未知');
 		    	}
 		    	if(data.pack!=null && data.pack!=''){
 		    		$("#detailed-pack").html(data.pack);
